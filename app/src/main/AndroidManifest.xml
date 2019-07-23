@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.monitoriadetartarugas">
 
@@ -7,5 +8,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" />
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Act_ShowData"
+            android:label="@string/title_activity_act__show_data"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Act_NestWithoutTurtle"
+            android:label="@string/title_activity_act__nest_without_turtle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Act_TurtleAndNest"
+            android:label="@string/title_activity_turtle_and_nest"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Act_Main"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
 </manifest>
