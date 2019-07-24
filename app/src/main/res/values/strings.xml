@@ -8,4 +8,8 @@
     <string name="title_activity_turtle_and_nest">Turtle And Nest</string>
     <string name="title_activity_act__nest_without_turtle">Nest Without Turtle</string>
     <string name="title_activity_act__show_data">Show Data</string>
+    <string name="main_Title">Menu</string>
+    <string name="txt_buttonHelp">Help</string>
+    <string name="txt_button_help">Help</string>
+    <string name="title_activity_act__help">Help</string>
 </resources>

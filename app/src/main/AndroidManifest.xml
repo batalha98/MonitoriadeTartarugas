@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Act_Help"
+            android:label="@string/title_activity_act__help"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Act_ShowData"
             android:label="@string/title_activity_act__show_data"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Act_NestWithoutTurtle"
             android:label="@string/title_activity_act__nest_without_turtle"
