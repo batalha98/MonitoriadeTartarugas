@@ -5,7 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Act_ShowData"
-    tools:showIn="@layout/act__show_data">
-
-</android.support.constraint.ConstraintLayout>
+    tools:context=".ActNestWithoutTurtle"
+    tools:showIn="@layout/act_nest_without_turtle"/>

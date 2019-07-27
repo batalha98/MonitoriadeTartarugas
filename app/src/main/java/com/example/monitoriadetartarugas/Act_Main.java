@@ -31,7 +31,7 @@ public class Act_Main extends AppCompatActivity {
         button_nestWithouTurtle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerNestWithouTurtle(v);
+                registerNestWithoutTurtle(v);
             }
         });
 
@@ -39,7 +39,7 @@ public class Act_Main extends AppCompatActivity {
         button_showData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showData(v);
+                showReports(v);
             }
         });
 
@@ -47,31 +47,29 @@ public class Act_Main extends AppCompatActivity {
         button_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helpInfo(v);
+                help(v);
             }
         });
-
         layoutContentMain = (ConstraintLayout) findViewById(R.id.layoutContentMain);
     }
 
     private void registerTurtleAndNest(View view){
-        Intent it = new Intent(Act_Main.this, Act_TurtleAndNest.class);
+        Intent it = new Intent(Act_Main.this, ActTurtleAndNest.class);
         startActivityForResult(it, 0);
     }
 
-
-    private void registerNestWithouTurtle(View view){
-        Intent it = new Intent(Act_Main.this, Act_NestWithoutTurtle.class);
+    private void registerNestWithoutTurtle(View view){
+        Intent it = new Intent(Act_Main.this, ActNestWithoutTurtle.class);
         startActivityForResult(it, 0);
     }
 
-    private void showData(View view){
-        Intent it = new Intent(Act_Main.this, Act_ShowData.class);
+    private void showReports(View view){
+        Intent it = new Intent(Act_Main.this, ActShowReports.class);
         startActivityForResult(it, 0);
     }
 
-    private void helpInfo(View view){
-        Intent it = new Intent(Act_Main.this, Act_Help.class);
+    private void help(View view){
+        Intent it = new Intent(Act_Main.this, ActHelp.class);
         startActivityForResult(it, 0);
     }
 }

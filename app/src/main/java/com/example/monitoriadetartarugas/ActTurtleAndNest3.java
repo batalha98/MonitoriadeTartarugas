@@ -1,23 +1,35 @@
 package com.example.monitoriadetartarugas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class Act_TurtleAndNest extends AppCompatActivity {
+public class ActTurtleAndNest3 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_turtle_and_nest);
+        setContentView(R.layout.act_turtle_and_nest3);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_register_turtle_and_nest, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -28,7 +40,13 @@ public class Act_TurtleAndNest extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+
+            case R.id.action_next:
+                Intent it = new Intent(ActTurtleAndNest3.this, ActTurtleAndNest4.class);
+                startActivityForResult(it, 0);
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
