@@ -43,11 +43,11 @@ public class Act_Main extends AppCompatActivity {
             }
         });
 
-        Button button_help = findViewById(R.id.button_help);
-        button_help.setOnClickListener(new View.OnClickListener() {
+        Button button_updateCodifier = findViewById(R.id.button_updateCodifier);
+        button_updateCodifier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                help(v);
+                updateCodifier(v);
             }
         });
         layoutContentMain = (ConstraintLayout) findViewById(R.id.layoutContentMain);
@@ -68,8 +68,8 @@ public class Act_Main extends AppCompatActivity {
         startActivityForResult(it, 0);
     }
 
-    private void help(View view){
-        Intent it = new Intent(Act_Main.this, ActHelp.class);
+    private void updateCodifier(View view){
+        Intent it = new Intent(Act_Main.this, ActUpdateCodifier.class);
         startActivityForResult(it, 0);
     }
 }

@@ -3,7 +3,9 @@ package com.example.monitoriadetartarugas.domain.controller;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 
+import com.example.monitoriadetartarugas.R;
 import com.example.monitoriadetartarugas.domain.entitys.Specie;
 
 import java.io.Serializable;
@@ -21,7 +23,7 @@ public class SpecieController {
     public void insert(Specie specie){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("idspecie", specie.idspecie);
+        contentValues.put("specie", specie.getSpecie());
 
         connection.insertOrThrow("specie",null, contentValues);
     }
@@ -37,32 +39,39 @@ public class SpecieController {
         ContentValues contentValues = new ContentValues();
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(specie.idspecie);
+        parameters[0] = String.valueOf(specie.getIdspecie());
 
         connection.update("specie", contentValues,"idspecie = ?", parameters);
     }
 
     public List<Specie> fetchAll(){
         List<Specie> specieList = new ArrayList<>();
+        Specie specie;
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idspecie, specie");
-        sql.append("    FROM specie");
+        sql.append("SELECT idspecie,");
+        sql.append("       specie");
+        sql.append("  FROM specie;");
 
-        Cursor cursor = connection.rawQuery(sql.toString(), null);
+        try {
+            Cursor result = connection.rawQuery(sql.toString(), null);
 
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
+            if(result.getCount() > 0){
+                result.moveToFirst();
 
-            do{
-                Specie specie = new Specie();
+                do{
+                    specie = new Specie();
 
-                specie.idspecie = cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"));
-                specie.specie = cursor.getString(cursor.getColumnIndexOrThrow("specie"));
+                    specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
+                    specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
 
-                specieList.add(specie);
-            }while(cursor.moveToNext());
+                    specieList.add(specie);
+                }while(result.moveToNext());
+            }
+        }catch (NullPointerException e){
+            System.out.println(e.getMessage());;
         }
+
 
         return specieList;
     }
@@ -78,13 +87,13 @@ public class SpecieController {
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idturtle);
 
-        Cursor cursor = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), null);
 
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
+        if(result.getCount() > 0){
+            result.moveToFirst();
 
-            specie.idspecie = cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"));
-            specie.specie = cursor.getString(cursor.getColumnIndexOrThrow("specie"));
+            specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
+            specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
 
             return specie;
         }

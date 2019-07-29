@@ -3,10 +3,7 @@ package com.example.monitoriadetartarugas.domain.controller;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.monitoriadetartarugas.domain.entitys.Turtle;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,8 @@ public class TurtleController {
     public void insert(Turtle turtle){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("idspecie", turtle.idspecie);
+        contentValues.put("idspecie", turtle.getIdspecie());
+        contentValues.put("description", turtle.getDescription());
 
         connection.insertOrThrow("turtle",null, contentValues);
     }
@@ -37,7 +35,7 @@ public class TurtleController {
         ContentValues contentValues = new ContentValues();
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(turtle.idspecie);
+        parameters[0] = String.valueOf(turtle.getIdspecie());
 
         connection.update("turtle", contentValues,"idturtle = ?", parameters);
     }
@@ -46,8 +44,10 @@ public class TurtleController {
         List<Turtle> turtleList = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idturtle, idspecie");
-        sql.append("    FROM turtle");
+        sql.append("SELECT idturtle,");
+        sql.append("       idspecie,");
+        sql.append("       description");
+        sql.append("  FROM turtle;");
 
         Cursor cursor = connection.rawQuery(sql.toString(), null);
 
@@ -57,8 +57,9 @@ public class TurtleController {
             do{
                 Turtle turtle = new Turtle();
 
-                turtle.idturtle = cursor.getInt(cursor.getColumnIndexOrThrow("idturtle"));
-                turtle.idspecie = cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"));
+                turtle.setIdturtle(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
+                turtle.setIdspecie(cursor.getInt(cursor.getColumnIndexOrThrow("idspecie")));
+                turtle.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
 
                 turtleList.add(turtle);
             }while(cursor.moveToNext());
@@ -71,9 +72,11 @@ public class TurtleController {
         Turtle turtle = new Turtle();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idturtle, idspecie");
-        sql.append("    FROM turtle");
-        sql.append("    WHERE idturtle = ?");
+        sql.append("SELECT idturtle,");
+        sql.append("       idspecie,");
+        sql.append("       description");
+        sql.append("  FROM turtle;");
+        sql.append("  WHERE idturtle = ?");
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idturtle);
@@ -83,8 +86,9 @@ public class TurtleController {
         if(cursor.getCount() > 0){
             cursor.moveToFirst();
 
-            turtle.idturtle = cursor.getInt(cursor.getColumnIndexOrThrow("idturtle"));
-            turtle.idspecie = cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"));
+            turtle.setIdturtle(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
+            turtle.setIdspecie(cursor.getInt(cursor.getColumnIndexOrThrow("idspecie")));
+            turtle.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
 
             return turtle;
         }

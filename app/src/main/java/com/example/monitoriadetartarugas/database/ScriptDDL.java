@@ -7,7 +7,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS activities(");
         builder.append("    idactivity INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''))");
+        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -20,7 +20,7 @@ public class ScriptDDL {
         builder.append("    island VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    FOREIGN KEY(");
         builder.append("        island)");
-        builder.append("    REFERENCES island (island))");
+        builder.append("    REFERENCES island (island));");
 
         return builder.toString();
     }
@@ -34,7 +34,7 @@ public class ScriptDDL {
         builder.append("    description VARCHAR (255) NOT NULL DEFAULT (''),");
         builder.append("    FOREIGN KEY (");
         builder.append("        idspecie)");
-        builder.append("    REFERENCES specie (idspecie))");
+        builder.append("    REFERENCES specie (idspecie));");
 
         return builder.toString();
     }
@@ -45,13 +45,6 @@ public class ScriptDDL {
         builder.append("CREATE TABLE IF NOT EXISTS specie(");
         builder.append("    idspecie INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    specie VARCHAR (45) NOT NULL DEFAULT (''));");
-
-        builder.append(
-                "INSERT INTO specie (idspecie, specie) VALUES (1, 'carreta carreta');" +
-                "INSERT INTO specie (idspecie,specie) VALUES (2, 'Chelonia mydas');" +
-                "INSERT INTO specie (idspecie,specie) VALUES (3, 'la cabecadas');" +
-                "INSERT INTO specie (idspecie,specie) VALUES (4, 'do mareta');"
-        );
 
         return builder.toString();
     }
@@ -65,7 +58,7 @@ public class ScriptDDL {
         builder.append("    eggs_quantity INT (11) NOT NULL DEFAULT (''),");
         builder.append("    distance FLOAT NOT NULL DEFAULT (''),");
         builder.append("    width FLOAT NOT NULL DEFAULT (''),");
-        builder.append("    description VARCHAR (255) NOT NULL DEFAULT (''))");
+        builder.append("    description VARCHAR (255) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -75,7 +68,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS windcategory(");
         builder.append("    idwc INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''))");
+        builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -85,7 +78,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS winddirection(");
         builder.append("    idwd INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''))");
+        builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -94,7 +87,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS island(");
-        builder.append("    island VARCHAR (45) NOT NULL PRIMARY KEY)");
+        builder.append("    island VARCHAR (45) NOT NULL PRIMARY KEY);");
 
         return builder.toString();
     }
@@ -104,7 +97,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS IF NOT EXISTS users(");
         builder.append("    email VARCHAR (255) NOT NULL PRIMARY KEY,");
-        builder.append("    password VARCHAR (255) NOT NULL DEFAULT (''))");
+        builder.append("    password VARCHAR (255) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -132,7 +125,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES winddirection (idwd),");
         builder.append("    FOREIGN KEY (");
         builder.append("        beach)");
-        builder.append("    REFERENCES beach (beach))");
+        builder.append("    REFERENCES beach (beach));");
 
         return builder.toString();
     }
@@ -150,7 +143,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES nest (idnest),");
         builder.append("    FOREIGN KEY (");
         builder.append("        idturtle)");
-        builder.append("    REFERENCES turtle (idturtle))");
+        builder.append("    REFERENCES turtle (idturtle));");
 
         return builder.toString();
     }
@@ -168,7 +161,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES nest (idnest),");
         builder.append("    FOREIGN KEY(");
         builder.append("        idspecie)");
-        builder.append("    REFERENCES specie (idspecie))");
+        builder.append("    REFERENCES specie (idspecie));");
 
         return builder.toString();
     }
@@ -178,7 +171,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS observer(");
         builder.append("    idobserver INTEGER PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    observer VARCHAR (45) NOT NULL DEFAULT (''))");
+        builder.append("    observer VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -207,7 +200,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES observation (idturtle),");
         builder.append("    FOREIGN KEY (");
         builder.append("        beach)");
-        builder.append("    REFERENCES observation (beach))");
+        builder.append("    REFERENCES observation (beach));");
 
         return builder.toString();
     }
@@ -234,7 +227,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES nest (idnest),");
         builder.append("    FOREIGN KEY (");
         builder.append("        beach)");
-        builder.append("    REFERENCES beach (beach))");
+        builder.append("    REFERENCES beach (beach));");
 
         return builder.toString();
     }
@@ -262,7 +255,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES observation (idturtle),");
         builder.append("    FOREIGN KEY (");
         builder.append("        beach)");
-        builder.append("    REFERENCES observation (beach))");
+        builder.append("    REFERENCES observation (beach));");
 
         return builder.toString();
     }
@@ -282,7 +275,7 @@ public class ScriptDDL {
         builder.append("        idturtle),");
         builder.append("    FOREIGN KEY (");
         builder.append("    idturtle)");
-        builder.append("    REFERENCES turtle (idturtle))");
+        builder.append("    REFERENCES turtle (idturtle));");
 
         return builder.toString();
     }
@@ -303,7 +296,7 @@ public class ScriptDDL {
         builder.append("    REFERENCES nestlocalization (idnest),");
         builder.append("    FOREIGN KEY (");
         builder.append("        localization_date)");
-        builder.append("    REFERENCES nestlocalization (dataa))");
+        builder.append("    REFERENCES nestlocalization (dataa));");
 
         return builder.toString();
     }
@@ -325,7 +318,7 @@ public class ScriptDDL {
         builder.append("        idnest),");
         builder.append("    FOREIGN KEY (");
         builder.append("    idnest)");
-        builder.append("    REFERENCES nest (idnest))");
+        builder.append("    REFERENCES nest (idnest));");
 
         return builder.toString();
     }
@@ -335,7 +328,7 @@ public class ScriptDDL {
 
         builder.append("CREATE TABLE IF NOT EXISTS habitat (");
         builder.append("    idhabitat INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''))");
+        builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
     }
@@ -344,38 +337,27 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS observationandobserver (");
-                builder.append("idnest            INT (11) NOT NULL,");
-        builder.append("localization_date DATETIME NOT NULL,");
-        builder.append("observation_date  DATETIME NOT NULL,");
-        builder.append("idobserver        INT (11) NOT NULL,");
-        builder.append("PRIMARY KEY (");
-                builder.append("idnest,");
-                builder.append("localization_date,");
-                builder.append("observation_date,");
-                builder.append("idobserver)");
-
-        builder.append("FOREIGN KEY (");
-                builder.append("idnest)");
-
-        builder.append("REFERENCES localizationandobservation (idnest) ON DELETE RESTRICT " +
-                "ON UPDATE RESTRICT,");
-        builder.append("FOREIGN KEY (");
-                builder.append("idobserver)");
-
-        builder.append("REFERENCES observer (idobserver) ON DELETE RESTRICT " +
-                "ON UPDATE RESTRICT,");
-
-                builder.append("FOREIGN KEY (");
-                builder.append("localization_date)");
-
-        builder.append("REFERENCES localizationandobservation (localization_date) ON DELETE RESTRICT " +
-                "ON UPDATE RESTRICT,");
-
-                builder.append("FOREIGN KEY (");
-                builder.append("observation_date)");
-
-        builder.append("REFERENCES localizationandobservation (observation_date) ON DELETE RESTRICT " +
-                "ON UPDATE RESTRICT");
+        builder.append("    idnest INT (11) NOT NULL,");
+        builder.append("    localization_date DATETIME NOT NULL,");
+        builder.append("    observation_date DATETIME NOT NULL,");
+        builder.append("    idobserver INT (11) NOT NULL,");
+        builder.append("    PRIMARY KEY (");
+        builder.append("        idnest,");
+        builder.append("        localization_date,");
+        builder.append("        observation_date,");
+        builder.append("        idobserver)");
+        builder.append("    FOREIGN KEY (");
+        builder.append("        idnest)");
+        builder.append("    REFERENCES localizationandobservation (idnest),");
+        builder.append("    FOREIGN KEY (");
+        builder.append("        idobserver)");
+        builder.append("    REFERENCES observer (idobserver),");
+        builder.append("    FOREIGN KEY (");
+        builder.append("        localization_date)");
+        builder.append("    REFERENCES localizationandobservation (localization_date),");
+        builder.append("    FOREIGN KEY (");
+        builder.append("        observation_date)");
+        builder.append("    REFERENCES localizationandobservation (observation_date));");
 
         return builder.toString();
     }

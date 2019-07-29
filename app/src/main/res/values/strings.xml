@@ -61,5 +61,7 @@
     <string name="title_activity_act_show_data">Reports</string>
     <string name="title_activity_act_help">Help</string>
     <string name="title_erro">ERRO</string>
-    <string name="title_msgErro">Mensagem de erro</string>>
+    <string name="title_msgErro">Mensagem de erro</string>
+    <string name="title_activity_act_update_codifier">Update Codifier</string>
+    <string name="btnTitle_updateCod">Update Codifier</string>
 </resources>

@@ -68,7 +68,6 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
         specieAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_specie.setAdapter(specieAdapter);
-        txt_description.setText(turtle.description);
     }
 
     public void createConnection(){
@@ -94,8 +93,8 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
         try {
             Specie specie = (Specie) spinner_specie.getSelectedItem();
 
-            turtle.idspecie = specie.idspecie;
-            turtle.description = txt_description.getText().toString();
+            turtle.setIdspecie(specie.getIdspecie());
+            turtle.setDescription(txt_description.getText().toString());
 
             turtleController.insert(turtle);
 
@@ -110,7 +109,7 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = (String) parent.getItemAtPosition(position);
+        String item = parent.getItemAtPosition(position).toString();
 
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }

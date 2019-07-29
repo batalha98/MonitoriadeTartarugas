@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ActUpdateCodifier"
+            android:label="@string/title_activity_act_update_codifier"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ActHelp"
             android:label="@string/title_activity_act_help"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActShowReports"
             android:label="@string/title_activity_act_show_data"

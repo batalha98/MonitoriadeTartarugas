@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataOpenHelper extends SQLiteOpenHelper {
 
     public DataOpenHelper(Context context) {
-        super(context, "turtlesDB", null, 2);
+        super(context, "turtlesDatabase", null, 1);
     }
 
     @Override
