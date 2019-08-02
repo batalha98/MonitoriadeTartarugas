@@ -5,14 +5,10 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/app"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ActUpdateCodifier"
-            android:label="@string/title_activity_act_update_codifier"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ActHelp"
             android:label="@string/title_activity_act_help"
@@ -26,27 +22,27 @@
             android:label="@string/title_activity_act_nest_without_turtle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest5"
+            android:name=".ActTaggs"
             android:label="@string/title_activity_act_turtle_and_nest5"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest4"
+            android:name=".ActHatchling"
             android:label="@string/title_activity_act_turtle_and_nest4"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest3"
+            android:name=".ActNestLocalization"
             android:label="@string/title_activity_act_turtle_and_nest3"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest2"
+            android:name=".ActNest"
             android:label="@string/title_activity_act_turtle_and_nest2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest1"
+            android:name=".ActObservation"
             android:label="@string/title_activity_act__turtle_and_nest1"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActTurtleAndNest"
+            android:name=".ActTurtle"
             android:label="@string/title_activity_turtle_and_nest"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

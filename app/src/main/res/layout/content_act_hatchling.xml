@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActTurtleAndNest4"
-    tools:showIn="@layout/act_turtle_and_nest4">
+    tools:context=".ActHatchling"
+    tools:showIn="@layout/act_hatchling">
 
     <ScrollView
         android:layout_width="0dp"

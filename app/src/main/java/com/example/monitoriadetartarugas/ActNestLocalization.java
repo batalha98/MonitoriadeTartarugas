@@ -2,21 +2,18 @@ package com.example.monitoriadetartarugas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-public class ActTurtleAndNest2 extends AppCompatActivity {
+public class ActNestLocalization extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_turtle_and_nest2);
+        setContentView(R.layout.act_nest_localization);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,7 +39,7 @@ public class ActTurtleAndNest2 extends AppCompatActivity {
                 break;
 
             case R.id.action_next:
-                Intent it = new Intent(ActTurtleAndNest2.this, ActTurtleAndNest3.class);
+                Intent it = new Intent(ActNestLocalization.this, ActHatchling.class);
                 startActivityForResult(it, 0);
                 break;
         }

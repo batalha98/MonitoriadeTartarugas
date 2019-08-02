@@ -1,7 +1,5 @@
 package com.example.monitoriadetartarugas.domain.entitys;
 
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 public class Beach implements Serializable {
@@ -26,6 +24,6 @@ public class Beach implements Serializable {
 
     @Override
     public String toString() {
-        return "["+"Beach: "+beach+" ;Island: "+island+"]";
+        return beach;
     }
 }

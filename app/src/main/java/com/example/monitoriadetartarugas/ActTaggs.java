@@ -2,21 +2,19 @@ package com.example.monitoriadetartarugas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
-public class ActTurtleAndNest4 extends AppCompatActivity {
+public class ActTaggs extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_turtle_and_nest4);
+        setContentView(R.layout.act_taggs);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -27,7 +25,7 @@ public class ActTurtleAndNest4 extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.menu_register_turtle_and_nest, menu);
+        inflater.inflate(R.menu.menu_report_turtle_nest, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -41,9 +39,11 @@ public class ActTurtleAndNest4 extends AppCompatActivity {
                 finish();
                 break;
 
-            case R.id.action_next:
-                Intent it = new Intent(ActTurtleAndNest4.this, ActTurtleAndNest5.class);
+            case R.id.action_report:
+                Toast.makeText(this, "Report added successfully!", Toast.LENGTH_LONG).show();
+                Intent it = new Intent(ActTaggs.this, Act_Main.class);
                 startActivityForResult(it, 0);
+
                 break;
         }
 

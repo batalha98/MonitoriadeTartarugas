@@ -43,7 +43,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS specie(");
-        builder.append("    idspecie INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
+        builder.append("    idspecie INTEGER NOT NULL DEFAULT ('') PRIMARY KEY AUTOINCREMENT,");
         builder.append("    specie VARCHAR (45) NOT NULL DEFAULT (''));");
 
         return builder.toString();
@@ -106,10 +106,11 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS observation(");
-        builder.append("    idturtle INT (11) NOT NULL,");
-        builder.append("    beach VARCHAR (45) NOT NULL,");
-        builder.append("    dataa DATETIME NOT NULL,");
-        builder.append("    wc INT (11) NOT NULL,");
+        builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    idactivity INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    wc INT (11) NOT NULL DEFAULT (''),");
         builder.append("    wd INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach_height FLOAT NOT NULL DEFAULT (''),");
         builder.append("    beach_time DATETIME NOT NULL DEFAULT (''),");
@@ -118,6 +119,9 @@ public class ScriptDDL {
         builder.append("        beach,");
         builder.append("        dataa),");
         builder.append("    FOREIGN KEY (");
+        builder.append("        idturtle)");
+        builder.append("    REFERENCES turtle (idturtle),");
+        builder.append("    FOREIGN KEY (");
         builder.append("        wc)");
         builder.append("    REFERENCES windcategory (idwc),");
         builder.append("    FOREIGN KEY(");
@@ -125,7 +129,10 @@ public class ScriptDDL {
         builder.append("    REFERENCES winddirection (idwd),");
         builder.append("    FOREIGN KEY (");
         builder.append("        beach)");
-        builder.append("    REFERENCES beach (beach));");
+        builder.append("    REFERENCES beach (beach),");
+        builder.append("    FOREIGN KEY (");
+        builder.append("        idactivity)");
+        builder.append("    REFERENCES activities (idactivity));");
 
         return builder.toString();
     }
@@ -134,7 +141,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS turtlenest(");
-        builder.append("    idnest INT (11) NOT NULL,");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idnest),");
@@ -152,7 +159,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS nestwithoutturtle (");
-        builder.append("    idnest INT (11) NOT NULL,");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idspecie INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idnest),");
@@ -180,10 +187,10 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS observerobservation (");
-        builder.append("    idturtle INT (11) NOT NULL,");
-        builder.append("    beach VARCHAR (45) NOT NULL,");
-        builder.append("    dataa DATETIME  NOT NULL,");
-        builder.append("    idobserver INT (11) NOT NULL,");
+        builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    dataa DATETIME  NOT NULL DEFAULT (''),");
+        builder.append("    idobserver INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idturtle,");
         builder.append("        beach,");
@@ -209,8 +216,8 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS nestlocalization (");
-        builder.append("    idnest INT (11) NOT NULL,");
-        builder.append("    dataa DATETIME NOT NULL,");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    idhabitat INT (11) NOT NULL DEFAULT (''),");
         builder.append("    distance FLOAT NOT NULL DEFAULT (''),");
@@ -236,9 +243,10 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS turtleactivities (");
-        builder.append("    idturtle INT (11) NOT NULL,");
-        builder.append("    beach VARCHAR (45) NOT NULL,");
-        builder.append("    idactivity INT (11) NOT NULL,");
+        builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    dataa DATETIME (45) NOT NULL DEFAULT (''),");
+        builder.append("    idactivity INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idturtle,");
         builder.append("        beach,");
@@ -264,8 +272,8 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS turtletags (");
-        builder.append("    idturtle INT (11) NOT NULL,");
-        builder.append("    dataa DATETIME NOT NULL,");
+        builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    leftring INT (11) NOT NULL DEFAULT (''),");
         builder.append("    rightring INT (11) NOT NULL DEFAULT (''),");
         builder.append("    internal_tag INT (11) NOT NULL DEFAULT (''),");
@@ -274,7 +282,7 @@ public class ScriptDDL {
         builder.append("    PRIMARY KEY (");
         builder.append("        idturtle),");
         builder.append("    FOREIGN KEY (");
-        builder.append("    idturtle)");
+        builder.append("        idturtle)");
         builder.append("    REFERENCES turtle (idturtle));");
 
         return builder.toString();
@@ -284,9 +292,9 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS localizationandobservation (");
-        builder.append("    idnest INT (11) NOT NULL,");
-        builder.append("    localization_date DATETIME NOT NULL,");
-        builder.append("    observation_date  DATETIME NOT NULL,");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    localization_date DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    observation_date  DATETIME NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idnest,");
         builder.append("        localization_date,");
@@ -305,7 +313,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS hatchlings (");
-        builder.append("    idnest  INT (11 NOT NULL,");
+        builder.append("    idnest  INT (11 NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    hatched INT (11) NOT NULL DEFAULT (''),");
         builder.append("    died_in_nest INT (11) NOT NULL DEFAULT (''),");
@@ -317,7 +325,7 @@ public class ScriptDDL {
         builder.append("    PRIMARY KEY (");
         builder.append("        idnest),");
         builder.append("    FOREIGN KEY (");
-        builder.append("    idnest)");
+        builder.append("        idnest)");
         builder.append("    REFERENCES nest (idnest));");
 
         return builder.toString();
@@ -337,10 +345,10 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS observationandobserver (");
-        builder.append("    idnest INT (11) NOT NULL,");
-        builder.append("    localization_date DATETIME NOT NULL,");
-        builder.append("    observation_date DATETIME NOT NULL,");
-        builder.append("    idobserver INT (11) NOT NULL,");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    localization_date DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    observation_date DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    idobserver INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idnest,");
         builder.append("        localization_date,");

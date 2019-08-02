@@ -46,48 +46,41 @@ public class SpecieController {
 
     public List<Specie> fetchAll(){
         List<Specie> specieList = new ArrayList<>();
-        Specie specie;
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idspecie,");
-        sql.append("       specie");
-        sql.append("  FROM specie;");
+        sql.append("SELECT idspecie, specie");
+        sql.append("  FROM specie");
 
-        try {
-            Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), null);
 
-            if(result.getCount() > 0){
-                result.moveToFirst();
+        if(result.getCount() > 0){
+            result.moveToFirst();
 
-                do{
-                    specie = new Specie();
+            do{
+                Specie specie = new Specie();
 
-                    specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
-                    specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
+                specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
+                specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
 
-                    specieList.add(specie);
-                }while(result.moveToNext());
-            }
-        }catch (NullPointerException e){
-            System.out.println(e.getMessage());;
+                specieList.add(specie);
+            }while(result.moveToNext());
         }
-
 
         return specieList;
     }
 
-    public Specie fetchOne(int idturtle){
+    public Specie fetchOne(int idspecie){
         Specie specie = new Specie();
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idspecie, specie");
-        sql.append("    FROM specie");
-        sql.append("    WHERE idspecie = ?");
+        sql.append("  FROM specie");
+        sql.append("  WHERE idspecie = ?;");
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idturtle);
+        parameters[0] = String.valueOf(idspecie);
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();

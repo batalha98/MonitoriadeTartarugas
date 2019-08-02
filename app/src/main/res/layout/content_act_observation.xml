@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActTurtleAndNest2"
-    tools:showIn="@layout/act_turtle_and_nest2">
+    tools:context=".ActObservation"
+    tools:showIn="@layout/act_observation">
 
     <ScrollView
         android:layout_width="0dp"
@@ -22,101 +22,130 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_depth"
+                android:id="@+id/title_beachField4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/title_beachForm"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_DepthField"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/txt_depthField"
+            <Spinner
+                android:id="@+id/spinner_beach"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="number" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/title_nrEggs"
+                android:id="@+id/title_dateField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_nrEggs"
+                android:text="@string/title_dateForm"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_nrEggsField"
+                android:id="@+id/dateObservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="date" />
 
             <TextView
-                android:id="@+id/title_distancField"
+                android:id="@+id/title_wcField4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_DistanceField"
+                android:text="@string/title_wcField"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_wc"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/title_wdField4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_wdField"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_wd"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/title_beacHeight4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_bHeightField"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_nrDistance"
+                android:id="@+id/txt_BeachHeight"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_TimeField"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_beachTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="date" />
 
             <TextView
-                android:id="@+id/title_widthField"
+                android:id="@+id/title_activityField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_widthField"
+                android:text="@string/title_activityField"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/txt_nrWidth"
+            <Spinner
+                android:id="@+id/spinner_activity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/title_descriptionField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_descriptionField"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txt_descriptionField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

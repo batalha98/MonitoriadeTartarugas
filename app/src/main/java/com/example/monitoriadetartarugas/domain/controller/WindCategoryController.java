@@ -77,13 +77,13 @@ public class WindCategoryController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idwc,");
         sql.append("       name");
-        sql.append("  FROM windcategory;");
+        sql.append("  FROM windcategory");
         sql.append("  WHERE idwc = ?");
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idwc);
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();

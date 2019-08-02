@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivitiesController {
-    private Activities activities;
     private SQLiteDatabase connection;
 
     public ActivitiesController(SQLiteDatabase connection){
@@ -33,7 +32,7 @@ public class ActivitiesController {
         connection.delete("activities","idactivity = ?",parameters);
     }
 
-    public void edit(Activities Activities){
+    public void edit(Activities activities){
         ContentValues contentValues = new ContentValues();
 
         String[] parameters = new String[1];
@@ -57,9 +56,9 @@ public class ActivitiesController {
                 result.moveToFirst();
 
                 do{
-                    activities = new Activities();
+                    Activities activities = new Activities();
 
-                    activities.setIdactivity(result.getColumnIndexOrThrow("idactivity"));
+                    activities.setIdactivity(result.getInt(result.getColumnIndexOrThrow("idactivity")));
                     activities.setActivity(result.getString(result.getColumnIndexOrThrow("activity")));
 
                     activitiesList.add(activities);
@@ -72,19 +71,19 @@ public class ActivitiesController {
         return activitiesList;
     }
 
-    public Activities fetchOne(int idwc){
-        activities = new Activities();
+    public Activities fetchOne(int idactivity){
+        Activities activities = new Activities();
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idactivity,");
         sql.append("       activity");
-        sql.append("  FROM activities;");
+        sql.append("  FROM activities");
         sql.append("  WHERE idactivity = ?;");
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idwc);
+        parameters[0] = String.valueOf(idactivity);
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();

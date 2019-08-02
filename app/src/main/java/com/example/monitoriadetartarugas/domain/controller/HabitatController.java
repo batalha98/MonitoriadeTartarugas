@@ -72,7 +72,7 @@ public class HabitatController {
         return habitatList;
     }
 
-    public Habitat fetchOne(int idwc){
+    public Habitat fetchOne(int idhabitat){
         Habitat habitat = new Habitat();
 
         StringBuilder sql = new StringBuilder();
@@ -82,7 +82,7 @@ public class HabitatController {
         sql.append("  WHERE idhabitat = ?;");
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idwc);
+        parameters[0] = String.valueOf(idhabitat);
 
         Cursor result = connection.rawQuery(sql.toString(), null);
 

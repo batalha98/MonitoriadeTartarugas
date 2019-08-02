@@ -6,12 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.monitoriadetartarugas.domain.entitys.Beach;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BeachController {
-    private Beach beach;
     private SQLiteDatabase connection;
 
     public BeachController(SQLiteDatabase connection){
@@ -21,15 +19,15 @@ public class BeachController {
     public void insert(Beach beach){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("beach_name", beach.getBeach());
-        contentValues.put("island_name", beach.getIsland());
+        contentValues.put("beach", beach.getBeach());
+        contentValues.put("island", beach.getIsland());
 
         connection.insertOrThrow("beach",null, contentValues);
     }
 
-    public void remove(int idwc){
+    public void remove(String beach){
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idwc);
+        parameters[0] = beach;
 
         connection.delete("beach","beach = ?",parameters);
     }
@@ -47,9 +45,8 @@ public class BeachController {
         List<Beach> beachList = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT beach,");
-        sql.append("       island");
-        sql.append("  FROM beach;");
+        sql.append("SELECT beach, island");
+        sql.append("  FROM beach");
 
         try {
             Cursor result = connection.rawQuery(sql.toString(), null);
@@ -58,7 +55,7 @@ public class BeachController {
                 result.moveToFirst();
 
                 do{
-                    beach = new Beach();
+                    Beach beach = new Beach();
 
                     beach.setBeach(result.getString(result.getColumnIndexOrThrow("beach")));
                     beach.setIsland(result.getString(result.getColumnIndexOrThrow("island")));
@@ -73,8 +70,8 @@ public class BeachController {
         return beachList;
     }
 
-    public Beach fetchOne(int idwc){
-        beach = new Beach();
+    public Beach fetchOne(String beach){
+        Beach beach1 = new Beach();
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT beach,");
@@ -83,22 +80,19 @@ public class BeachController {
         sql.append("  WHERE beach = ?;");
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idwc);
+        parameters[0] = beach;
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();
 
-            beach.setBeach(result.getString(result.getColumnIndexOrThrow("beach")));
-            beach.setIsland(result.getString(result.getColumnIndexOrThrow("island")));
+            beach1.setBeach(result.getString(result.getColumnIndexOrThrow("beach")));
+            beach1.setIsland(result.getString(result.getColumnIndexOrThrow("island")));
 
-            return beach;
+            return beach1;
         }
-
         return null;
     }
-
-
 
 }

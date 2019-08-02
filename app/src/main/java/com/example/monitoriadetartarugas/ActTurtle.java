@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.SpecieController;
@@ -23,24 +22,22 @@ import com.example.monitoriadetartarugas.domain.controller.TurtleController;
 import com.example.monitoriadetartarugas.domain.entitys.Specie;
 import com.example.monitoriadetartarugas.domain.entitys.Turtle;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private long idturtle;
     private Spinner spinner_specie;
-    private List<Specie> speciesList;
     private EditText txt_description;
-    private Turtle turtle;
     private TurtleController turtleController;
     private SpecieController specieController;
-
+    private List<Specie> speciesList;
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_turtle_and_nest);
+        setContentView(R.layout.act_turtle);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,14 +48,10 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
         spinner_specie.setOnItemSelectedListener(this);
 
         createConnection();
-        getFieldValues();
+        getSpinnerValues();
     }
 
-    private void getFieldValues(){
-        //recuperando parametro
-        turtle = new Turtle();
-
-        speciesList = new ArrayList<Specie>();
+    private void getSpinnerValues(){
         speciesList = specieController.fetchAll();
 
         ArrayAdapter<Specie> specieAdapter = new ArrayAdapter<Specie>(this
@@ -70,9 +63,28 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
         spinner_specie.setAdapter(specieAdapter);
     }
 
+    private void confirm(){
+        try {
+            Turtle turtle = new Turtle();
+            Specie specie = (Specie) spinner_specie.getSelectedItem();
+
+            String description = txt_description.getText().toString();
+
+            turtle.setIdspecie(specieController.fetchOne(specie.getIdspecie()));
+            turtle.setDescription(description);
+
+            idturtle = turtleController.insert(turtle);
+        }catch (Exception e){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle(R.string.title_msgErro);
+            alertDialog.setMessage(e.getMessage());
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.show();
+        }
+    }
+
     public void createConnection(){
         try {
-
             dataOpenHelper = new DataOpenHelper(this);
 
             connection = dataOpenHelper.getWritableDatabase();
@@ -89,29 +101,9 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
         }
     }
 
-    private void confirmDBOperation(){
-        try {
-            Specie specie = (Specie) spinner_specie.getSelectedItem();
-
-            turtle.setIdspecie(specie.getIdspecie());
-            turtle.setDescription(txt_description.getText().toString());
-
-            turtleController.insert(turtle);
-
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
 
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -136,8 +128,13 @@ public class ActTurtleAndNest extends AppCompatActivity implements AdapterView.O
                 break;
 
             case R.id.action_next:
-                confirmDBOperation();
-                Intent it = new Intent(ActTurtleAndNest.this, ActTurtleAndNest1.class);
+                confirm();
+                Intent it = new Intent(this, ActObservation.class);
+
+                Bundle parameters = new Bundle();
+                parameters.putSerializable("turtle", turtleController.fetchOne((int) idturtle));
+                it.putExtras(parameters);
+
                 startActivityForResult(it, 0);
                 break;
         }

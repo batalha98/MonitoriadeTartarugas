@@ -24,6 +24,6 @@ public class WindCategory implements Serializable {
 
     @Override
     public String toString() {
-        return "["+idwc+", "+name+"]";
+        return name;
     }
 }

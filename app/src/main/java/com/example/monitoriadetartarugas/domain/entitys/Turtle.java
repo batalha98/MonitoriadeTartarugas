@@ -4,30 +4,39 @@ import java.io.Serializable;
 
 public class Turtle implements Serializable {
     private int idturtle;
-    private int idspecie;
+    private Specie idspecie;
     private String description;
 
-    public int getIdturtle(){
+    public int getIdturtle() {
         return idturtle;
     }
 
-    public int getIdspecie(){
-        return idspecie;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public void setIdturtle(int idturtle){
+    public void setIdturtle(int idturtle) {
         this.idturtle = idturtle;
     }
 
-    public void setIdspecie(int idspecie){
+    public Specie getIdspecie() {
+        return idspecie;
+    }
+
+    public void setIdspecie(Specie idspecie) {
         this.idspecie = idspecie;
     }
 
-    public void setDescription(String description){
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Turtle{" +
+                "idturtle=" + idturtle +
+                ", idspecie=" + idspecie +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

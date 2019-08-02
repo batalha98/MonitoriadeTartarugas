@@ -44,17 +44,17 @@ public class Act_Main extends AppCompatActivity {
         });
 
         Button button_updateCodifier = findViewById(R.id.button_updateCodifier);
-        button_updateCodifier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateCodifier(v);
-            }
-        });
+//        button_updateCodifier.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateCodifier(v);
+//            }
+//        });
         layoutContentMain = (ConstraintLayout) findViewById(R.id.layoutContentMain);
     }
 
     private void registerTurtleAndNest(View view){
-        Intent it = new Intent(Act_Main.this, ActTurtleAndNest.class);
+        Intent it = new Intent(Act_Main.this, ActTurtle.class);
         startActivityForResult(it, 0);
     }
 
@@ -68,8 +68,8 @@ public class Act_Main extends AppCompatActivity {
         startActivityForResult(it, 0);
     }
 
-    private void updateCodifier(View view){
-        Intent it = new Intent(Act_Main.this, ActUpdateCodifier.class);
-        startActivityForResult(it, 0);
-    }
+//    private void updateCodifier(View view){
+//        Intent it = new Intent(Act_Main.this, ActUpdateCodifier.class);
+//        startActivityForResult(it, 0);
+//    }
 }

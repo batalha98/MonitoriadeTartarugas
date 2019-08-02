@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActTurtleAndNest3"
-    tools:showIn="@layout/act_turtle_and_nest3">
+    tools:context=".ActNest"
+    tools:showIn="@layout/act_nest">
 
     <ScrollView
         android:layout_width="0dp"
@@ -22,53 +22,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_HabitatField"
+                android:id="@+id/title_depth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_HabitatField"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spinner_habitatName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:id="@+id/title_dateField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_dateField"
+                android:text="@string/title_DepthField"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/dateObservation5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="date" />
-
-            <TextView
-                android:id="@+id/title_gpsSouth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_gpsSouth"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txt_GPSSouthdata"
+                android:id="@+id/txt_depthField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -77,17 +41,17 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/title_gpsEast"
+                android:id="@+id/title_nrEggs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_gpsEast"
+                android:text="@string/title_nrEggs"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_GPSEastData"
+                android:id="@+id/txt_nrEggsField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -96,17 +60,55 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/title_observation"
+                android:id="@+id/title_distancField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_observation"
+                android:text="@string/title_DistanceField"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_observationField"
+                android:id="@+id/txt_nrDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="datetime" />
+
+            <TextView
+                android:id="@+id/title_widthField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_widthField"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_nrWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/title_descriptionField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_descriptionField"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_descriptionField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

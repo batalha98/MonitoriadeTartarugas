@@ -1,6 +1,6 @@
 package com.example.monitoriadetartarugas.domain.entitys;
 
-import androidx.annotation.NonNull;
+
 
 import java.io.Serializable;
 
@@ -26,6 +26,6 @@ public class Habitat implements Serializable {
 
     @Override
     public String toString() {
-        return "["+idhabitat+", "+habitat+"]";
+        return habitat;
     }
 }
