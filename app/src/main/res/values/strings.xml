@@ -4,10 +4,9 @@
     <string name="title_activity_main">Monitoring Turtles</string>
     <string name="txtButton_turtle_and_nest">Turtle and Nest</string>
     <string name="txtButton_nest_without_turtle">Nest Without Turtle</string>
-    <string name="txtButton_show_data">Show data</string>
+    <string name="txtButton_show_data">Records</string>
     <string name="title_activity_turtle_and_nest">Turtle</string>
     <string name="title_activity_act__nest_without_turtle">Nest Without Turtle</string>
-    <string name="title_activity_act__show_data">Show Data</string>
     <string name="main_Title">Menu</string>
     <string name="txt_buttonHelp">Help</string>
     <string name="txt_button_help">Help</string>
@@ -57,9 +56,19 @@
     <string name="title_cwlMeasure">CWL Measure</string>
     <string name="menu_item_next">Next</string>
     <string name="menu_item_report">Add</string>
-    <string name="title_activity_act_nest_without_turtle">Nest Without Turtle</string>
-    <string name="title_activity_act_show_data">Reports</string>
+    <string name="title_activity_act_nest_without_turtle">Nest</string>
+    <string name="title_activity_act_show_data">Records</string>
     <string name="title_activity_act_help">Help</string>
     <string name="title_erro">ERRO</string>
-    <string name="title_msgErro">Mensagem de erro</string>
+    <string name="title_msgErro">Error</string>
+    <string name="title_home">Home</string>
+    <string name="title_sendData">Send</string>
+    <string name="title_activity_act_hatchling_2">Hatchling</string>
+    <string name="title_activity_act_nest_localization2">"Nest Localization "</string>
+    <string name="observationDateField">Observation date</string>
+    <string name="camposInvalidos">Fill the blank fields!</string>
+    <string name="title_aviso">Warning</string>
+    <string name="title_activity_act_listing_records">List of Records</string>
+    <string name="title_action_remove">Remove</string>
+    <string name="title_action_edit">Edit</string>
 </resources>

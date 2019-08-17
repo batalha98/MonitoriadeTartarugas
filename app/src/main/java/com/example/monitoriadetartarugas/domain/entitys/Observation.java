@@ -1,6 +1,7 @@
 package com.example.monitoriadetartarugas.domain.entitys;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 
 public class Observation implements Serializable {
@@ -11,7 +12,7 @@ public class Observation implements Serializable {
     private Beach beach;
     private Date dataa;
     private Float beach_height;
-    private Date beach_time;
+    private Time beach_time;
 
     public Turtle getIdturtle() {
         return idturtle;
@@ -73,7 +74,7 @@ public class Observation implements Serializable {
         return beach_time;
     }
 
-    public void setBeach_time(Date beach_time) {
+    public void setBeach_time(Time beach_time) {
         this.beach_time = beach_time;
     }
 

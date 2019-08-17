@@ -5,34 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActNest"
-    tools:showIn="@layout/act_nest">
+    tools:context=".ActNestLocalization2"
+    tools:showIn="@layout/act_nest_localization_2">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/title_depth"
+                android:id="@+id/title_beachSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_DepthField"
+                android:text="@string/title_beachForm"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_beach2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:id="@+id/title_HabitatField2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_HabitatField"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_habitat2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:id="@+id/title_dateField2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_dateField"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_depthField"
+                android:id="@+id/dateLocalization2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/title_gpsSouth2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_gpsSouth"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_GPSDistance2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -41,17 +90,17 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/title_nrEggs"
+                android:id="@+id/title_gpsEast2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_nrEggs"
+                android:text="@string/title_gpsEast"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_nrEggsField"
+                android:id="@+id/txt_GPSHeight2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -60,63 +109,45 @@
                 android:inputType="number" />
 
             <TextView
-                android:id="@+id/title_distancField"
+                android:id="@+id/title_observationDate2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_DistanceField"
+                android:text="@string/observationDateField"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_nrDistance"
+                android:id="@+id/txt_observationDate2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="date" />
 
             <TextView
-                android:id="@+id/title_widthField"
+                android:id="@+id/title_observation2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_widthField"
+                android:text="@string/title_observation"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_nrWidth"
+                android:id="@+id/txt_observationField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:id="@+id/title_descriptionField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_descriptionField"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txt_descriptionField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
+
         </LinearLayout>
     </ScrollView>
 

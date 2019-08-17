@@ -45,7 +45,7 @@ public class ObservationAndObserver implements Serializable {
     public String toString() {
         return "ObservationAndObserver{" +
                 "idnest=" + idnest.getIdnest() +
-                ", localization_date=" + localization_date.getLocalization_date().getDataa() +
+                ", localization_date=" + localization_date.getLocalization_date() +
                 ", observation_date=" + observation_date.getObservation_date() +
                 ", idobserver=" + idobserver.getObserver() +
                 '}';

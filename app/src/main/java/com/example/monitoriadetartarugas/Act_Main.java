@@ -2,15 +2,12 @@ package com.example.monitoriadetartarugas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 public class Act_Main extends AppCompatActivity {
-
-    private ConstraintLayout layoutContentMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,33 +40,20 @@ public class Act_Main extends AppCompatActivity {
             }
         });
 
-        Button button_updateCodifier = findViewById(R.id.button_updateCodifier);
-//        button_updateCodifier.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateCodifier(v);
-//            }
-//        });
-        layoutContentMain = (ConstraintLayout) findViewById(R.id.layoutContentMain);
     }
 
     private void registerTurtleAndNest(View view){
-        Intent it = new Intent(Act_Main.this, ActTurtle.class);
+        Intent it = new Intent(this, ActTurtle.class);
         startActivityForResult(it, 0);
     }
 
     private void registerNestWithoutTurtle(View view){
-        Intent it = new Intent(Act_Main.this, ActNestWithoutTurtle.class);
+        Intent it = new Intent(this, ActNest2.class);
         startActivityForResult(it, 0);
     }
 
     private void showReports(View view){
-        Intent it = new Intent(Act_Main.this, ActShowReports.class);
+        Intent it = new Intent(this, ActRecordsMenu.class);
         startActivityForResult(it, 0);
     }
-
-//    private void updateCodifier(View view){
-//        Intent it = new Intent(Act_Main.this, ActUpdateCodifier.class);
-//        startActivityForResult(it, 0);
-//    }
 }

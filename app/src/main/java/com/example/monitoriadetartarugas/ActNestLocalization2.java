@@ -1,11 +1,11 @@
 package com.example.monitoriadetartarugas;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,45 +38,47 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ActNestLocalization extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Spinner spinner_habitatName;
-    private EditText txt_observationField;
-    private EditText dateLocalization;
-    private EditText txt_GPSDistance;
-    private EditText txt_GPSHeight;
-    private EditText txt_observationDate;
+public class ActNestLocalization2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private Spinner spinner_beach2;
+    private Spinner spinner_habitat2;
+    private EditText dateLocalization2;
+    private EditText txt_GPSDistance2;
+    private EditText txt_GPSHeight2;
+    private EditText txt_observationField2;
+    private EditText txt_observationDate2;
 
     private DatePickerDialog picker;
 
-    private Habitat habitat;
     private String[] strings;
-    private SQLiteDatabase connection;
-    private DataOpenHelper dataOpenHelper;
-
-    private String dataFromActNest;
-    private NestController nestController;
+    private String receivedFromNest;
+    private Beach beach;
+    private Habitat habitat;
     private NestLocalization nestLocalization;
-    private LocalizationAndObservation localizationAndObservation;
 
-    private HabitatController habitatController;
+    private NestController nestController;
     private BeachController beachController;
+    private HabitatController habitatController;
     private NestLocalizationController nestLocalizationController;
+    private LocalizationAndObservation localizationAndObservation;
     private LocalizationAndObservationController localizationAndObservationController;
+
+    private DataOpenHelper dataOpenHelper;
+    private SQLiteDatabase connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_nest_localization);
+        setContentView(R.layout.act_nest_localization_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        spinner_habitatName = findViewById(R.id.spinner_habitatName);
-        txt_observationField = findViewById(R.id.txt_observationField);
-        dateLocalization = findViewById(R.id.dateLocalization);
-        dateLocalization.setInputType(InputType.TYPE_NULL);
-        dateLocalization.setOnClickListener(new View.OnClickListener() {
+        spinner_habitat2 = findViewById(R.id.spinner_habitat2);
+        spinner_beach2 = findViewById(R.id.spinner_beach2);
+        dateLocalization2 = findViewById(R.id.dateLocalization2);
+        dateLocalization2.setInputType(InputType.TYPE_NULL);
+        dateLocalization2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -84,10 +86,10 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
                 int month = calendar.get(calendar.MONTH);
                 int year = calendar.get(calendar.YEAR);
 
-                picker = new DatePickerDialog(ActNestLocalization.this, new DatePickerDialog.OnDateSetListener() {
+                picker = new DatePickerDialog(ActNestLocalization2.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        dateLocalization.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        dateLocalization2.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
                 }, year, month, day);
 
@@ -95,11 +97,12 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             }
         });
 
-        txt_GPSDistance = findViewById(R.id.txt_GPSDistance);
-        txt_GPSHeight = findViewById(R.id.txt_GPSHeight);
-        txt_observationDate = findViewById(R.id.txt_observationDate);
-        txt_observationDate.setInputType(InputType.TYPE_NULL);
-        txt_observationDate.setOnClickListener(new View.OnClickListener() {
+        txt_GPSDistance2 = findViewById(R.id.txt_GPSDistance2);
+        txt_GPSHeight2 = findViewById(R.id.txt_GPSHeight2);
+        txt_observationField2 = findViewById(R.id.txt_observationField2);
+        txt_observationDate2 = findViewById(R.id.txt_observationDate2);
+        txt_observationDate2.setInputType(InputType.TYPE_NULL);
+        txt_observationDate2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -107,10 +110,10 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
                 int month = calendar.get(calendar.MONTH);
                 int year = calendar.get(calendar.YEAR);
 
-                picker = new DatePickerDialog(ActNestLocalization.this, new DatePickerDialog.OnDateSetListener() {
+                picker = new DatePickerDialog(ActNestLocalization2.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        txt_observationDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        txt_observationDate2.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
                 }, year, month, day);
 
@@ -118,10 +121,30 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             }
         });
 
-        spinner_habitatName.setOnItemSelectedListener(this);
+        spinner_habitat2.setOnItemSelectedListener(this);
+        spinner_beach2.setOnItemSelectedListener(this);
 
         createConnection();
         getSpinnerValues();
+    }
+
+    public void getSpinnerValues(){
+        List<Beach> beachList = beachController.fetchAll();
+        List<Habitat> habitats = habitatController.fetchAll();
+
+        ArrayAdapter<Beach> beachArrayAdapter = new ArrayAdapter<>(this
+                , android.R.layout.simple_spinner_item
+                , beachList);
+
+        ArrayAdapter<Habitat> habitatArrayAdapter = new ArrayAdapter<>(this
+                , android.R.layout.simple_spinner_item
+                , habitats);
+
+        beachArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        habitatArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_beach2.setAdapter(beachArrayAdapter);
+        spinner_habitat2.setAdapter(habitatArrayAdapter);
     }
 
     public void createConnection(){
@@ -130,13 +153,12 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
 
             connection = dataOpenHelper.getWritableDatabase();
 
-            localizationAndObservationController = new LocalizationAndObservationController(connection);
-            nestLocalizationController = new NestLocalizationController(connection);
-            habitatController = new HabitatController(connection);
-            beachController = new BeachController(connection);
             nestController = new NestController(connection);
-
-        }catch(SQLException e){
+            beachController = new BeachController(connection);
+            habitatController = new HabitatController(connection);
+            nestLocalizationController = new NestLocalizationController(connection);
+            localizationAndObservationController = new LocalizationAndObservationController(connection);
+        }catch(Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -145,47 +167,30 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
         }
     }
 
-    public void getSpinnerValues(){
-        List<Habitat> habitats = new ArrayList<>();
-
-        habitats = habitatController.fetchAll();
-
-        ArrayAdapter<Habitat> habitatArrayAdapter = new ArrayAdapter<>(this
-                , android.R.layout.simple_spinner_item
-                , habitats);
-
-        habitatArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_habitatName.setAdapter(habitatArrayAdapter);
-    }
-
     public void confirm(){
         try {
-            strings = null;
             nestLocalization = new NestLocalization();
             localizationAndObservation = new LocalizationAndObservation();
             Bundle bundle = getIntent().getExtras();
-            Beach beach = new Beach();
-            Nest nest = new Nest();
 
-            String observations = txt_observationField.getText().toString();
-            String distance = txt_GPSDistance.getText().toString();
-            String height = txt_GPSHeight.getText().toString();
-            String date = dateLocalization.getText().toString();
-            String obsDate = txt_observationDate.getText().toString();
+            String observations = txt_observationField2.getText().toString();
+            String distance = txt_GPSDistance2.getText().toString();
+            String height = txt_GPSHeight2.getText().toString();
+            String date = dateLocalization2.getText().toString();
+            String dateObservation = txt_observationDate2.getText().toString();
+            beach = (Beach) spinner_beach2.getSelectedItem();
+            habitat = (Habitat) spinner_habitat2.getSelectedItem();
 
-            if(bundle != null){
-                dataFromActNest = bundle.getString("FromActNest");
+            if (bundle != null) {
+                receivedFromNest = bundle.getString("idnestAndSpecie");
 
-                strings = dataFromActNest.split("-");
+                strings = receivedFromNest.split("-");
 
-                beach = beachController.fetchOne(strings[0]);
-                nest = nestController.fetchOne(Integer.parseInt(strings[2]));
+                nestLocalization.setIdnest(nestController.fetchOne(Integer.parseInt(strings[0])));
             }
 
-            nestLocalization.setIdnest(nest);
             nestLocalization.setBeach(beach);
-            nestLocalization.setIdhabitat(habitatController.fetchOne(habitat.getIdhabitat()));
+            nestLocalization.setIdhabitat(habitat);
             nestLocalization.setObservations(observations);
             nestLocalization.setDistance(Float.valueOf(distance));
             nestLocalization.setHeight(Float.valueOf(height));
@@ -194,44 +199,43 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             nestLocalizationController.insert(nestLocalization);
 
             localizationAndObservation.setIdnest(
-                    nestLocalizationController.fetchOne(nest.getIdnest(), nestLocalization.getDataa()));
+                    nestLocalizationController.fetchOne(Integer.parseInt(strings[0]), nestLocalization.getDataa()));
             localizationAndObservation.setLocalization_date(nestLocalization);
-            localizationAndObservation.setObservation_date(new Date(obsDate));
+            localizationAndObservation.setObservation_date(new Date(dateObservation));
 
             localizationAndObservationController.insert(localizationAndObservation);
-        }catch (Exception e){
+        }catch(Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
             alertDialog.setNeutralButton("OK", null);
             alertDialog.show();
         }
-
     }
 
     public boolean validateFields(){
         boolean res = false;
 
-        String observations = txt_observationField.getText().toString();
-        String distance = txt_GPSDistance.getText().toString();
-        String height = txt_GPSHeight.getText().toString();
-        String date = dateLocalization.getText().toString();
-        String date2 = txt_observationDate.getText().toString();
+        String observations = txt_observationField2.getText().toString();
+        String distance = txt_GPSDistance2.getText().toString();
+        String height = txt_GPSHeight2.getText().toString();
+        String date = dateLocalization2.getText().toString();
+        String date2 = txt_observationDate2.getText().toString();
 
         if(res = isEmptyField(date)){
-            dateLocalization.requestFocus();
+            dateLocalization2.requestFocus();
         }else
             if(res = isEmptyField(height)){
-                txt_GPSHeight.requestFocus();
+                txt_GPSHeight2.requestFocus();
             }else
                 if(res = isEmptyField(distance)){
-                    txt_GPSDistance.requestFocus();
+                    txt_GPSDistance2.requestFocus();
                 }else
                     if(res = isEmptyField(observations)){
-                        txt_observationField.requestFocus();
+                        txt_observationField2.requestFocus();
                     }else
                         if(res = isEmptyField(date2)){
-                            txt_observationDate.requestFocus();
+                            txt_observationDate2.requestFocus();
                         }
 
         if(res){
@@ -269,15 +273,14 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             case android.R.id.home:
                 finish();
                 break;
-
             case R.id.action_next:
                 if(validateFields() == false){
                     confirm();
 
-                    Intent it = new Intent(ActNestLocalization.this, ActHatchling.class);
+                    Intent it = new Intent(this, ActHatchling_2.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("beachTurtleAndIdnest", dataFromActNest);
+                    bundle.putString("idnestAndSpecie2", receivedFromNest);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);
@@ -285,13 +288,12 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
                 break;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        habitat = (Habitat) parent.getSelectedItem();
+
     }
 
     @Override

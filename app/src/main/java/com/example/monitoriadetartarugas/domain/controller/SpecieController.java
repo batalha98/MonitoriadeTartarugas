@@ -46,6 +46,7 @@ public class SpecieController {
 
     public List<Specie> fetchAll(){
         List<Specie> specieList = new ArrayList<>();
+        Specie specie;
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idspecie, specie");
@@ -57,7 +58,7 @@ public class SpecieController {
             result.moveToFirst();
 
             do{
-                Specie specie = new Specie();
+                specie = new Specie();
 
                 specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
                 specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));

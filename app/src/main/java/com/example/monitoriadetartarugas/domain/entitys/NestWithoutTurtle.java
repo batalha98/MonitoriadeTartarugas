@@ -25,8 +25,8 @@ public class NestWithoutTurtle implements Serializable {
     @Override
     public String toString() {
         return "NestWithoutTurtle{" +
-                "idnest=" + idnest.getIdnest() +
-                ", idspecie=" + idspecie.getSpecie() +
+                "idnest=" + idnest +
+                ", idspecie=" + idspecie +
                 '}';
     }
 }

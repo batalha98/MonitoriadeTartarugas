@@ -17,7 +17,7 @@ public class TurtleActivitiesController {
     private ObservationController observationController;
 
     public TurtleActivitiesController(SQLiteDatabase connection){
-        observationController = new ObservationController(connection);
+        this.observationController = new ObservationController(connection);
         this.connection = connection;
     }
 

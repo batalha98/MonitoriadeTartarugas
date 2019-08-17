@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurtleController {
-
     private SpecieController specieController;
     private SQLiteDatabase connection;
 
     public TurtleController(SQLiteDatabase connection){
-        specieController = new SpecieController(connection);
+        this.specieController = new SpecieController(connection);
         this.connection = connection;
     }
 
@@ -40,14 +39,13 @@ public class TurtleController {
         contentValues.put("description", turtle.getDescription());
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(turtle.getIdspecie());
+        parameters[0] = String.valueOf(turtle.getIdturtle());
 
         connection.update("turtle", contentValues,"idturtle = ?", parameters);
     }
 
     public List<Turtle> fetchAll(){
         List<Turtle> turtleList = new ArrayList<>();
-        specieController = new SpecieController(connection);
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");

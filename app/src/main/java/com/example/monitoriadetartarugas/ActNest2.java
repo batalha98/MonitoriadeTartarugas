@@ -11,52 +11,82 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.NestController;
+import com.example.monitoriadetartarugas.domain.controller.NestWithoutTurtleController;
+import com.example.monitoriadetartarugas.domain.controller.SpecieController;
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
+import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
+import com.example.monitoriadetartarugas.domain.entitys.Specie;
 
-public class ActNest extends AppCompatActivity {
-    private EditText txt_depthField;
-    private EditText txt_nrEggsField;
-    private EditText txt_nrDistance;
-    private EditText txt_nrWidth;
-    private EditText txt_descriptionField;
+import java.util.List;
+
+public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private long idnest;
+    private Spinner spinner_specie2;
+    private EditText txt_depthField2;
+    private EditText txt_nrEggsField2;
+    private EditText txt_nrDistance2;
+    private EditText txt_nrWidth2;
+    private EditText txt_descriptionField2;
 
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
-    private long idnest;
-    private String receivedFromActObservation;
     private Nest nest;
+    private Specie specie;
     private NestController nestController;
+    private SpecieController specieController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_nest);
+        setContentView(R.layout.act_nest_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        txt_depthField = findViewById(R.id.txt_depthField);
-        txt_nrEggsField = findViewById(R.id.txt_nrEggsField);
-        txt_nrDistance = findViewById(R.id.txt_nrDistance);
-        txt_nrWidth = findViewById(R.id.txt_nrWidth);
-        txt_descriptionField = findViewById(R.id.txt_descriptionField);
+        spinner_specie2 = findViewById(R.id.spinner_specie2);
+        txt_depthField2 = findViewById(R.id.txt_depthField2);
+        txt_nrEggsField2 = findViewById(R.id.txt_nrEggsField2);
+        txt_nrDistance2 = findViewById(R.id.txt_nrDistance2);
+        txt_nrWidth2 = findViewById(R.id.txt_nrWidth2);
+        txt_descriptionField2 = findViewById(R.id.txt_descriptionField2);
 
-        createConnection();
+        spinner_specie2.setOnItemSelectedListener(this);
+
+        createconnection();
+        getSpinnerValues();
     }
 
-    public void createConnection(){
+    public void getSpinnerValues(){
+        List<Specie> specieList = specieController.fetchAll();
+        ArrayAdapter<Specie> specieArrayAdapter = new ArrayAdapter<>(this
+                , android.R.layout.simple_spinner_item
+                , specieList);
+
+        specieArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_specie2.setAdapter(specieArrayAdapter);
+    }
+
+    public void createconnection(){
         try {
             dataOpenHelper = new DataOpenHelper(this);
 
             connection = dataOpenHelper.getWritableDatabase();
 
+            specieController = new SpecieController(connection);
             nestController = new NestController(connection);
-        }catch(SQLException e){
+
+        }catch (SQLException e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -68,18 +98,12 @@ public class ActNest extends AppCompatActivity {
     public void confirm(){
         try {
             nest = new Nest();
-            receivedFromActObservation = "";
-            Bundle bundle = getIntent().getExtras();
-            String depth = txt_depthField.getText().toString();
-            String eggs_quantity = txt_nrEggsField.getText().toString();
-            String distance = txt_nrDistance.getText().toString();
-            String width = txt_nrWidth.getText().toString();
-            String description = txt_descriptionField.getText().toString();
 
-            if(bundle != null){
-                receivedFromActObservation = bundle.getString("beachAndTurtle");
-                receivedFromActObservation += "-";
-            }
+            String depth = txt_depthField2.getText().toString();
+            String eggs_quantity = txt_nrEggsField2.getText().toString();
+            String distance = txt_nrDistance2.getText().toString();
+            String width = txt_nrWidth2.getText().toString();
+            String description = txt_descriptionField2.getText().toString();
 
             nest.setDepth(Integer.parseInt(depth));
             nest.setDescription(description);
@@ -88,15 +112,7 @@ public class ActNest extends AppCompatActivity {
             nest.setWidth(Float.valueOf(width));
 
             idnest = nestController.insert(nest);
-
-            receivedFromActObservation += (int) idnest;
-//
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-//            alertDialog.setTitle("From observ");
-//            alertDialog.setMessage(receivedFromActObservation);
-//            alertDialog.setNeutralButton("OK", null);
-//            alertDialog.show();
-        }catch (Exception e){
+        }catch(Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -108,26 +124,26 @@ public class ActNest extends AppCompatActivity {
     public boolean validateFields(){
         boolean res = false;
 
-        String depth = txt_depthField.getText().toString();
-        String eggs_quantity = txt_nrEggsField.getText().toString();
-        String distance = txt_nrDistance.getText().toString();
-        String width = txt_nrWidth.getText().toString();
-        String description = txt_descriptionField.getText().toString();
+        String depth = txt_depthField2.getText().toString();
+        String eggs_quantity = txt_nrEggsField2.getText().toString();
+        String distance = txt_nrDistance2.getText().toString();
+        String width = txt_nrWidth2.getText().toString();
+        String description = txt_descriptionField2.getText().toString();
 
         if(res = isEmptyField(depth)){
-            txt_depthField.requestFocus();
+            txt_depthField2.requestFocus();
         }else
             if(res = isEmptyField(eggs_quantity)){
-                txt_nrEggsField.requestFocus();
+                txt_nrEggsField2.requestFocus();
             }else
                 if(res = isEmptyField(distance)){
-                    txt_nrDistance.requestFocus();
+                    txt_nrDistance2.requestFocus();
                 }else
                     if(res = isEmptyField(width)){
-                        txt_nrWidth.requestFocus();
+                        txt_nrWidth2.requestFocus();
                     }else
                         if(res = isEmptyField(description)){
-                            txt_descriptionField.requestFocus();
+                            txt_descriptionField2.requestFocus();
                         }
 
         if(res){
@@ -165,14 +181,14 @@ public class ActNest extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-
             case R.id.action_next:
                 if(validateFields() == false){
                     confirm();
-                    Intent it = new Intent(ActNest.this, ActNestLocalization.class);
+
+                    Intent it = new Intent(this, ActNestLocalization2.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("FromActNest", receivedFromActObservation);
+                    bundle.putString("idnestAndSpecie", idnest+"-"+specie.getIdspecie());
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);
@@ -180,7 +196,16 @@ public class ActNest extends AppCompatActivity {
                 break;
         }
 
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        specie = (Specie) parent.getSelectedItem();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

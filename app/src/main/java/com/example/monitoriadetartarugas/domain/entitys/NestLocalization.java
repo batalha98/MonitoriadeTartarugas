@@ -8,8 +8,8 @@ public class NestLocalization implements Serializable {
     private Date dataa;
     private Beach beach;
     private Habitat idhabitat;
-    private float distance;
-    private float height;
+    private Float distance;
+    private Float height;
     private String observations;
 
     public Nest getIdnest() {
@@ -44,19 +44,19 @@ public class NestLocalization implements Serializable {
         this.idhabitat = idhabitat;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 
-    public float getHeight() {
+    public Float getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(Float height) {
         this.height = height;
     }
 

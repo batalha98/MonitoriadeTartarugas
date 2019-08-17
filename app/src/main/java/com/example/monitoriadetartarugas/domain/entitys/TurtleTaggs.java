@@ -9,8 +9,8 @@ public class TurtleTaggs implements Serializable {
     private int leftring;
     private int rightring;
     private int internal_tag;
-    private double ccl_measure;
-    private double cwl_measure;
+    private Double ccl_measure;
+    private Double cwl_measure;
 
     public Turtle getIdturtle() {
         return idturtle;
@@ -52,19 +52,19 @@ public class TurtleTaggs implements Serializable {
         this.internal_tag = internal_tag;
     }
 
-    public double getCcl_measure() {
+    public Double getCcl_measure() {
         return ccl_measure;
     }
 
-    public void setCcl_measure(double ccl_measure) {
+    public void setCcl_measure(Double ccl_measure) {
         this.ccl_measure = ccl_measure;
     }
 
-    public double getCwl_measure() {
+    public Double getCwl_measure() {
         return cwl_measure;
     }
 
-    public void setCwl_measure(double cwl_measure) {
+    public void setCwl_measure(Double cwl_measure) {
         this.cwl_measure = cwl_measure;
     }
 

@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActNestLocalization"
-    tools:showIn="@layout/act_nest_localization">
+    tools:context=".ActHatchling_2"
+    tools:showIn="@layout/act_hatchling_2">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,118 +19,168 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/title_HabitatField"
+                android:id="@+id/title_dateOfBirthField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_HabitatField"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spinner_habitatName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:id="@+id/title_dateField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_dateField"
+                android:text="@string/title_dateOfBirth"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/dateLocalization"
+                android:id="@+id/dateOfBirthField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/title_gpsSouth"
+                android:id="@+id/title_hatched2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_gpsSouth"
+                android:text="@string/title_hatched"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_GPSDistance"
+                android:id="@+id/txt_nrHatched2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/title_gpsEast"
+                android:id="@+id/title_diedInNest2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_gpsEast"
+                android:text="@string/title_diedInNest"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_GPSHeight"
+                android:id="@+id/txt_nrDiedInNest2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/title_observationDate"
+                android:id="@+id/title_aliveInNest2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/observationDateField"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="@string/title_aliveInNest"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_observationDate"
+                android:id="@+id/txt_nrAliveInNest2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="date" />
+                android:inputType="number"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/title_observation"
+                android:id="@+id/title_nrUndeveloped2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/title_observation"
+                android:text="@string/title_nrUndeveloped"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_observationField"
+                android:id="@+id/txt_nrUndeveloped2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/title_nrUnhatched2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_unhatchedField"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_nrUnhatched2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/title_nrPredatedEggs2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_predatedEggs"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_nrPredatedEggs2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/title_description2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/title_description"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_HatchDescription2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -138,9 +188,8 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
-
+                android:inputType="textMultiLine"
+                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>

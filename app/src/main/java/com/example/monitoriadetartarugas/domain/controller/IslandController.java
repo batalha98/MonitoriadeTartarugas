@@ -79,7 +79,7 @@ public class IslandController {
         String[] parameters = new String[1];
         parameters[0] = island;
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();

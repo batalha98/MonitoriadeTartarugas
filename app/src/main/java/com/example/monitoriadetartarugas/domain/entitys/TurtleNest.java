@@ -25,8 +25,8 @@ public class TurtleNest implements Serializable {
     @Override
     public String toString() {
         return "TurtleNest{" +
-                "idnest=" + idnest.getIdnest() +
-                ", idturtle=" + idturtle.getIdturtle() +
+                "idnest=" + idnest +
+                ", idturtle=" + idturtle +
                 '}';
     }
 }

@@ -33,10 +33,7 @@ public class Turtle implements Serializable {
 
     @Override
     public String toString() {
-        return "Turtle{" +
-                "idturtle=" + idturtle +
-                ", idspecie=" + idspecie +
-                ", description='" + description + '\'' +
-                '}';
+        return  "   Idturtle: " + idturtle +"\n"+
+                "   Description: " + description;
     }
 }

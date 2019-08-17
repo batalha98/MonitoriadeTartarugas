@@ -6,8 +6,8 @@ public class Nest implements Serializable {
     private int idnest;
     private int depth;
     private int eggs_quantity;
-    private float distance;
-    private float width;
+    private Float distance;
+    private Float width;
     private String description;
 
     public int getIdnest() {
@@ -34,19 +34,19 @@ public class Nest implements Serializable {
         this.eggs_quantity = eggs_quantity;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 
-    public float getWidth() {
+    public Float getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(Float width) {
         this.width = width;
     }
 
@@ -60,13 +60,11 @@ public class Nest implements Serializable {
 
     @Override
     public String toString() {
-        return "Nest{" +
-                "idnest=" + idnest +
-                ", depth=" + depth +
-                ", eggs_quantity=" + eggs_quantity +
-                ", distance=" + distance +
-                ", width=" + width +
-                ", description='" + description + '\'' +
-                '}';
+        return  "Nest" +"\n"+
+                "   Depth: " + depth +"\n"+
+                "   Eggs_quantity: " + eggs_quantity +"\n"+
+                "   Distance: " + distance +"\n"+
+                "   Width: " + width +"\n"+
+                "   Description: " + description;
     }
 }

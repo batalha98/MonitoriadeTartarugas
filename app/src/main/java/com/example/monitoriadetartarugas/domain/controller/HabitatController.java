@@ -78,13 +78,13 @@ public class HabitatController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idhabitat,");
         sql.append("       habitat");
-        sql.append("  FROM habitat;");
+        sql.append("  FROM habitat");
         sql.append("  WHERE idhabitat = ?;");
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idhabitat);
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();

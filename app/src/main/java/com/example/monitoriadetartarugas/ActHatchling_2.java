@@ -2,7 +2,6 @@ package com.example.monitoriadetartarugas;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,48 +15,55 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.HatchlingController;
 import com.example.monitoriadetartarugas.domain.controller.NestController;
+import com.example.monitoriadetartarugas.domain.controller.NestWithoutTurtleController;
+import com.example.monitoriadetartarugas.domain.controller.SpecieController;
 import com.example.monitoriadetartarugas.domain.entitys.Hatchling;
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
+import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
+import com.example.monitoriadetartarugas.domain.entitys.Specie;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class ActHatchling extends AppCompatActivity {
-    private EditText dateOfBirthField;
-    private EditText txt_nrHatched;
-    private EditText txt_nrDiedInNest;
-    private EditText txt_nrAliveInNest;
-    private EditText txt_nrUndeveloped;
-    private EditText txt_nrUnhatched;
-    private EditText txt_nrPredatedEggs;
-    private EditText txt_HatchDescription;
+public class ActHatchling_2 extends AppCompatActivity {
+    private EditText dateOfBirthField2;
+    private EditText txt_nrHatched2;
+    private EditText txt_nrDiedInNest2;
+    private EditText txt_nrAliveInNest2;
+    private EditText txt_nrUndeveloped2;
+    private EditText txt_nrUnhatched2;
+    private EditText txt_nrPredatedEggs2;
+    private EditText txt_HatchDescription2;
 
     private DatePickerDialog picker;
-    private SQLiteDatabase connection;
-    private DataOpenHelper dataOpenHelper;
-
-    private String[] strings;
-    private String receivedFromNestLocal;
     private Hatchling hatchling;
+    private NestWithoutTurtle nestWithoutTurtle;
+
+    private NestWithoutTurtleController nestWithoutTurtleController;
+    private SpecieController specieController;
     private NestController nestController;
     private HatchlingController hatchlingController;
+
+    private DataOpenHelper dataOpenHelper;
+    private SQLiteDatabase connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_hatchling);
+        setContentView(R.layout.act_hatchling_2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dateOfBirthField = findViewById(R.id.dateOfBirthField);
-        dateOfBirthField.setInputType(InputType.TYPE_NULL);
-        dateOfBirthField.setOnClickListener(new View.OnClickListener() {
+        dateOfBirthField2 = findViewById(R.id.dateOfBirthField2);
+        dateOfBirthField2.setInputType(InputType.TYPE_NULL);
+        dateOfBirthField2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -65,10 +71,10 @@ public class ActHatchling extends AppCompatActivity {
                 int month = calendar.get(calendar.MONTH);
                 int year = calendar.get(calendar.YEAR);
 
-                picker = new DatePickerDialog(ActHatchling.this, new DatePickerDialog.OnDateSetListener() {
+                picker = new DatePickerDialog(ActHatchling_2.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        dateOfBirthField.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        dateOfBirthField2.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
                 }, year, month, day);
 
@@ -76,27 +82,27 @@ public class ActHatchling extends AppCompatActivity {
             }
         });
 
-        txt_nrHatched = findViewById(R.id.txt_nrHatched);
-        txt_nrDiedInNest = findViewById(R.id.txt_nrDiedInNest);
-        txt_nrAliveInNest = findViewById(R.id.txt_nrAliveInNest);
-        txt_nrUndeveloped = findViewById(R.id.txt_nrUndeveloped);
-        txt_nrUnhatched = findViewById(R.id.txt_nrUnhatched);
-        txt_nrPredatedEggs = findViewById(R.id.txt_nrPredatedEggs);
-        txt_HatchDescription = findViewById(R.id.txt_HatchDescription);
+        txt_nrHatched2 = findViewById(R.id.txt_nrHatched2);
+        txt_nrDiedInNest2 = findViewById(R.id.txt_nrDiedInNest2);
+        txt_nrAliveInNest2 = findViewById(R.id.txt_nrAliveInNest2);
+        txt_nrUndeveloped2 = findViewById(R.id.txt_nrUndeveloped2);
+        txt_nrUnhatched2 = findViewById(R.id.txt_nrUnhatched2);
+        txt_nrPredatedEggs2 = findViewById(R.id.txt_nrPredatedEggs2);
+        txt_HatchDescription2 = findViewById(R.id.txt_HatchDescription2);
 
         createConnection();
     }
 
     public void createConnection(){
         try {
-
             dataOpenHelper = new DataOpenHelper(this);
-
             connection = dataOpenHelper.getWritableDatabase();
 
             hatchlingController = new HatchlingController(connection);
             nestController = new NestController(connection);
-      }catch(SQLException e){
+            nestWithoutTurtleController = new NestWithoutTurtleController(connection);
+            specieController = new SpecieController(connection);
+        }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -107,24 +113,26 @@ public class ActHatchling extends AppCompatActivity {
 
     public void confirm(){
         try {
+            nestWithoutTurtle = new NestWithoutTurtle();
             hatchling = new Hatchling();
             Nest nest = new Nest();
+            Specie specie = new Specie();
             Bundle bundle = getIntent().getExtras();
-            String date = dateOfBirthField.getText().toString();
-            String nrHatched = txt_nrHatched.getText().toString();
-            String diedInNest = txt_nrDiedInNest.getText().toString();
-            String aliveInNest = txt_nrAliveInNest.getText().toString();
-            String undeveloped = txt_nrUndeveloped.getText().toString();
-            String unhatched = txt_nrUnhatched.getText().toString();
-            String predatedEggs = txt_nrPredatedEggs.getText().toString();
-            String description = txt_HatchDescription.getText().toString();
+            String date = dateOfBirthField2.getText().toString();
+            String nrHatched = txt_nrHatched2.getText().toString();
+            String diedInNest = txt_nrDiedInNest2.getText().toString();
+            String aliveInNest = txt_nrAliveInNest2.getText().toString();
+            String undeveloped = txt_nrUndeveloped2.getText().toString();
+            String unhatched = txt_nrUnhatched2.getText().toString();
+            String predatedEggs = txt_nrPredatedEggs2.getText().toString();
+            String description = txt_HatchDescription2.getText().toString();
 
-            if(bundle != null){
-                receivedFromNestLocal = bundle.getString("beachTurtleAndIdnest");
+            if (bundle != null) {
+                String receivedFromNestLocal = bundle.getString("idnestAndSpecie2");
 
-                strings = receivedFromNestLocal.split("-");
-
-                nest = nestController.fetchOne(Integer.parseInt(strings[2]));
+                String[] strings = receivedFromNestLocal.split("-");
+                nest = nestController.fetchOne(Integer.parseInt(strings[0]));
+                specie = specieController.fetchOne(Integer.parseInt(strings[1]));
             }
 
             hatchling.setIdnest(nest);
@@ -137,7 +145,14 @@ public class ActHatchling extends AppCompatActivity {
             hatchling.setUnhatched(Integer.parseInt(unhatched));
             hatchling.setDescription(description);
 
+            nestWithoutTurtle.setIdnest(nest);
+            nestWithoutTurtle.setIdspecie(specie);
+
             hatchlingController.insert(hatchling);
+
+            nestWithoutTurtleController.insert(nestWithoutTurtle);
+//            inserir um observador (utilizador logado)
+
         }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -150,38 +165,38 @@ public class ActHatchling extends AppCompatActivity {
     public boolean validateFields(){
         boolean res = false;
 
-        String date = dateOfBirthField.getText().toString();
-        String nrHatched = txt_nrHatched.getText().toString();
-        String diedInNest = txt_nrDiedInNest.getText().toString();
-        String aliveInNest = txt_nrAliveInNest.getText().toString();
-        String undeveloped = txt_nrUndeveloped.getText().toString();
-        String unhatched = txt_nrUnhatched.getText().toString();
-        String predatedEggs = txt_nrPredatedEggs.getText().toString();
-        String description = txt_HatchDescription.getText().toString();
+        String date = dateOfBirthField2.getText().toString();
+        String nrHatched = txt_nrHatched2.getText().toString();
+        String diedInNest = txt_nrDiedInNest2.getText().toString();
+        String aliveInNest = txt_nrAliveInNest2.getText().toString();
+        String undeveloped = txt_nrUndeveloped2.getText().toString();
+        String unhatched = txt_nrUnhatched2.getText().toString();
+        String predatedEggs = txt_nrPredatedEggs2.getText().toString();
+        String description = txt_HatchDescription2.getText().toString();
 
         if(res = isEmptyField(date)){
-            dateOfBirthField.requestFocus();
+            dateOfBirthField2.requestFocus();
         }else
             if(res = isEmptyField(nrHatched)){
-                txt_nrHatched.requestFocus();
+                txt_nrHatched2.requestFocus();
             }else
                 if(res = isEmptyField(diedInNest)){
-                    txt_nrDiedInNest.requestFocus();
+                    txt_nrDiedInNest2.requestFocus();
                 }else
                     if(res = isEmptyField(aliveInNest)){
-                        txt_nrAliveInNest.requestFocus();
+                        txt_nrAliveInNest2.requestFocus();
                     }else
                         if(res = isEmptyField(undeveloped)){
-                            txt_nrUndeveloped.requestFocus();
+                            txt_nrUndeveloped2.requestFocus();
                         }else
                             if(res = isEmptyField(unhatched)){
-                                txt_nrUnhatched.requestFocus();
+                                txt_nrUnhatched2.requestFocus();
                             }else
                                 if(res = isEmptyField(predatedEggs)){
-                                    txt_nrPredatedEggs.requestFocus();
+                                    txt_nrPredatedEggs2.requestFocus();
                                 }else
                                     if (res = isEmptyField(description)){
-                                        txt_HatchDescription.requestFocus();
+                                        txt_HatchDescription2.requestFocus();
                                     }
 
         if(res){
@@ -206,7 +221,7 @@ public class ActHatchling extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.menu_next, menu);
+        inflater.inflate(R.menu.menu_save_information, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -219,22 +234,21 @@ public class ActHatchling extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-
-            case R.id.action_next:
-                if(validateFields() == false){
+            case R.id.action_report:
+                if(validateFields() == false) {
                     confirm();
 
-                    Intent it = new Intent(this, ActTaggs.class);
+                    Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
+                    Intent it = new Intent(this, ActListingRecords.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("beachTurtleAndNest", receivedFromNestLocal);
+                    bundle.putString("idBtn","nestWithoutTurtle");
                     it.putExtras(bundle);
 
-                    startActivityForResult(it, 0);
+                    startActivityForResult(it,  0);
                 }
                 break;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

@@ -36,8 +36,8 @@ public class LocalizationAndObservation implements Serializable {
     public String toString() {
         return "LocalizationAndObservation{" +
                 "idnest=" + idnest.getIdnest() +
-                ", localization_date=" + localization_date.getDataa() +
-                ", observation_date=" + observation_date +
+                ", localization_date=" + localization_date.toString() +
+                ", observation_date=" + observation_date.toString() +
                 '}';
     }
 }

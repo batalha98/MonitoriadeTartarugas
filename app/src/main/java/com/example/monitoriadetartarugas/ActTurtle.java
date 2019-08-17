@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,11 +27,12 @@ import java.util.List;
 
 public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private long idturtle;
+    private Specie specie;
+    private Turtle turtle;
     private Spinner spinner_specie;
     private EditText txt_description;
     private TurtleController turtleController;
     private SpecieController specieController;
-    private List<Specie> speciesList;
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
@@ -52,7 +54,7 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     private void getSpinnerValues(){
-        speciesList = specieController.fetchAll();
+        List<Specie> speciesList = specieController.fetchAll();
 
         ArrayAdapter<Specie> specieAdapter = new ArrayAdapter<Specie>(this
                 , android.R.layout.simple_spinner_item
@@ -64,23 +66,21 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     private void confirm(){
-        try {
-            Turtle turtle = new Turtle();
-            Specie specie = (Specie) spinner_specie.getSelectedItem();
+            try {
+                turtle = new Turtle();
+                String description = txt_description.getText().toString();
 
-            String description = txt_description.getText().toString();
+                turtle.setIdspecie(specieController.fetchOne(specie.getIdspecie()));
+                turtle.setDescription(description);
 
-            turtle.setIdspecie(specieController.fetchOne(specie.getIdspecie()));
-            turtle.setDescription(description);
-
-            idturtle = turtleController.insert(turtle);
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+                idturtle = turtleController.insert(turtle);
+            }catch (Exception e){
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(R.string.title_msgErro);
+                alertDialog.setMessage(e.getMessage());
+                alertDialog.setNeutralButton("OK", null);
+                alertDialog.show();
+            }
     }
 
     public void createConnection(){
@@ -101,9 +101,36 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
         }
     }
 
+    private boolean validateFields(){
+        boolean res = false;
+
+        String description = txt_description.getText().toString();
+
+        if(res = isEmptyField(description)){
+            txt_description.requestFocus();
+        }
+
+        if(res){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            alertDialog.setTitle(R.string.title_aviso);
+            alertDialog.setMessage(R.string.camposInvalidos);
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.show();
+        }
+
+        return res;
+    }
+
+    private boolean isEmptyField(String value){
+        boolean result = (TextUtils.isEmpty(value) || value.trim().isEmpty());
+
+        return result;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        specie = (Specie) parent.getSelectedItem();
     }
 
     @Override
@@ -113,7 +140,7 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.menu_register_turtle_and_nest, menu);
+        inflater.inflate(R.menu.menu_next, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -128,14 +155,16 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
                 break;
 
             case R.id.action_next:
-                confirm();
-                Intent it = new Intent(this, ActObservation.class);
+                if(validateFields() == false) {
+                    confirm();
+                    Intent it = new Intent(this, ActObservation.class);
 
-                Bundle parameters = new Bundle();
-                parameters.putSerializable("turtle", turtleController.fetchOne((int) idturtle));
-                it.putExtras(parameters);
+                    Bundle parameters = new Bundle();
+                    parameters.putSerializable("turtle", turtleController.fetchOne((int) idturtle));
+                    it.putExtras(parameters);
 
-                startActivityForResult(it, 0);
+                    startActivityForResult(it, 0);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
