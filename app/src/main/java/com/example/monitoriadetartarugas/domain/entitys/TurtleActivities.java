@@ -8,7 +8,6 @@ import java.util.Date;
 public class TurtleActivities implements Serializable {
     private Observation idturtle;
     private Observation beach;
-    private Observation dataa;
     private Activities idactivity;
 
     public Observation getIdturtle() {
@@ -27,14 +26,6 @@ public class TurtleActivities implements Serializable {
         this.beach = beach;
     }
 
-    public Observation getDataa() {
-        return dataa;
-    }
-
-    public void setDataa(Observation dataa) {
-        this.dataa = dataa;
-    }
-
     public Activities getIdactivity() {
         return idactivity;
     }
@@ -48,7 +39,6 @@ public class TurtleActivities implements Serializable {
         return "TurtleActivities{" +
                 "idturtle=" + idturtle.getIdturtle() +
                 ", beach=" + beach.getBeach().getBeach() +
-                ", dataa=" + dataa.getDataa() +
                 ", idactivity=" + idactivity.getActivity() +
                 '}';
     }

@@ -31,40 +31,40 @@ public class NestLocalizationController {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("idnest", nestlocalization.getIdnest().getIdnest());
-        contentValues.put("dataa", nestlocalization.getDataa().toString());
+        contentValues.put("nest_marking_date", nestlocalization.getNest_marking_date().toString());
         contentValues.put("beach", nestlocalization.getBeach().getBeach());
+        contentValues.put("gps_east", nestlocalization.getGpsEast());
+        contentValues.put("gps_south", nestlocalization.getGpsSouth());
         contentValues.put("idhabitat", nestlocalization.getIdhabitat().getIdhabitat());
-        contentValues.put("distance", nestlocalization.getDistance());
-        contentValues.put("height", nestlocalization.getHeight());
-        contentValues.put("observations", nestlocalization.getObservations());
+        contentValues.put("notes", nestlocalization.getNotes());
 
         connection.insertOrThrow("nestlocalization",null, contentValues);
     }
 
-    public void remove(int idnest, Date dataa){
+    public void remove(int idnest, Date nest_marking_date){
         parameters = new String[2];
 
         parameters[0] = String.valueOf(idnest);
-        parameters[1] = dataa.toString();
+        parameters[1] = nest_marking_date.toString();
 
-        connection.delete("nestlocalization","idnest = ? and dataa = ?",parameters);
+        connection.delete("nestlocalization","idnest = ? and nest_marking_date = ?",parameters);
     }
 
     public void edit(NestLocalization nestlocalization){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("dataa", nestlocalization.getDataa().toString());
+        contentValues.put("nest_marking_date", nestlocalization.getNest_marking_date().toString());
         contentValues.put("beach", nestlocalization.getBeach().getBeach());
+        contentValues.put("gps_east", nestlocalization.getGpsEast());
+        contentValues.put("gps_south", nestlocalization.getGpsSouth());
         contentValues.put("idhabitat", nestlocalization.getIdhabitat().getIdhabitat());
-        contentValues.put("distance", nestlocalization.getDistance());
-        contentValues.put("height", nestlocalization.getHeight());
-        contentValues.put("observations", nestlocalization.getObservations());
+        contentValues.put("notes", nestlocalization.getNotes());
 
         parameters = new String[2];
         parameters[0] = String.valueOf(nestlocalization.getIdnest());
-        parameters[1] = nestlocalization.getDataa().toString();
+        parameters[1] = nestlocalization.getNest_marking_date().toString();
 
-        connection.update("nestlocalization", contentValues,"idnest = ? and dataa = ?", parameters);
+        connection.update("nestlocalization", contentValues,"idnest = ? and nest_marking_date = ?", parameters);
     }
 
     public List<NestLocalization> fetchAll(){
@@ -72,12 +72,12 @@ public class NestLocalizationController {
         sql = new StringBuilder();
 
         sql.append("SELECT idnest,");
-        sql.append("       dataa,");
+        sql.append("       nest_marking_date,");
         sql.append("       beach,");
+        sql.append("       gps_east,");
+        sql.append("       gps_south,");
         sql.append("       idhabitat,");
-        sql.append("       distance,");
-        sql.append("       height,");
-        sql.append("       observations");
+        sql.append("       notes");
         sql.append("  FROM nestlocalization;");
 
         Cursor result = connection.rawQuery(sql.toString(), null);
@@ -94,14 +94,14 @@ public class NestLocalizationController {
                         result.getInt(result.getColumnIndexOrThrow("idhabitat"))));
                 nestLocalization.setBeach(beachController.fetchOne(
                         result.getString(result.getColumnIndexOrThrow("beach"))));
-                nestLocalization.setDataa(new Date(
-                        result.getString(result.getColumnIndexOrThrow("dataa"))));
-                nestLocalization.setDistance(
-                        result.getFloat(result.getColumnIndexOrThrow("distance")));
-                nestLocalization.setHeight(
-                        result.getFloat(result.getColumnIndexOrThrow("height")));
-                nestLocalization.setObservations(
-                        result.getString(result.getColumnIndexOrThrow("observations")));
+                nestLocalization.setGpsEast(
+                        result.getFloat(result.getColumnIndexOrThrow("gps_east")));
+                nestLocalization.setGpsSouth(
+                        result.getFloat(result.getColumnIndexOrThrow("gps_south")));
+                nestLocalization.setNest_marking_date(new Date(
+                        result.getString(result.getColumnIndexOrThrow("nest_marking_date"))));
+                nestLocalization.setNotes(
+                        result.getString(result.getColumnIndexOrThrow("notes")));
 
                 nestLocalizationList.add(nestLocalization);
             }while(result.moveToNext());
@@ -110,23 +110,23 @@ public class NestLocalizationController {
         return nestLocalizationList;
     }
 
-    public NestLocalization fetchOne(int idnest, Date dataa){
+    public NestLocalization fetchOne(int idnest, Date nest_marking_date){
         nestLocalization = new NestLocalization();
         sql = new StringBuilder();
 
         sql.append("SELECT idnest,");
-        sql.append("       dataa,");
+        sql.append("       nest_marking_date,");
         sql.append("       beach,");
+        sql.append("       gps_east,");
+        sql.append("       gps_south,");
         sql.append("       idhabitat,");
-        sql.append("       distance,");
-        sql.append("       height,");
-        sql.append("       observations");
+        sql.append("       notes");
         sql.append("  FROM nestlocalization");
-        sql.append("  WHERE idnest = ? and dataa = ?;");
+        sql.append("  WHERE idnest = ? and nest_marking_date = ?;");
 
         parameters = new String[2];
         parameters[0] = String.valueOf(idnest);
-        parameters[1] = dataa.toString();
+        parameters[1] = nest_marking_date.toString();
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 
@@ -139,14 +139,14 @@ public class NestLocalizationController {
                     result.getInt(result.getColumnIndexOrThrow("idhabitat"))));
             nestLocalization.setBeach(beachController.fetchOne(
                     result.getString(result.getColumnIndexOrThrow("beach"))));
-            nestLocalization.setDataa(new Date(
-                    result.getString(result.getColumnIndexOrThrow("dataa"))));
-            nestLocalization.setDistance(
-                    result.getFloat(result.getColumnIndexOrThrow("distance")));
-            nestLocalization.setHeight(
-                    result.getFloat(result.getColumnIndexOrThrow("height")));
-            nestLocalization.setObservations(
-                    result.getString(result.getColumnIndexOrThrow("observations")));
+            nestLocalization.setGpsEast(
+                    result.getFloat(result.getColumnIndexOrThrow("gps_east")));
+            nestLocalization.setGpsSouth(
+                    result.getFloat(result.getColumnIndexOrThrow("gps_south")));
+            nestLocalization.setNest_marking_date(new Date(
+                    result.getString(result.getColumnIndexOrThrow("nest_marking_date"))));
+            nestLocalization.setNotes(
+                    result.getString(result.getColumnIndexOrThrow("notes")));
 
             return nestLocalization;
         }

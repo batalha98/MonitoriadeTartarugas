@@ -1,6 +1,5 @@
 package com.example.monitoriadetartarugas;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.SQLException;
@@ -42,9 +41,8 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
     private Spinner spinner_habitatName;
     private EditText txt_observationField;
     private EditText dateLocalization;
-    private EditText txt_GPSDistance;
-    private EditText txt_GPSHeight;
-    private EditText txt_observationDate;
+    private EditText txt_gpsEast;
+    private EditText txt_gpsSouth;
 
     private DatePickerDialog picker;
 
@@ -53,7 +51,7 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
-    private String dataFromActNest;
+    private String toActObservation;
     private NestController nestController;
     private NestLocalization nestLocalization;
     private LocalizationAndObservation localizationAndObservation;
@@ -95,47 +93,22 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             }
         });
 
-        txt_GPSDistance = findViewById(R.id.txt_GPSDistance);
-        txt_GPSHeight = findViewById(R.id.txt_GPSHeight);
-        txt_observationDate = findViewById(R.id.txt_observationDate);
-        txt_observationDate.setInputType(InputType.TYPE_NULL);
-        txt_observationDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(calendar.DAY_OF_MONTH);
-                int month = calendar.get(calendar.MONTH);
-                int year = calendar.get(calendar.YEAR);
-
-                picker = new DatePickerDialog(ActNestLocalization.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        txt_observationDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                    }
-                }, year, month, day);
-
-                picker.show();
-            }
-        });
+        txt_gpsEast = findViewById(R.id.txt_gpsSouth);
+        txt_gpsSouth = findViewById(R.id.txt_gpsEast);
 
         spinner_habitatName.setOnItemSelectedListener(this);
 
-        createConnection();
+        dataOpenHelper = new DataOpenHelper(this);
+
         getSpinnerValues();
     }
 
-    public void createConnection(){
+    public void getSpinnerValues(){
         try {
-            dataOpenHelper = new DataOpenHelper(this);
-
-            connection = dataOpenHelper.getWritableDatabase();
-
-            localizationAndObservationController = new LocalizationAndObservationController(connection);
-            nestLocalizationController = new NestLocalizationController(connection);
+            connection = dataOpenHelper.getReadableDatabase();
             habitatController = new HabitatController(connection);
             beachController = new BeachController(connection);
             nestController = new NestController(connection);
-
         }catch(SQLException e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -143,9 +116,7 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             alertDialog.setNeutralButton("OK", null);
             alertDialog.show();
         }
-    }
 
-    public void getSpinnerValues(){
         List<Habitat> habitats = new ArrayList<>();
 
         habitats = habitatController.fetchAll();
@@ -161,44 +132,26 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
 
     public void confirm(){
         try {
+            connection = dataOpenHelper.getWritableDatabase();
+            localizationAndObservationController = new LocalizationAndObservationController(connection);
+            nestLocalizationController = new NestLocalizationController(connection);
+
             strings = null;
             nestLocalization = new NestLocalization();
-            localizationAndObservation = new LocalizationAndObservation();
-            Bundle bundle = getIntent().getExtras();
-            Beach beach = new Beach();
-            Nest nest = new Nest();
+//            Beach beach = new Beach();
+//            Nest nest = new Nest();
 
             String observations = txt_observationField.getText().toString();
-            String distance = txt_GPSDistance.getText().toString();
-            String height = txt_GPSHeight.getText().toString();
             String date = dateLocalization.getText().toString();
-            String obsDate = txt_observationDate.getText().toString();
+            Float gpsEast = Float.valueOf(txt_gpsEast.getText().toString());
+            Float gpsSouth = Float.valueOf(txt_gpsSouth.getText().toString());
+            Date date1 = new Date(date);
 
-            if(bundle != null){
-                dataFromActNest = bundle.getString("FromActNest");
+            toActObservation = gpsEast+"-"+
+                    gpsSouth+"-"+habitat.getIdhabitat()+"-"+
+                    observations+"-"+date1;
 
-                strings = dataFromActNest.split("-");
-
-                beach = beachController.fetchOne(strings[0]);
-                nest = nestController.fetchOne(Integer.parseInt(strings[2]));
-            }
-
-            nestLocalization.setIdnest(nest);
-            nestLocalization.setBeach(beach);
-            nestLocalization.setIdhabitat(habitatController.fetchOne(habitat.getIdhabitat()));
-            nestLocalization.setObservations(observations);
-            nestLocalization.setDistance(Float.valueOf(distance));
-            nestLocalization.setHeight(Float.valueOf(height));
-            nestLocalization.setDataa(new Date(date));
-
-            nestLocalizationController.insert(nestLocalization);
-
-            localizationAndObservation.setIdnest(
-                    nestLocalizationController.fetchOne(nest.getIdnest(), nestLocalization.getDataa()));
-            localizationAndObservation.setLocalization_date(nestLocalization);
-            localizationAndObservation.setObservation_date(new Date(obsDate));
-
-            localizationAndObservationController.insert(localizationAndObservation);
+            //nestLocalizationController.insert(nestLocalization);
         }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -206,34 +159,24 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
             alertDialog.setNeutralButton("OK", null);
             alertDialog.show();
         }
-
     }
 
     public boolean validateFields(){
         boolean res = false;
 
-        String observations = txt_observationField.getText().toString();
-        String distance = txt_GPSDistance.getText().toString();
-        String height = txt_GPSHeight.getText().toString();
+        String distance = txt_gpsEast.getText().toString();
+        String height = txt_gpsSouth.getText().toString();
         String date = dateLocalization.getText().toString();
-        String date2 = txt_observationDate.getText().toString();
 
         if(res = isEmptyField(date)){
             dateLocalization.requestFocus();
         }else
             if(res = isEmptyField(height)){
-                txt_GPSHeight.requestFocus();
+                txt_gpsSouth.requestFocus();
             }else
                 if(res = isEmptyField(distance)){
-                    txt_GPSDistance.requestFocus();
-                }else
-                    if(res = isEmptyField(observations)){
-                        txt_observationField.requestFocus();
-                    }else
-                        if(res = isEmptyField(date2)){
-                            txt_observationDate.requestFocus();
-                        }
-
+                    txt_gpsEast.requestFocus();
+                }
         if(res){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
@@ -274,17 +217,16 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
                 if(validateFields() == false){
                     confirm();
 
-                    Intent it = new Intent(ActNestLocalization.this, ActHatchling.class);
+                    Intent it = new Intent(this, ActObservation.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("beachTurtleAndIdnest", dataFromActNest);
+                    bundle.putString("nestlocalizationData", toActObservation);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);
                 }
                 break;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

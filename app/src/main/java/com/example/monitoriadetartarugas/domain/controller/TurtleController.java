@@ -20,7 +20,7 @@ public class TurtleController {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("idspecie", turtle.getIdspecie().getIdspecie());
-        contentValues.put("description", turtle.getDescription());
+        contentValues.put("notes", turtle.getNotes());
 
         return connection.insertOrThrow("turtle",null, contentValues);
     }
@@ -36,7 +36,7 @@ public class TurtleController {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("idspecie", turtle.getIdspecie().getIdspecie());
-        contentValues.put("description", turtle.getDescription());
+        contentValues.put("notes", turtle.getNotes());
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(turtle.getIdturtle());
@@ -50,7 +50,7 @@ public class TurtleController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       idspecie,");
-        sql.append("       description");
+        sql.append("       notes");
         sql.append("  FROM turtle;");
 
         Cursor cursor = connection.rawQuery(sql.toString(), null);
@@ -63,7 +63,7 @@ public class TurtleController {
 
                 turtle.setIdturtle(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
                 turtle.setIdspecie(specieController.fetchOne(cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"))));
-                turtle.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
+                turtle.setNotes(cursor.getString(cursor.getColumnIndexOrThrow("notes")));
 
                 turtleList.add(turtle);
             }while(cursor.moveToNext());
@@ -78,7 +78,7 @@ public class TurtleController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       idspecie,");
-        sql.append("       description");
+        sql.append("       notes");
         sql.append("  FROM turtle");
         sql.append("  WHERE idturtle = ?;");
 
@@ -92,7 +92,7 @@ public class TurtleController {
 
             turtle.setIdturtle(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
             turtle.setIdspecie(specieController.fetchOne(cursor.getInt(cursor.getColumnIndexOrThrow("idspecie"))));
-            turtle.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
+            turtle.setNotes(cursor.getString(cursor.getColumnIndexOrThrow("notes")));
 
             return turtle;
         }

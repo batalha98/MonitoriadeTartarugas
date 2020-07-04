@@ -102,32 +102,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_BeachHeight"
+                android:id="@+id/txt_DuneHeight"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/title_TimeField"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txt_beachTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="date" />
 
             <TextView
                 android:id="@+id/title_activityField"

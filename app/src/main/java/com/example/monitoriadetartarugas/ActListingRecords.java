@@ -74,7 +74,7 @@ public class ActListingRecords extends AppCompatActivity {
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), ActTurtle.class);
+                        Intent intent = new Intent(v.getContext(), ActNestLocalization.class);
                         startActivity(intent);
                     }
                 });
@@ -82,7 +82,7 @@ public class ActListingRecords extends AppCompatActivity {
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), ActNest2.class);
+                        Intent intent = new Intent(v.getContext(), ActNestLocalization2.class);
                         startActivity(intent);
                     }
                 });
@@ -159,9 +159,6 @@ public class ActListingRecords extends AppCompatActivity {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.context_menu, menu);
-
             return true;
         }
 
@@ -250,7 +247,6 @@ public class ActListingRecords extends AppCompatActivity {
 
                 mode.setTitle(userSelection2.size() + " items selected...");
             }
-
         }
     };
 
@@ -260,19 +256,9 @@ public class ActListingRecords extends AppCompatActivity {
         Intent it;
 
         switch (id){
-//            case android.R.id.home:
-//                it = new Intent(this, ActRecordsMenu.class);
-//                startActivityForResult(it, 0);
-//                break;
-
             case R.id.action_home:
                 it = new Intent(this, Act_Main.class);
                 startActivityForResult(it, 0);
-                break;
-
-            case R.id.action_sendData:
-                //some operations to send data do central DB
-                Toast.makeText(this, "Data sent successfully!", Toast.LENGTH_LONG).show();
                 break;
         }
 

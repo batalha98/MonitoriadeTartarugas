@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class NestLocalization implements Serializable {
     private Nest idnest;
-    private Date dataa;
+    private Date nest_marking_date;
     private Beach beach;
     private Habitat idhabitat;
-    private Float distance;
-    private Float height;
-    private String observations;
+    private Float gpsEast;
+    private Float gpsSouth;
+    private String notes;
 
     public Nest getIdnest() {
         return idnest;
@@ -20,12 +20,12 @@ public class NestLocalization implements Serializable {
         this.idnest = idnest;
     }
 
-    public Date getDataa() {
-        return dataa;
+    public Date getNest_marking_date() {
+        return nest_marking_date;
     }
 
-    public void setDataa(Date dataa) {
-        this.dataa = dataa;
+    public void setNest_marking_date(Date nest_marking_date) {
+        this.nest_marking_date = nest_marking_date;
     }
 
     public Beach getBeach() {
@@ -44,40 +44,40 @@ public class NestLocalization implements Serializable {
         this.idhabitat = idhabitat;
     }
 
-    public Float getDistance() {
-        return distance;
+    public Float getGpsEast() {
+        return gpsEast;
     }
 
-    public void setDistance(Float distance) {
-        this.distance = distance;
+    public void setGpsEast(Float gpsEast) {
+        this.gpsEast = gpsEast;
     }
 
-    public Float getHeight() {
-        return height;
+    public Float getGpsSouth() {
+        return gpsSouth;
     }
 
-    public void setHeight(Float height) {
-        this.height = height;
+    public void setGpsSouth(Float gpsSouth) {
+        this.gpsSouth = gpsSouth;
     }
 
-    public String getObservations() {
-        return observations;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
     public String toString() {
         return "NestLocalization{" +
-                "idnest=" + idnest.getIdnest() +
-                ", dataa=" + dataa +
-                ", beach=" + beach.getBeach() +
-                ", idhabitat=" + idhabitat.getHabitat() +
-                ", distance=" + distance +
-                ", height=" + height +
-                ", observations='" + observations + '\'' +
+                "idnest=" + idnest +
+                ", nest_marking_date=" + nest_marking_date +
+                ", beach=" + beach +
+                ", idhabitat=" + idhabitat +
+                ", gpsEast=" + gpsEast +
+                ", gpsSouth=" + gpsSouth +
+                ", notes='" + notes + '\'' +
                 '}';
     }
 }

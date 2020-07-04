@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpecieController {
-
     private SQLiteDatabase connection;
+    private String[] parameters;
+    private StringBuilder sql;
 
     public SpecieController(SQLiteDatabase connection){
         this.connection = connection;
@@ -29,7 +30,7 @@ public class SpecieController {
     }
 
     public void remove(int idturtle){
-        String[] parameters = new String[1];
+        parameters = new String[1];
         parameters[0] = String.valueOf(idturtle);
 
         connection.delete("specie","idspecie = ?",parameters);
@@ -38,7 +39,7 @@ public class SpecieController {
     public void edit(Specie specie){
         ContentValues contentValues = new ContentValues();
 
-        String[] parameters = new String[1];
+        parameters = new String[1];
         parameters[0] = String.valueOf(specie.getIdspecie());
 
         connection.update("specie", contentValues,"idspecie = ?", parameters);
@@ -46,25 +47,29 @@ public class SpecieController {
 
     public List<Specie> fetchAll(){
         List<Specie> specieList = new ArrayList<>();
-        Specie specie;
 
-        StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idspecie, specie");
+        sql = new StringBuilder();
+        sql.append("SELECT idspecie,");
+        sql.append("       specie");
         sql.append("  FROM specie");
 
-        Cursor result = connection.rawQuery(sql.toString(), null);
+        try {
+            Cursor result = connection.rawQuery(sql.toString(), null);
 
-        if(result.getCount() > 0){
-            result.moveToFirst();
+            if(result.getCount() > 0){
+                result.moveToFirst();
 
-            do{
-                specie = new Specie();
+                do{
+                    Specie specie = new Specie();
 
-                specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
-                specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
+                    specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
+                    specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
 
-                specieList.add(specie);
-            }while(result.moveToNext());
+                    specieList.add(specie);
+                }while(result.moveToNext());
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
 
         return specieList;
@@ -73,12 +78,13 @@ public class SpecieController {
     public Specie fetchOne(int idspecie){
         Specie specie = new Specie();
 
-        StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idspecie, specie");
+        sql = new StringBuilder();
+        sql.append("SELECT idspecie,");
+        sql.append("       specie");
         sql.append("  FROM specie");
         sql.append("  WHERE idspecie = ?;");
 
-        String[] parameters = new String[1];
+        parameters = new String[1];
         parameters[0] = String.valueOf(idspecie);
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);

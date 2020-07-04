@@ -36,8 +36,7 @@ public class ObservationController {
         contentValues.put("idturtle", observation.getIdturtle().getIdturtle());
         contentValues.put("beach", observation.getBeach().getBeach());
         contentValues.put("dataa", observation.getDataa().toString());
-        contentValues.put("beach_time", observation.getBeach_time().toString());
-        contentValues.put("beach_height", observation.getBeach_height());
+        contentValues.put("dune_height", observation.getDune_height());
         contentValues.put("wc", observation.getWc().getIdwc());
         contentValues.put("wd", observation.getWd().getIdwd());
 
@@ -60,8 +59,7 @@ public class ObservationController {
         contentValues.put("idturtle", observation.getIdturtle().getIdturtle());
         contentValues.put("beach", observation.getBeach().getBeach());
         contentValues.put("dataa", observation.getDataa().toString());
-        contentValues.put("beach_time", observation.getBeach_time().toString());
-        contentValues.put("beach_height", observation.getBeach_height());
+        contentValues.put("dune_height", observation.getDune_height());
         contentValues.put("wc", observation.getWc().getIdwc());
         contentValues.put("wd", observation.getWd().getIdwd());
 
@@ -84,12 +82,10 @@ public class ObservationController {
         sql.append("       wc,");
         sql.append("       wd,");
         sql.append("       idactivity,");
-        sql.append("       beach_height,");
-        sql.append("       beach_time");
+        sql.append("       dune_height");
         sql.append("  FROM observation;");
         try {
             Cursor result = connection.rawQuery(sql.toString(), null);
-            String[] strings;
 
             if(result.getCount() > 0){
                 result.moveToFirst();
@@ -100,11 +96,7 @@ public class ObservationController {
                     observation.setIdturtle(turtleController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idturtle"))));
                     observation.setIdactivity(activitiesController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idactivity"))));
                     observation.setBeach(beachController.fetchOne(result.getString(result.getColumnIndexOrThrow("beach"))));
-                    observation.setBeach_height(result.getFloat(result.getColumnIndexOrThrow("beach_height")));
-
-                    strings = result.getString(result.getColumnIndexOrThrow("beach_time")).split(":");
-                    observation.setBeach_time(new Time(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2])));
-
+                    observation.setDune_height(result.getFloat(result.getColumnIndexOrThrow("dune_height")));
                     observation.setWc(windCategoryController.fetchOne(result.getInt(result.getColumnIndexOrThrow("wc"))));
                     observation.setWd(windDirectionController.fetchOne(result.getInt(result.getColumnIndexOrThrow("wd"))));
                     observation.setDataa(new Date(result.getString(result.getColumnIndexOrThrow("dataa"))));
@@ -129,8 +121,7 @@ public class ObservationController {
         sql.append("       wc,");
         sql.append("       wd,");
         sql.append("       idactivity,");
-        sql.append("       beach_height,");
-        sql.append("       beach_time");
+        sql.append("       dune_height");
         sql.append("  FROM observation");
         sql.append("  WHERE idturtle = ? and beach = ? and dataa = ?;");
 
@@ -140,7 +131,6 @@ public class ObservationController {
         parameters[2] = String.valueOf(dataa);
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
-        String[] strings;
 
         if(result.getCount() > 0){
             result.moveToFirst();
@@ -148,11 +138,7 @@ public class ObservationController {
             observation.setIdturtle(turtleController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idturtle"))));
             observation.setIdactivity(activitiesController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idactivity"))));
             observation.setBeach(beachController.fetchOne(result.getString(result.getColumnIndexOrThrow("beach"))));
-            observation.setBeach_height(result.getFloat(result.getColumnIndexOrThrow("beach_height")));
-
-            strings = result.getString(result.getColumnIndexOrThrow("beach_time")).split(":");
-            observation.setBeach_time(new Time(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2])));
-
+            observation.setDune_height(result.getFloat(result.getColumnIndexOrThrow("dune_height")));
             observation.setWc(windCategoryController.fetchOne(result.getInt(result.getColumnIndexOrThrow("wc"))));
             observation.setWd(windDirectionController.fetchOne(result.getInt(result.getColumnIndexOrThrow("wd"))));
             observation.setDataa(new Date(result.getString(result.getColumnIndexOrThrow("dataa"))));

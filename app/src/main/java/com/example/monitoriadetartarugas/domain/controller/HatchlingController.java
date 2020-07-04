@@ -55,7 +55,7 @@ public class HatchlingController {
         contentValues.put("alive_in_nest", hatchling.getAlive_in_nest());
         contentValues.put("undeveloped", hatchling.getUndeveloped());
         contentValues.put("predated_eggs", hatchling.getPredated_eggs());
-        contentValues.put("description", hatchling.getDescription());
+        contentValues.put("notes", hatchling.getDescription());
 
         parameters = new String[1];
 
@@ -76,7 +76,7 @@ public class HatchlingController {
         sql.append("       alive_in_nest,");
         sql.append("       undeveloped,");
         sql.append("       predated_eggs,");
-        sql.append("       description");
+        sql.append("       notes");
         sql.append("  FROM hatchlings;");
 
         Cursor result = connection.rawQuery(sql.toString(), null);
@@ -102,7 +102,7 @@ public class HatchlingController {
                 hatchling.setPredated_eggs(
                         result.getInt(result.getColumnIndexOrThrow("predated_eggs")));
                 hatchling.setDescription(
-                        result.getString(result.getColumnIndexOrThrow("description")));
+                        result.getString(result.getColumnIndexOrThrow("notes")));
 
                 hatchlingList.add(hatchling);
             }while(result.moveToNext());
@@ -124,7 +124,7 @@ public class HatchlingController {
         sql.append("       alive_in_nest,");
         sql.append("       undeveloped,");
         sql.append("       predated_eggs,");
-        sql.append("       description");
+        sql.append("       notes");
         sql.append("  FROM hatchlings");
         sql.append("  WHERE idnest = ?;");
 
@@ -151,7 +151,7 @@ public class HatchlingController {
             hatchling.setPredated_eggs(
                     result.getInt(result.getColumnIndexOrThrow("predated_eggs")));
             hatchling.setDescription(
-                    result.getString(result.getColumnIndexOrThrow("description")));
+                    result.getString(result.getColumnIndexOrThrow("notes")));
 
             return hatchling;
         }

@@ -11,8 +11,7 @@ public class Observation implements Serializable {
     private WindDirection wd;
     private Beach beach;
     private Date dataa;
-    private Float beach_height;
-    private Time beach_time;
+    private Float dune_height;
 
     public Turtle getIdturtle() {
         return idturtle;
@@ -62,20 +61,12 @@ public class Observation implements Serializable {
         this.dataa = dataa;
     }
 
-    public Float getBeach_height() {
-        return beach_height;
+    public Float getDune_height() {
+        return dune_height;
     }
 
-    public void setBeach_height(Float beach_height) {
-        this.beach_height = beach_height;
-    }
-
-    public Date getBeach_time() {
-        return beach_time;
-    }
-
-    public void setBeach_time(Time beach_time) {
-        this.beach_time = beach_time;
+    public void setDune_height(Float dune_height) {
+        this.dune_height = dune_height;
     }
 
     @Override
@@ -87,8 +78,7 @@ public class Observation implements Serializable {
                 ", wd=" + wd +
                 ", beach=" + beach +
                 ", dataa=" + dataa +
-                ", beach_height=" + beach_height +
-                ", beach_time=" + beach_time +
+                ", beach_height=" + dune_height +
                 '}';
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class ObservationAndObserver implements Serializable {
     private LocalizationAndObservation idnest;
-    private LocalizationAndObservation localization_date;
+    private LocalizationAndObservation nest_marking_date;
     private LocalizationAndObservation observation_date;
     private Observer idobserver;
 
@@ -17,12 +17,12 @@ public class ObservationAndObserver implements Serializable {
         this.idnest = idnest;
     }
 
-    public LocalizationAndObservation getLocalization_date() {
-        return localization_date;
+    public LocalizationAndObservation getnest_marking_date() {
+        return nest_marking_date;
     }
 
-    public void setLocalization_date(LocalizationAndObservation localization_date) {
-        this.localization_date = localization_date;
+    public void setnest_marking_date(LocalizationAndObservation nest_marking_date) {
+        this.nest_marking_date = nest_marking_date;
     }
 
     public LocalizationAndObservation getObservation_date() {
@@ -45,7 +45,7 @@ public class ObservationAndObserver implements Serializable {
     public String toString() {
         return "ObservationAndObserver{" +
                 "idnest=" + idnest.getIdnest() +
-                ", localization_date=" + localization_date.getLocalization_date() +
+                ", nest_marking_date=" + nest_marking_date.getNest_marking_date() +
                 ", observation_date=" + observation_date.getObservation_date() +
                 ", idobserver=" + idobserver.getObserver() +
                 '}';

@@ -28,20 +28,20 @@ public class LocalizationAndObservationController {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("idnest", localizationAndObservation.getIdnest().getIdnest().getIdnest());
-        contentValues.put("localization_date", localizationAndObservation.getLocalization_date().toString());
+        contentValues.put("nest_marking_date", localizationAndObservation.getNest_marking_date().toString());
         contentValues.put("observation_date", localizationAndObservation.getObservation_date().toString());
 
         connection.insertOrThrow("localizationAndObservation",null, contentValues);
     }
 
-    public void remove(int idnest, Date localization_date, Date observation_date){
+    public void remove(int idnest, Date nest_marking_date, Date observation_date){
         parameters = new String[3];
 
         parameters[0] = String.valueOf(idnest);
-        parameters[1] = localization_date.toString();
+        parameters[1] = nest_marking_date.toString();
         parameters[2] = observation_date.toString();
 
-        connection.delete("localizationAndObservation","idnest = ? and localization_date = ? and observation_date = ?",parameters);
+        connection.delete("localizationAndObservation","idnest = ? and nest_marking_date = ? and observation_date = ?",parameters);
     }
 
     public void edit(LocalizationAndObservation localizationAndObservation){
@@ -49,14 +49,14 @@ public class LocalizationAndObservationController {
         parameters = new String[3];
 
         contentValues.put("idnest", localizationAndObservation.getIdnest().getIdnest().getIdnest());
-        contentValues.put("localization_date", localizationAndObservation.getLocalization_date().toString());
+        contentValues.put("nest_marking_date", localizationAndObservation.getNest_marking_date().toString());
         contentValues.put("observation_date", localizationAndObservation.getObservation_date().toString());
 
         parameters[0] = String.valueOf(localizationAndObservation.getIdnest().getIdnest().getIdnest());
-        parameters[1] = localizationAndObservation.getLocalization_date().toString();
+        parameters[1] = localizationAndObservation.getNest_marking_date().toString();
         parameters[2] = localizationAndObservation.getObservation_date().toString();
 
-        connection.update("localizationAndObservation", contentValues,"idnest = ? and localization_date = ? and observation_date = ?", parameters);
+        connection.update("localizationAndObservation", contentValues,"idnest = ? and nest_marking_date = ? and observation_date = ?", parameters);
     }
 
     public List<LocalizationAndObservation> fetchAll(){
@@ -64,7 +64,7 @@ public class LocalizationAndObservationController {
         sql = new StringBuilder();
 
         sql.append("SELECT idnest,");
-        sql.append("       localization_date,");
+        sql.append("       nest_marking_date,");
         sql.append("       observation_date");
         sql.append("  FROM localizationAndObservation;");
 
@@ -78,10 +78,10 @@ public class LocalizationAndObservationController {
 
                 localizationAndObservation.setIdnest(
                         nestLocalizationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idnest"))
-                                , new Date(result.getString(result.getColumnIndexOrThrow("localization_date")))));
-                localizationAndObservation.setLocalization_date(
+                                , new Date(result.getString(result.getColumnIndexOrThrow("nest_marking_date")))));
+                localizationAndObservation.setNest_marking_date(
                         nestLocalizationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idnest"))
-                                , new Date(result.getString(result.getColumnIndexOrThrow("localization_date")))));
+                                , new Date(result.getString(result.getColumnIndexOrThrow("nest_marking_date")))));
                 localizationAndObservation.setObservation_date(
                         new Date(result.getString(result.getColumnIndexOrThrow("observation_date"))));
 
@@ -92,19 +92,19 @@ public class LocalizationAndObservationController {
         return localizationAndObservationList;
     }
 
-    public LocalizationAndObservation fetchOne(int idnest, Date localization_date, Date observation_date){
+    public LocalizationAndObservation fetchOne(int idnest, Date nest_marking_date, Date observation_date){
         localizationAndObservation = new LocalizationAndObservation();
         sql = new StringBuilder();
         parameters = new String[3];
 
         sql.append("SELECT idnest,");
-        sql.append("       localization_date,");
+        sql.append("       nest_marking_date,");
         sql.append("       observation_date");
         sql.append("  FROM localizationAndObservation");
-        sql.append("  WHERE idnest = ? and localization_date = ? and observation_date = ?;");
+        sql.append("  WHERE idnest = ? and nest_marking_date = ? and observation_date = ?;");
 
         parameters[0] = String.valueOf(idnest);
-        parameters[1] = localization_date.toString();
+        parameters[1] = nest_marking_date.toString();
         parameters[2] = observation_date.toString();
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
@@ -114,10 +114,10 @@ public class LocalizationAndObservationController {
 
             localizationAndObservation.setIdnest(
                     nestLocalizationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idnest"))
-                            , new Date(result.getString(result.getColumnIndexOrThrow("localization_date")))));
-            localizationAndObservation.setLocalization_date(
+                            , new Date(result.getString(result.getColumnIndexOrThrow("nest_marking_date")))));
+            localizationAndObservation.setNest_marking_date(
                     nestLocalizationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idnest"))
-                            , new Date(result.getString(result.getColumnIndexOrThrow("localization_date")))));
+                            , new Date(result.getString(result.getColumnIndexOrThrow("nest_marking_date")))));
             localizationAndObservation.setObservation_date(
                     new Date(result.getString(result.getColumnIndexOrThrow("observation_date"))));
 

@@ -90,34 +90,23 @@ public class ActHatchling_2 extends AppCompatActivity {
         txt_nrPredatedEggs2 = findViewById(R.id.txt_nrPredatedEggs2);
         txt_HatchDescription2 = findViewById(R.id.txt_HatchDescription2);
 
-        createConnection();
-    }
-
-    public void createConnection(){
-        try {
-            dataOpenHelper = new DataOpenHelper(this);
-            connection = dataOpenHelper.getWritableDatabase();
-
-            hatchlingController = new HatchlingController(connection);
-            nestController = new NestController(connection);
-            nestWithoutTurtleController = new NestWithoutTurtleController(connection);
-            specieController = new SpecieController(connection);
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
     }
 
     public void confirm(){
         try {
+            connection = dataOpenHelper.getWritableDatabase();
+            hatchlingController = new HatchlingController(connection);
+            nestWithoutTurtleController = new NestWithoutTurtleController(connection);
+            nestController = new NestController(connection);
+            specieController = new SpecieController(connection);
+
             nestWithoutTurtle = new NestWithoutTurtle();
             hatchling = new Hatchling();
+
             Nest nest = new Nest();
             Specie specie = new Specie();
             Bundle bundle = getIntent().getExtras();
+
             String date = dateOfBirthField2.getText().toString();
             String nrHatched = txt_nrHatched2.getText().toString();
             String diedInNest = txt_nrDiedInNest2.getText().toString();
@@ -128,9 +117,9 @@ public class ActHatchling_2 extends AppCompatActivity {
             String description = txt_HatchDescription2.getText().toString();
 
             if (bundle != null) {
-                String receivedFromNestLocal = bundle.getString("idnestAndSpecie2");
+                String receivedFromNest = bundle.getString("idnestAndSpecie2");
 
-                String[] strings = receivedFromNestLocal.split("-");
+                String[] strings = receivedFromNest.split("-");
                 nest = nestController.fetchOne(Integer.parseInt(strings[0]));
                 specie = specieController.fetchOne(Integer.parseInt(strings[1]));
             }
@@ -194,11 +183,7 @@ public class ActHatchling_2 extends AppCompatActivity {
                             }else
                                 if(res = isEmptyField(predatedEggs)){
                                     txt_nrPredatedEggs2.requestFocus();
-                                }else
-                                    if (res = isEmptyField(description)){
-                                        txt_HatchDescription2.requestFocus();
-                                    }
-
+                                }
         if(res){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 

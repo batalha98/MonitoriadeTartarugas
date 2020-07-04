@@ -27,9 +27,8 @@ public class NestController {
 
         contentValues.put("depth", nest.getDepth());
         contentValues.put("eggs_quantity", nest.getEggs_quantity());
-        contentValues.put("distance", nest.getDistance());
-        contentValues.put("width", nest.getWidth());
-        contentValues.put("description", nest.getDescription());
+        contentValues.put("distance_to_tide", nest.getDistance_to_tide());
+        contentValues.put("notes", nest.getNotes());
 
         return connection.insertOrThrow("nest",null, contentValues);
     }
@@ -47,9 +46,8 @@ public class NestController {
 
         contentValues.put("depth", nest.getDepth());
         contentValues.put("eggs_qunatity", nest.getEggs_quantity());
-        contentValues.put("distance", nest.getDistance());
-        contentValues.put("width", nest.getWidth());
-        contentValues.put("description", nest.getDescription());
+        contentValues.put("distance_to_tide", nest.getDistance_to_tide());
+        contentValues.put("notes", nest.getNotes());
 
         parameters = new String[1];
         parameters[0] = String.valueOf(nest.getIdnest());
@@ -64,9 +62,8 @@ public class NestController {
         sql.append("SELECT idnest,");
         sql.append("       depth,");
         sql.append("       eggs_quantity,");
-        sql.append("       distance,");
-        sql.append("       width,");
-        sql.append("       description");
+        sql.append("       distance_to_tide,");
+        sql.append("       notes");
         sql.append("  FROM nest;");
 
         try {
@@ -81,9 +78,8 @@ public class NestController {
                     nest.setIdnest(result.getInt(result.getColumnIndexOrThrow("idnest")));
                     nest.setDepth(result.getInt(result.getColumnIndexOrThrow("depth")));
                     nest.setEggs_quantity(result.getInt(result.getColumnIndexOrThrow("eggs_quantity")));
-                    nest.setDistance(result.getFloat(result.getColumnIndexOrThrow("distance")));
-                    nest.setWidth(result.getFloat(result.getColumnIndexOrThrow("width")));
-                    nest.setDescription(result.getString(result.getColumnIndexOrThrow("description")));
+                    nest.setDistance_to_tide(result.getFloat(result.getColumnIndexOrThrow("distance_to_tide")));
+                    nest.setNotes(result.getString(result.getColumnIndexOrThrow("notes")));
 
                     nestList.add(nest);
                 }while(result.moveToNext());
@@ -102,9 +98,8 @@ public class NestController {
         sql.append("SELECT idnest,");
         sql.append("       depth,");
         sql.append("       eggs_quantity,");
-        sql.append("       distance,");
-        sql.append("       width,");
-        sql.append("       description");
+        sql.append("       distance_to_tide,");
+        sql.append("       notes");
         sql.append("  FROM nest");
         sql.append("  WHERE idnest = ?;");
 
@@ -119,9 +114,8 @@ public class NestController {
             nest.setIdnest(result.getInt(result.getColumnIndexOrThrow("idnest")));
             nest.setDepth(result.getInt(result.getColumnIndexOrThrow("depth")));
             nest.setEggs_quantity(result.getInt(result.getColumnIndexOrThrow("eggs_quantity")));
-            nest.setDistance(result.getFloat(result.getColumnIndexOrThrow("distance")));
-            nest.setWidth(result.getFloat(result.getColumnIndexOrThrow("width")));
-            nest.setDescription(result.getString(result.getColumnIndexOrThrow("description")));
+            nest.setDistance_to_tide(result.getFloat(result.getColumnIndexOrThrow("distance_to_tide")));
+            nest.setNotes(result.getString(result.getColumnIndexOrThrow("notes")));
 
             return nest;
         }

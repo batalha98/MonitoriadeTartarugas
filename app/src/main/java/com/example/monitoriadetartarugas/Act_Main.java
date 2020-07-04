@@ -40,20 +40,32 @@ public class Act_Main extends AppCompatActivity {
             }
         });
 
+        Button button_help = findViewById(R.id.button_help);
+        button_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                help(v);
+            }
+        });
     }
 
     private void registerTurtleAndNest(View view){
-        Intent it = new Intent(this, ActTurtle.class);
-        startActivityForResult(it, 0);
+        Intent it = new Intent(this, ActNestLocalization.class);
+        startActivity(it);
     }
 
     private void registerNestWithoutTurtle(View view){
-        Intent it = new Intent(this, ActNest2.class);
-        startActivityForResult(it, 0);
+        Intent it = new Intent(this, ActNestLocalization2.class);
+        startActivity(it);
     }
 
     private void showReports(View view){
         Intent it = new Intent(this, ActRecordsMenu.class);
-        startActivityForResult(it, 0);
+        startActivity(it);
+    }
+
+    private void help(View view){
+        Intent it = new Intent(this, ActHelp.class);
+        startActivity(it);
     }
 }

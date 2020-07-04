@@ -45,7 +45,7 @@ public class ActTaggs extends AppCompatActivity {
     private DataOpenHelper dataOpenHelper;
 
     private String[] strings;
-    private String receivedFromHatchling;
+    private String receivedFromHatchling, toTurtle = "";
     private TurtleNest turtleNest;
     private TurtleTaggs turtleTaggs;
     private TurtleController turtleController;
@@ -90,36 +90,12 @@ public class ActTaggs extends AppCompatActivity {
         txt_cclMeasure = findViewById(R.id.txt_cclMeasure);
         txt_cwlMeasure = findViewById(R.id.txt_cwlMeasure);
 
-        createConnection();
-    }
-
-    public void createConnection(){
-        try {
-            dataOpenHelper = new DataOpenHelper(this);
-
-            connection = dataOpenHelper.getWritableDatabase();
-
-            turtleController = new TurtleController(connection);
-            nestController = new NestController(connection);
-            turtleNestController = new TurtleNestController(connection);
-            turtleTaggsController = new TurtleTaggsController(connection);
-
-        }catch(SQLException e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+        dataOpenHelper = new DataOpenHelper(this);
     }
 
     public void confirm(){
         try {
-            turtleNest = new TurtleNest();
-            turtleTaggs = new TurtleTaggs();
             Bundle bundle = getIntent().getExtras();
-            Nest nest = new Nest();
-            Turtle turtle = new Turtle();
 
             Date tagDate = new Date(tagginDate.getText().toString());
             int leftRing = Integer.parseInt(txt_nrLeftRing.getText().toString());
@@ -129,28 +105,18 @@ public class ActTaggs extends AppCompatActivity {
             Double cwlMeasure = Double.valueOf(txt_cwlMeasure.getText().toString());
 
             if(bundle != null){
-                receivedFromHatchling = bundle.getString("beachTurtleAndNest");
-
-                strings = receivedFromHatchling.split("-");
-
-                turtle = turtleController.fetchOne(Integer.parseInt(strings[1]));
-                nest = nestController.fetchOne(Integer.parseInt(strings[2]));
+                receivedFromHatchling = bundle.getString("observation");
+                //strings[0]: idnest
+                //strings[1]: observation
             }
 
-            turtleTaggs.setIdturtle(turtle);
-            turtleTaggs.setLeftring(leftRing);
-            turtleTaggs.setRightring(rightRing);
-            turtleTaggs.setInternal_tag(internalTag);
-            turtleTaggs.setDataa(tagDate);
-            turtleTaggs.setCcl_measure(cclMeasure);
-            turtleTaggs.setCwl_measure(cwlMeasure);
+            toTurtle = receivedFromHatchling+"@"+tagDate+
+                    "-"+leftRing+
+                    "-"+rightRing+
+                    "-"+internalTag+
+                    "-"+cclMeasure+
+                    "-"+cwlMeasure;
 
-            turtleTaggsController.insert(turtleTaggs);
-
-            turtleNest.setIdnest(nest);
-            turtleNest.setIdturtle(turtle);
-
-            turtleNestController.insert(turtleNest);
         }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -211,7 +177,7 @@ public class ActTaggs extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.menu_save_information, menu);
+        inflater.inflate(R.menu.menu_next, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -225,15 +191,14 @@ public class ActTaggs extends AppCompatActivity {
                 finish();
                 break;
 
-            case R.id.action_report:
+            case R.id.action_next:
                 if(validateFields() == false) {
                     confirm();
 
-                    Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
-                    Intent it = new Intent(this, ActListingRecords.class);
+                    Intent it = new Intent(this, ActTurtle.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("idBtn", "turtleNest");
+                    bundle.putString("finalStage", toTurtle);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);
@@ -241,7 +206,6 @@ public class ActTaggs extends AppCompatActivity {
 
                 break;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

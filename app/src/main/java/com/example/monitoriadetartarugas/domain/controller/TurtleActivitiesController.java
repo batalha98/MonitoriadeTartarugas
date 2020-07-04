@@ -15,10 +15,15 @@ import java.util.List;
 public class TurtleActivitiesController {
     private SQLiteDatabase connection;
     private ObservationController observationController;
+    private Date dateObservation;
 
     public TurtleActivitiesController(SQLiteDatabase connection){
         this.observationController = new ObservationController(connection);
         this.connection = connection;
+    }
+
+    public TurtleActivitiesController(Date dateObservation){
+        this.dateObservation = dateObservation;
     }
 
     public void insert(TurtleActivities turtleActivities){
@@ -26,22 +31,19 @@ public class TurtleActivitiesController {
 
         contentValues.put("idturtle", turtleActivities.getIdturtle().getIdturtle().getIdturtle());
         contentValues.put("beach", turtleActivities.getBeach().getBeach().getBeach());
-        contentValues.put("dataa", turtleActivities.getDataa().getDataa().toString());
         contentValues.put("idactivity", turtleActivities.getIdactivity().getIdactivity());
 
         connection.insertOrThrow("turtleactivities",null, contentValues);
     }
 
-    public void remove(int idturtle, String beach, Date dataa, int idactivity){
+    public void remove(int idturtle, String beach, int idactivity){
         String[] parameters = new String[4];
 
         parameters[0] = String.valueOf(idturtle);
         parameters[1] = beach;
-        parameters[2] = dataa.toString();
-        parameters[3] = String.valueOf(idactivity);
+        parameters[2] = String.valueOf(idactivity);
 
-        connection.delete("turtleactivities","idturtle = ? and beach = ? " +
-                "and dataa = ? and idactivity = ?",parameters);
+        connection.delete("turtleactivities","idturtle = ? and beach = ? and idactivity = ?",parameters);
     }
 
     public void edit(TurtleActivities turtleActivities){
@@ -51,11 +53,9 @@ public class TurtleActivitiesController {
 
         parameters[0] = String.valueOf(turtleActivities.getIdturtle().getIdturtle().getIdturtle());
         parameters[1] = turtleActivities.getBeach().getBeach().getBeach();
-        parameters[2] = turtleActivities.getDataa().getDataa().toString();
-        parameters[3] = String.valueOf(turtleActivities.getIdactivity().getIdactivity());
+        parameters[2] = String.valueOf(turtleActivities.getIdactivity().getIdactivity());
 
-        connection.update("turtleactivities", contentValues,"idturtle = ? and beach = ? " +
-                "and dataa = ? and idactivity = ?", parameters);
+        connection.update("turtleactivities", contentValues,"idturtle = ? and beach = ? and idactivity = ?", parameters);
     }
 
     public List<TurtleActivities> fetchAll(){
@@ -64,7 +64,6 @@ public class TurtleActivitiesController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       beach,");
-        sql.append("       dataa,");
         sql.append("       idactivity");
         sql.append("  FROM turtleactivities;");
 
@@ -78,11 +77,10 @@ public class TurtleActivitiesController {
                     TurtleActivities turtleActivities = new TurtleActivities();
                     Observation observation = observationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idturtle"))
                             , result.getString(result.getColumnIndexOrThrow("beach"))
-                            , new Date(result.getString(result.getColumnIndexOrThrow("dataa"))));
+                            , dateObservation);
 
                     turtleActivities.setIdturtle(observation);
                     turtleActivities.setBeach(observation);
-                    turtleActivities.setDataa(observation);
                     turtleActivities.setIdactivity(observation.getIdactivity());
 
                     turtleActivitiesList.add(turtleActivities);
@@ -102,15 +100,13 @@ public class TurtleActivitiesController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       beach,");
-        sql.append("       dataa,");
         sql.append("       idactivity");
         sql.append("  FROM turtleactivities");
-        sql.append("  WHERE idturtle = ? and beach = ? and dataa = ? and idactivity = ?");
+        sql.append("  WHERE idturtle = ? and beach = ? and idactivity = ?");
 
         parameters[0] = String.valueOf(idturtle);
         parameters[1] = beach;
-        parameters[2] = dataa.toString();
-        parameters[3] = String.valueOf(idactivity);
+        parameters[2] = String.valueOf(idactivity);
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 
@@ -120,11 +116,10 @@ public class TurtleActivitiesController {
             TurtleActivities turtleActivities = new TurtleActivities();
             Observation observation = observationController.fetchOne(result.getInt(result.getColumnIndexOrThrow("idturtle"))
                     , result.getString(result.getColumnIndexOrThrow("beach"))
-                    , new Date(result.getString(result.getColumnIndexOrThrow("dataa"))));
+                    , dateObservation);
 
             turtleActivities.setIdturtle(observation);
             turtleActivities.setBeach(observation);
-            turtleActivities.setDataa(observation);
             turtleActivities.setIdactivity(observation.getIdactivity());
 
             return activities;

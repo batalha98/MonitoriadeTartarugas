@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.ActivitiesController;
@@ -38,7 +37,6 @@ import com.example.monitoriadetartarugas.domain.entitys.TurtleActivities;
 import com.example.monitoriadetartarugas.domain.entitys.WindCategory;
 import com.example.monitoriadetartarugas.domain.entitys.WindDirection;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,14 +51,16 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
     private WindCategory windCategory;
     private Observation observation;
     private EditText dateObservation;
-    private EditText txt_beachTime;
-    private EditText txt_BeachHeight;
+    private EditText txt_Dune_height;
     private Spinner spinner_wc;
     private Spinner spinner_wd;
     private Spinner spinner_beach;
     private Spinner spinner_activity;
     private int hour, min;
 
+    private String[] strings;
+    private String fromActNestLocalization;
+    private String toActNest;
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
 
@@ -70,7 +70,6 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
     private List<WindDirection> windDirectionList = new ArrayList<>();
 
     private BeachController beachController;
-    private TurtleController turtleController;
     private ActivitiesController activitiesController;
     private ObservationController observationController;
     private WindCategoryController windCategoryController;
@@ -114,37 +113,34 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        txt_beachTime = findViewById(R.id.txt_beachTime);
-        txt_beachTime.setInputType(InputType.TYPE_NULL);
-        txt_beachTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                timePicker = new TimePickerDialog(ActObservation.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        hour = hourOfDay;
-                        min = minute;
-                        txt_beachTime.setText(hourOfDay +":"+ minute);
-                    }
-                }, hour, min, true);
-
-                timePicker.show();
-            }
-        });
-
-        txt_BeachHeight = findViewById(R.id.txt_BeachHeight);
+        txt_Dune_height = findViewById(R.id.txt_DuneHeight);
 
         spinner_wd.setOnItemSelectedListener(this);
         spinner_wc.setOnItemSelectedListener(this);
         spinner_activity.setOnItemSelectedListener(this);
         spinner_beach.setOnItemSelectedListener(this);
 
-        createConnection();
+        dataOpenHelper = new DataOpenHelper(this);
+
         getSpinnerValues();
     }
 
     public void getSpinnerValues(){
+        try {
+            connection = dataOpenHelper.getReadableDatabase();
+
+            beachController = new BeachController(connection);
+            activitiesController = new ActivitiesController(connection);
+            windCategoryController = new WindCategoryController(connection);
+            windDirectionController = new WindDirectionController(connection);
+        }catch(SQLException e){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle(R.string.title_msgErro);
+            alertDialog.setMessage(e.getMessage());
+            alertDialog.setNeutralButton("OK", null);
+            alertDialog.show();
+        }
+
         beachList = beachController.fetchAll();
         activitiesList = activitiesController.fetchAll();
         windCategoryList = windCategoryController.fetchAll();
@@ -179,8 +175,12 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
 
     public void confirm(){
         try{
+            observationController = new ObservationController(connection);
+            turtleActivitiesController = new TurtleActivitiesController(connection);
+
             observation = new Observation();
             turtleActivities = new TurtleActivities();
+
             Bundle bundle = getIntent().getExtras();
 
             beach = (Beach) spinner_beach.getSelectedItem();
@@ -188,54 +188,36 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
             windCategory = (WindCategory) spinner_wc.getSelectedItem();
             windDirection = (WindDirection) spinner_wd.getSelectedItem();
             String dataa = dateObservation.getText().toString();
-            String beach_height = txt_BeachHeight.getText().toString();
+            String dune_height = txt_Dune_height.getText().toString();
+            Date date = new Date(dataa);
+            date.setHours(hour);
+            date.setMinutes(min);
 
             if((bundle != null)){
-                turtle = (Turtle) bundle.getSerializable("turtle");
-
-                observation.setIdturtle(turtle);
+                fromActNestLocalization = bundle.getString("nestlocalizationData");
+                //strings = fromActNestLocalization.split("-");
+                /*
+                * strings[0] = gpsEast
+                * strings[1] = gpsSouth
+                * strings[2] = habitatName
+                * strings[3] = observations
+                * strings[4] = date
+                * */
             }
 
-            observation.setBeach(beachController.fetchOne(beach.getBeach()));
-            observation.setWc(windCategoryController.fetchOne(windCategory.getIdwc()));
-            observation.setWd(windDirectionController.fetchOne(windDirection.getIdwd()));
-            observation.setIdactivity(activitiesController.fetchOne(activities.getIdactivity()));
-            observation.setDataa(new Date(dataa));
-            observation.setBeach_time(new Time(hour, min, 0));
-            observation.setBeach_height(Float.parseFloat(beach_height));
+            toActNest = beach.getBeach()
+                    +"-"+activities.getIdactivity()
+                    +"-"+windCategory.getIdwc()
+                    +"-"+windDirection.getIdwd()
+                    +"-"+dune_height
+                    +"-"+date;
 
-            observationController.insert(observation);
+//            turtleActivities.setIdturtle(observation);
+//            turtleActivities.setBeach(observation);
+//            turtleActivities.setIdactivity(observation.getIdactivity());
 
-            turtleActivities.setIdturtle(observation);
-            turtleActivities.setDataa(observation);
-            turtleActivities.setBeach(observation);
-            turtleActivities.setIdactivity(observation.getIdactivity());
-
-            turtleActivitiesController.insert(turtleActivities);
+            //turtleActivitiesController.insert(turtleActivities);
         }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
-    }
-
-    public void createConnection(){
-        try {
-            dataOpenHelper = new DataOpenHelper(this);
-
-            connection = dataOpenHelper.getWritableDatabase();
-
-            beachController = new BeachController(connection);
-            turtleController = new TurtleController(connection);
-            activitiesController = new ActivitiesController(connection);
-            observationController = new ObservationController(connection);
-            windCategoryController = new WindCategoryController(connection);
-            windDirectionController = new WindDirectionController(connection);
-            turtleActivitiesController = new TurtleActivitiesController(connection);
-
-        }catch(SQLException e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -248,18 +230,14 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
         boolean res = false;
 
         String dataa = dateObservation.getText().toString();
-        String beach_time = txt_beachTime.getText().toString();
-        String beach_height = txt_BeachHeight.getText().toString();
+        String dune_height = txt_Dune_height.getText().toString();
 
         if(res = isEmptyField(dataa)){
             dateObservation.requestFocus();
         }else
-            if(res = isEmptyField(beach_time)){
-                txt_beachTime.requestFocus();
-            }else
-                if(res = isEmptyField(beach_height)){
-                    txt_BeachHeight.requestFocus();
-                }
+            if(res = isEmptyField(dune_height)){
+                txt_Dune_height.requestFocus();
+            }
 
         if(res){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -303,8 +281,8 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
                     Intent it = new Intent(this, ActNest.class);
 
                     Bundle parameters = new Bundle();
-                    parameters.putString("beachAndTurtle", observation.getBeach().getBeach()
-                            +"-"+turtle.getIdturtle());
+                    parameters.putString("actNestLocalAndObservation",
+                            fromActNestLocalization+"#"+toActNest);
                     it.putExtras(parameters);
 
                     startActivityForResult(it, 0);

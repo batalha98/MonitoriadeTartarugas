@@ -14,22 +14,32 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
+import com.example.monitoriadetartarugas.domain.controller.BeachController;
+import com.example.monitoriadetartarugas.domain.controller.HabitatController;
 import com.example.monitoriadetartarugas.domain.controller.NestController;
+import com.example.monitoriadetartarugas.domain.controller.NestLocalizationController;
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
+import com.example.monitoriadetartarugas.domain.entitys.NestLocalization;
+
+import java.util.Date;
 
 public class ActNest extends AppCompatActivity {
     private EditText txt_depthField;
     private EditText txt_nrEggsField;
     private EditText txt_nrDistance;
-    private EditText txt_nrWidth;
     private EditText txt_descriptionField;
 
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
     private long idnest;
+    private String[] strings;
+    private String[] splitNestLocalization;
+    private String[] splitObservation;
     private String receivedFromActObservation;
-    private Nest nest;
+    private HabitatController habitatController;
+    private NestLocalizationController nestLocalizationController;
+    private BeachController beachController;
     private NestController nestController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,6 @@ public class ActNest extends AppCompatActivity {
         txt_depthField = findViewById(R.id.txt_depthField);
         txt_nrEggsField = findViewById(R.id.txt_nrEggsField);
         txt_nrDistance = findViewById(R.id.txt_nrDistance);
-        txt_nrWidth = findViewById(R.id.txt_nrWidth);
         txt_descriptionField = findViewById(R.id.txt_descriptionField);
 
         createConnection();
@@ -56,6 +65,9 @@ public class ActNest extends AppCompatActivity {
             connection = dataOpenHelper.getWritableDatabase();
 
             nestController = new NestController(connection);
+            nestLocalizationController = new NestLocalizationController(connection);
+            habitatController = new HabitatController(connection);
+            beachController = new BeachController(connection);
         }catch(SQLException e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -67,35 +79,45 @@ public class ActNest extends AppCompatActivity {
 
     public void confirm(){
         try {
-            nest = new Nest();
+            NestLocalization nestLocalization = new NestLocalization();
+            Nest nest = new Nest();
             receivedFromActObservation = "";
             Bundle bundle = getIntent().getExtras();
             String depth = txt_depthField.getText().toString();
             String eggs_quantity = txt_nrEggsField.getText().toString();
             String distance = txt_nrDistance.getText().toString();
-            String width = txt_nrWidth.getText().toString();
             String description = txt_descriptionField.getText().toString();
 
             if(bundle != null){
-                receivedFromActObservation = bundle.getString("beachAndTurtle");
-                receivedFromActObservation += "-";
+                receivedFromActObservation = bundle.getString("actNestLocalAndObservation");
+                strings = receivedFromActObservation.split("#");
+
+                /*
+                * strings[0] = nestlocalization
+                * strings[1] = observation
+                * */
             }
 
+            splitNestLocalization = strings[0].split("-");
+            splitObservation = strings[1].split("-");
+
             nest.setDepth(Integer.parseInt(depth));
-            nest.setDescription(description);
-            nest.setDistance(Float.valueOf(distance));
+            nest.setNotes(description);
+            nest.setDistance_to_tide(Float.valueOf(distance));
             nest.setEggs_quantity(Integer.parseInt(eggs_quantity));
-            nest.setWidth(Float.valueOf(width));
 
             idnest = nestController.insert(nest);
 
-            receivedFromActObservation += (int) idnest;
-//
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-//            alertDialog.setTitle("From observ");
-//            alertDialog.setMessage(receivedFromActObservation);
-//            alertDialog.setNeutralButton("OK", null);
-//            alertDialog.show();
+            nestLocalization.setIdnest(nestController.fetchOne((int) idnest));
+            nestLocalization.setGpsEast(Float.valueOf(splitNestLocalization[0]));
+            nestLocalization.setGpsSouth(Float.valueOf(splitNestLocalization[1]));
+            nestLocalization.setIdhabitat(
+                    habitatController.fetchOne(Integer.parseInt(splitNestLocalization[2])));
+            nestLocalization.setNotes(splitNestLocalization[3]);
+            nestLocalization.setNest_marking_date(new Date(splitNestLocalization[4]));
+            nestLocalization.setBeach(beachController.fetchOne(splitObservation[0]));
+
+            nestLocalizationController.insert(nestLocalization);
         }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
@@ -111,7 +133,6 @@ public class ActNest extends AppCompatActivity {
         String depth = txt_depthField.getText().toString();
         String eggs_quantity = txt_nrEggsField.getText().toString();
         String distance = txt_nrDistance.getText().toString();
-        String width = txt_nrWidth.getText().toString();
         String description = txt_descriptionField.getText().toString();
 
         if(res = isEmptyField(depth)){
@@ -122,13 +143,7 @@ public class ActNest extends AppCompatActivity {
             }else
                 if(res = isEmptyField(distance)){
                     txt_nrDistance.requestFocus();
-                }else
-                    if(res = isEmptyField(width)){
-                        txt_nrWidth.requestFocus();
-                    }else
-                        if(res = isEmptyField(description)){
-                            txt_descriptionField.requestFocus();
-                        }
+                }
 
         if(res){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -169,10 +184,11 @@ public class ActNest extends AppCompatActivity {
             case R.id.action_next:
                 if(validateFields() == false){
                     confirm();
-                    Intent it = new Intent(ActNest.this, ActNestLocalization.class);
+                    Intent it = new Intent(this, ActHatchling.class);
 
+                    strings[1] += "#"+idnest;
                     Bundle bundle = new Bundle();
-                    bundle.putString("FromActNest", receivedFromActObservation);
+                    bundle.putString("observationFromActNest", strings[1]);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

@@ -81,7 +81,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_GPSDistance2"
+                android:id="@+id/txt_gpsSouth2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -100,32 +100,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/txt_GPSHeight2"
+                android:id="@+id/txt_gpsEast2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:ems="10"
                 android:inputType="number" />
-
-            <TextView
-                android:id="@+id/title_observationDate2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/observationDateField"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txt_observationDate2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:ems="10"
-                android:inputType="date" />
 
             <TextView
                 android:id="@+id/title_observation2"

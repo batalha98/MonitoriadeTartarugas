@@ -2,15 +2,26 @@ package com.example.monitoriadetartarugas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.ajts.androidmads.library.SQLiteToExcel;
+import com.example.monitoriadetartarugas.database.DataOpenHelper;
+import com.example.monitoriadetartarugas.util.Utils;
+import com.example.monitoriadetartarugas.verifyPermission.VerifyPermission;
+
+import java.io.File;
+
 public class ActRecordsMenu extends AppCompatActivity {
     Button button_turtleAndNest;
     Button button_nestWithoutTurtle;
+    Button button_exportData;
+    SQLiteToExcel sqLiteToExcel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +34,7 @@ public class ActRecordsMenu extends AppCompatActivity {
 
         button_turtleAndNest = findViewById(R.id.button_turtleAndNestRecords);
         button_nestWithoutTurtle = findViewById(R.id.button_nestWithoutTurtleRecords);
+        button_exportData = findViewById(R.id.btn_exportData);
 
         button_turtleAndNest.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -35,6 +47,40 @@ public class ActRecordsMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 listRecords(v, "nestWithoutTurtle");
+            }
+        });
+
+        VerifyPermission.verifyStoragePermissions(this);
+
+        button_exportData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                String directory_path = Environment.getExternalStorageDirectory().getPath()+ "/SqliteToExcel/";
+                File file = new File(directory_path);
+
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+
+                sqLiteToExcel = new SQLiteToExcel(getApplicationContext(),
+                        DataOpenHelper.DB_NAME, directory_path);
+                sqLiteToExcel.exportAllTables("turtles.xls", new SQLiteToExcel.ExportListener(){
+
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onCompleted(String filePath) {
+                        Utils.showSnackBar(v, "Exportado com sucesso!");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Utils.showSnackBar(v, e.getMessage());
+                    }
+                });
             }
         });
     }
@@ -62,4 +108,6 @@ public class ActRecordsMenu extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

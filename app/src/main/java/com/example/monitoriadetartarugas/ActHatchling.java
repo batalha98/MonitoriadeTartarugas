@@ -27,6 +27,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ActHatchling extends AppCompatActivity {
+
+
     private EditText dateOfBirthField;
     private EditText txt_nrHatched;
     private EditText txt_nrDiedInNest;
@@ -41,7 +43,7 @@ public class ActHatchling extends AppCompatActivity {
     private DataOpenHelper dataOpenHelper;
 
     private String[] strings;
-    private String receivedFromNestLocal;
+    private String receivedFromNest;
     private Hatchling hatchling;
     private NestController nestController;
     private HatchlingController hatchlingController;
@@ -84,29 +86,17 @@ public class ActHatchling extends AppCompatActivity {
         txt_nrPredatedEggs = findViewById(R.id.txt_nrPredatedEggs);
         txt_HatchDescription = findViewById(R.id.txt_HatchDescription);
 
-        createConnection();
-    }
-
-    public void createConnection(){
-        try {
-
-            dataOpenHelper = new DataOpenHelper(this);
-
-            connection = dataOpenHelper.getWritableDatabase();
-
-            hatchlingController = new HatchlingController(connection);
-            nestController = new NestController(connection);
-      }catch(SQLException e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+        dataOpenHelper = new DataOpenHelper(this);
     }
 
     public void confirm(){
         try {
+            connection = dataOpenHelper.getWritableDatabase();
+            hatchlingController = new HatchlingController(connection);
+
+            connection = dataOpenHelper.getReadableDatabase();
+            nestController = new NestController(connection);
+
             hatchling = new Hatchling();
             Nest nest = new Nest();
             Bundle bundle = getIntent().getExtras();
@@ -120,11 +110,11 @@ public class ActHatchling extends AppCompatActivity {
             String description = txt_HatchDescription.getText().toString();
 
             if(bundle != null){
-                receivedFromNestLocal = bundle.getString("beachTurtleAndIdnest");
+                receivedFromNest = bundle.getString("observationFromActNest");
 
-                strings = receivedFromNestLocal.split("-");
+                strings = receivedFromNest.split("#");
 
-                nest = nestController.fetchOne(Integer.parseInt(strings[2]));
+                nest = nestController.fetchOne(Integer.parseInt(strings[1]));
             }
 
             hatchling.setIdnest(nest);
@@ -179,10 +169,7 @@ public class ActHatchling extends AppCompatActivity {
                             }else
                                 if(res = isEmptyField(predatedEggs)){
                                     txt_nrPredatedEggs.requestFocus();
-                                }else
-                                    if (res = isEmptyField(description)){
-                                        txt_HatchDescription.requestFocus();
-                                    }
+                                }
 
         if(res){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -227,7 +214,7 @@ public class ActHatchling extends AppCompatActivity {
                     Intent it = new Intent(this, ActTaggs.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("beachTurtleAndNest", receivedFromNestLocal);
+                    bundle.putString("observation", Integer.parseInt(strings[1])+"_"+strings[0]);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);
