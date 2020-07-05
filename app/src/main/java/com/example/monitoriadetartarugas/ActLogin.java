@@ -1,7 +1,10 @@
 package com.example.monitoriadetartarugas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,29 +17,37 @@ import com.example.monitoriadetartarugas.database.DataOpenHelper;
 public class ActLogin extends AppCompatActivity {
     EditText username;
     EditText password;
+    String txtUsername, txtPassword;
     Button btnLogin;
     DataOpenHelper dataOpenHelper;
     SQLiteDatabase sqLiteDatabase;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_login);
 
+        sp = getSharedPreferences("user_details",MODE_PRIVATE);
         username = findViewById(R.id.txtUsername);
         password = findViewById(R.id.txtPassword);
-
         btnLogin = findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isEmptyFields()){
-                    Toast.makeText(ActLogin.this, "Fill the blank fields to proceed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
                 }else{
-                    //verificar se o usuario existe na DB
-
+                    //antes verifique se o usuario existe na DB
                     Intent intent = new Intent(ActLogin.this, Act_Main.class);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("uname",txtUsername);
+                    editor.putString("pwd",txtPassword);
+                    editor.commit();
+
+                    Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+
                     startActivity(intent);
                 }
             }
@@ -44,7 +55,6 @@ public class ActLogin extends AppCompatActivity {
     }
 
     public boolean isEmptyFields(){
-        String txtUsername, txtPassword;
         int control = 0;
 
         txtUsername = username.getText().toString();
@@ -61,5 +71,13 @@ public class ActLogin extends AppCompatActivity {
 
         if(control > 0) return true;
         else return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

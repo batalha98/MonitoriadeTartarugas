@@ -77,5 +77,7 @@
     <string name="loginTitle">Monitoring Turtles</string>
     <string name="usernameHint">Username</string>
     <string name="passwordhint">Password</string>
+    <string name="title_action_logout">Logout</string>
+    <string name="title_action_exit">Exit</string>
 
 </resources>
