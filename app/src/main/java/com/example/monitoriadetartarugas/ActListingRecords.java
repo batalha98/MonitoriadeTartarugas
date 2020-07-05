@@ -264,4 +264,11 @@ public class ActListingRecords extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+        Intent it = new Intent(this, Act_Main.class);
+        startActivity(it);
+    }
 }

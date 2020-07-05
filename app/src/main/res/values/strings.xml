@@ -73,4 +73,9 @@
     <string name="title_action_edit">Edit</string>
     <string name="app_description" />
     <string name="action_export">Export</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="loginTitle">Monitoring Turtles</string>
+    <string name="usernameHint">Username</string>
+    <string name="passwordhint">Password</string>
+
 </resources>

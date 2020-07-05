@@ -68,4 +68,9 @@ public class Act_Main extends AppCompatActivity {
         Intent it = new Intent(this, ActHelp.class);
         startActivity(it);
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 }

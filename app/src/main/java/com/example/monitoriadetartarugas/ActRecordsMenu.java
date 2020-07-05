@@ -1,6 +1,7 @@
 package com.example.monitoriadetartarugas;
 
 import android.content.Intent;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -16,8 +17,10 @@ import com.example.monitoriadetartarugas.util.Utils;
 import com.example.monitoriadetartarugas.verifyPermission.VerifyPermission;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ActRecordsMenu extends AppCompatActivity {
+public class ActRecordsMenu extends AppCompatActivity{
     Button button_turtleAndNest;
     Button button_nestWithoutTurtle;
     Button button_exportData;
@@ -55,8 +58,9 @@ public class ActRecordsMenu extends AppCompatActivity {
         button_exportData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                String directory_path = Environment.getExternalStorageDirectory().getPath()+ "/SqliteToExcel/";
+                String directory_path = Environment.getExternalStorageDirectory().getPath()+ "/TurtlesDataExported/";
                 File file = new File(directory_path);
+                List<String> tables = new ArrayList<>();
 
                 if(!file.exists()){
                     file.mkdirs();
@@ -64,8 +68,38 @@ public class ActRecordsMenu extends AppCompatActivity {
 
                 sqLiteToExcel = new SQLiteToExcel(getApplicationContext(),
                         DataOpenHelper.DB_NAME, directory_path);
-                sqLiteToExcel.exportAllTables("turtles.xls", new SQLiteToExcel.ExportListener(){
 
+/*                tables.add("turtle");
+                tables.add("nest");
+                tables.add("observation");
+                tables.add("turtlenest");
+                tables.add("nestwithoutturtle");
+                tables.add("observerobservation");
+                tables.add("nestlocalization");
+                tables.add("turtleactivities");
+                tables.add("turtletags");
+                tables.add("localizationandobservation");
+                tables.add("hatchlings");
+                tables.add("observationandobserver");
+
+                sqLiteToExcel.exportSpecificTables(tables, "turtles.xls", new SQLiteToExcel.ExportListener() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onCompleted(String filePath) {
+                        Utils.showSnackBar(v, "Success!!!");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Utils.showSnackBar(v, e.getMessage());
+                    }
+                });*/
+
+                sqLiteToExcel.exportAllTables("turtles.xls", new SQLiteToExcel.ExportListener(){
                     @Override
                     public void onStart() {
 
