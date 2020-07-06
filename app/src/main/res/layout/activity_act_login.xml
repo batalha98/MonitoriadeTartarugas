@@ -26,29 +26,27 @@
             app:srcCompat="@drawable/loginicon2" />
 
         <EditText
-            android:id="@+id/txtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="24dp"
-            android:ems="10"
-            android:hint="@string/passwordhint"
-            android:inputType="textPassword"
-            android:textStyle="bold" />
-
-        <EditText
             android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="24dp"
             android:ems="10"
             android:hint="@string/usernameHint"
             android:inputType="textPersonName"
-            android:textColor="#000000"
-            android:textStyle="bold" />
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp"
+            android:ems="10"
+            android:hint="@string/passwordhint"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btn_login"
