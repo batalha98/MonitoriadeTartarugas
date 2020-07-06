@@ -23,6 +23,7 @@ public class ActLogin extends AppCompatActivity {
     SQLiteDatabase sqLiteDatabase;
     SharedPreferences sp;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,20 +37,20 @@ public class ActLogin extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isEmptyFields()){
-                    Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
-                }else{
-                    //antes verifique se o usuario existe na DB
-                    Intent intent = new Intent(ActLogin.this, Act_Main.class);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("uname",txtUsername);
-                    editor.putString("pwd",txtPassword);
-                    editor.commit();
+            if(isEmptyFields()){
+                Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
+            }else{
 
-                    Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ActLogin.this, Act_Main.class);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("uname",txtUsername);
+                editor.putString("pwd",txtPassword);
+                editor.commit();
 
-                    startActivity(intent);
-                }
+                Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+            }
             }
         });
     }
