@@ -153,6 +153,42 @@ public class ScriptDDL {
         return builder.toString();
     }
 
+    public static String createTableTurtleNestData(){
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("CREATE TABLE turtlenestdata(");
+        builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    hatch_dataa DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    hatched INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    died_in_nest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    alive_in_nest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    undeveloped INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    unhatched INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    predated_eggs INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    nest_marking_date DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    nest_beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    gps_east FLOAT NOT NULL DEFAULT (''),");
+        builder.append("    gps_south FLOAT NOT NULL DEFAULT (''),");
+        builder.append("    tagg_dataa DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    leftring INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    rightring INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    internal_tag INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    ccl_measure DOUBLE NOT NULL DEFAULT (''),");
+        builder.append("    cwl_measure DOUBLE NOT NULL DEFAULT (''),");
+        builder.append("    obs_beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    obs_dataa DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    wc VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    wd VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    PRIMARY KEY(");
+        builder.append("        idturtle,");
+        builder.append("        idnest));");
+
+        return builder.toString();
+    }
+
     public static String createTableNestWithouTurtle(){
         StringBuilder builder = new StringBuilder();
 
