@@ -125,12 +125,55 @@ public class TurtleNestDataController {
                 turtleNestData.setWc(cursor.getString(cursor.getColumnIndexOrThrow("wc")));
                 turtleNestData.setWd(cursor.getString(cursor.getColumnIndexOrThrow("wd")));
 
-
-
+                data.add(turtleNestData);
             }
 
         }
         return data;
+    }
+
+
+    public TurtleNestData getOne(int idturtle,int idnest){
+
+        sql = new StringBuilder();
+        sql.append("SELECT * FROM turtlenestdata");
+        sql.append("WHERE idturtle = ? AND idnest = ?;");
+
+        parameters = new String[2];
+        parameters[0] = String.valueOf(idturtle);
+        parameters[1] = String.valueOf(idnest);
+
+        Cursor cursor = connection.rawQuery(sql.toString(),parameters);
+
+        if (cursor.getCount()>0){
+            cursor.moveToFirst();
+                turtleNestData = new TurtleNestData();
+
+                turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
+                turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idnest")));
+                turtleNestData.setHatched(cursor.getInt(cursor.getColumnIndexOrThrow("hatched")));
+                turtleNestData.setDied_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("died_in_nest")));
+                turtleNestData.setAlive_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("alive_in_nest")));
+                turtleNestData.setUndeveloped(cursor.getInt(cursor.getColumnIndexOrThrow("undeveloped")));
+                turtleNestData.setPredated_eggs(cursor.getInt(cursor.getColumnIndexOrThrow("predated_eggs")));
+                turtleNestData.setLeftring(cursor.getInt(cursor.getColumnIndexOrThrow("leftring")));
+                turtleNestData.setRightring(cursor.getInt(cursor.getColumnIndexOrThrow("rightring")));
+                turtleNestData.setInternal_tag(cursor.getInt(cursor.getColumnIndexOrThrow("internal_tag")));
+                turtleNestData.setHatch_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("hatch_dataa"))));
+                turtleNestData.setNest_marking_date(new Date(cursor.getString(cursor.getColumnIndexOrThrow("nest_marking_date"))));
+                turtleNestData.setTagg_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("tagg_dataa"))));
+                turtleNestData.setObs_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("obs_dataa"))));
+                turtleNestData.setNest_beach(cursor.getString(cursor.getColumnIndexOrThrow("nest_beach")));
+                turtleNestData.setHabitat(cursor.getString(cursor.getColumnIndexOrThrow("habitat")));
+                turtleNestData.setObs_beach(cursor.getString(cursor.getColumnIndexOrThrow("obs_beach")));
+                turtleNestData.setActivity(cursor.getString(cursor.getColumnIndexOrThrow("activity")));
+                turtleNestData.setWc(cursor.getString(cursor.getColumnIndexOrThrow("wc")));
+                turtleNestData.setWd(cursor.getString(cursor.getColumnIndexOrThrow("wd")));
+
+                return turtleNestData;
+
+            }
+                return null;
     }
 
 }
