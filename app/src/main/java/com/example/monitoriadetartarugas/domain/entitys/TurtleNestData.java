@@ -1,7 +1,6 @@
 package com.example.monitoriadetartarugas.domain.entitys;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class TurtleNestData implements Serializable {

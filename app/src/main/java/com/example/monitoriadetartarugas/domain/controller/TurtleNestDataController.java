@@ -44,6 +44,12 @@ public class TurtleNestDataController {
         contentValues.put("activity", turtleNestData.getActivity());
         contentValues.put("wc",turtleNestData.getWc());
         contentValues.put("wd",turtleNestData.getWd());
+        contentValues.put("ccl_measure",turtleNestData.getCcl_measure());
+        contentValues.put("cwl_measure",turtleNestData.getCwl_measure());
+        contentValues.put("gps_east",turtleNestData.getGps_east());
+        contentValues.put("gps_south",turtleNestData.getGps_south());
+        contentValues.put("unhatched",turtleNestData.getUnhatched());
+
 
         connection.insertOrThrow("turtlenestdata",null, contentValues);
     }
@@ -80,7 +86,11 @@ public class TurtleNestDataController {
         contentValues.put("activity", turtleNestData.getActivity());
         contentValues.put("wc",turtleNestData.getWc());
         contentValues.put("wd",turtleNestData.getWd());
-
+        contentValues.put("ccl_measure",turtleNestData.getCcl_measure());
+        contentValues.put("cwl_measure",turtleNestData.getCwl_measure());
+        contentValues.put("gps_east",turtleNestData.getGps_east());
+        contentValues.put("gps_south",turtleNestData.getGps_south());
+        contentValues.put("unhatched",turtleNestData.getUnhatched());
         parameters = new String[2];
 
         parameters[0] = String.valueOf(turtleNestData.getIdturtle());
@@ -124,7 +134,11 @@ public class TurtleNestDataController {
                 turtleNestData.setActivity(cursor.getString(cursor.getColumnIndexOrThrow("activity")));
                 turtleNestData.setWc(cursor.getString(cursor.getColumnIndexOrThrow("wc")));
                 turtleNestData.setWd(cursor.getString(cursor.getColumnIndexOrThrow("wd")));
-
+                turtleNestData.setCcl_measure(cursor.getDouble(cursor.getColumnIndexOrThrow("ccl_measure")));
+                turtleNestData.setCwl_measure(cursor.getDouble(cursor.getColumnIndexOrThrow("cwl_measure")));
+                turtleNestData.setGps_east(cursor.getFloat(cursor.getColumnIndexOrThrow("gps_east")));
+                turtleNestData.setGps_south(cursor.getFloat(cursor.getColumnIndexOrThrow("gps_south")));
+                turtleNestData.setUnhatched(cursor.getInt(cursor.getColumnIndexOrThrow("unhatched")));
                 data.add(turtleNestData);
             }
 
