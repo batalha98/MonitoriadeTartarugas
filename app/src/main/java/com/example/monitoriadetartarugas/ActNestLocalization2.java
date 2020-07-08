@@ -44,7 +44,7 @@ public class ActNestLocalization2 extends AppCompatActivity implements AdapterVi
     private EditText txt_observationField2;
     private DatePickerDialog picker;
 
-    private String toActNest;
+    private String toActNest, toNestWTurtleData;
     private Beach beach;
     private Habitat habitat;
     private BeachController beachController;
@@ -139,11 +139,17 @@ public class ActNestLocalization2 extends AppCompatActivity implements AdapterVi
             habitat = (Habitat) spinner_habitat2.getSelectedItem();
 
             toActNest = habitat.getIdhabitat()+
-                    "-"+beach.getBeach()+
-                    "-"+gpsSouth+
-                    "-"+gpsEast+
-                    "-"+date+
-                    "-"+observations;
+                    "!"+beach.getBeach()+
+                    "!"+gpsSouth+
+                    "!"+gpsEast+
+                    "!"+date+
+                    "!"+observations;
+
+            toNestWTurtleData = habitat.getIdhabitat()+
+                    "="+beach.getBeach()+
+                    "="+gpsSouth+
+                    "="+gpsEast+
+                    "="+date;
 
         }catch(Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -214,7 +220,7 @@ public class ActNestLocalization2 extends AppCompatActivity implements AdapterVi
                     Intent it = new Intent(this, ActNest2.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("toActNest2", toActNest);
+                    bundle.putString("toActNest2", toActNest +"#"+toNestWTurtleData);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.ajts.androidmads.library.SQLiteToExcel;
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
@@ -60,7 +61,6 @@ public class ActRecordsMenu extends AppCompatActivity{
             public void onClick(final View v) {
                 String directory_path = Environment.getExternalStorageDirectory().getPath()+ "/TurtlesDataExported/";
                 File file = new File(directory_path);
-                List<String> tables = new ArrayList<>();
 
                 if(!file.exists()){
                     file.mkdirs();
@@ -69,8 +69,11 @@ public class ActRecordsMenu extends AppCompatActivity{
                 sqLiteToExcel = new SQLiteToExcel(getApplicationContext(),
                         DataOpenHelper.DB_NAME, directory_path);
 
+                List<String> tables = new ArrayList<>();
 
-                sqLiteToExcel.exportSingleTable("turtlenestdata","turtles.xls", new SQLiteToExcel.ExportListener(){
+                tables.add("turtlenestdata"); tables.add("nestWTurtleData");
+
+                sqLiteToExcel.exportSpecificTables(tables, "turtles.xls", new SQLiteToExcel.ExportListener() {
                     @Override
                     public void onStart() {
 
@@ -78,12 +81,12 @@ public class ActRecordsMenu extends AppCompatActivity{
 
                     @Override
                     public void onCompleted(String filePath) {
-                        Utils.showSnackBar(v, "Exportado com sucesso!");
+                        Toast.makeText(getApplicationContext(),"Sucessfully exported!",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        Utils.showSnackBar(v, e.getMessage());
+                        Toast.makeText(getApplicationContext(),"Export failed!",Toast.LENGTH_SHORT).show();
                     }
                 });
             }

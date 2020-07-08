@@ -211,6 +211,36 @@ public class ScriptDDL {
         return builder.toString();
     }
 
+    public static String createTableNestWTurtleData(){
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("CREATE TABLE nestWTurtleData (");
+        builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    specie VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    gps_east FLOAT NOT NULL DEFAULT (''),");
+        builder.append("    gps_south FLOAT NOT NULL DEFAULT (''),");
+        builder.append("    nest_loc_date DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    depth INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    eggs_quantity INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    distance_to_tide FLOAT NOT NULL DEFAULT (''),");
+        builder.append("    nest_notes VARCHAR (255) NOT NULL DEFAULT (''),");
+        builder.append("    hatched INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    hatch_dataa DATETIME NOT NULL DEFAULT (''),");
+        builder.append("    died_in_nest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    alive_in_nest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    undeveloped INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    predated_eggs INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    unhatched INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    hatch_notes VARCHAR (255) NOT NULL DEFAULT (''),");
+        builder.append("    PRIMARY KEY (");
+        builder.append("        idnest,");
+        builder.append("        specie));");
+
+        return builder.toString();
+    }
+
     public static String createTableObserver(){
         StringBuilder builder = new StringBuilder();
 

@@ -72,6 +72,7 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 */
 
         db.execSQL(ScriptDDL.createTableTurtleNestData());
+        db.execSQL(ScriptDDL.createTableNestWTurtleData());
     }
 
     @Override

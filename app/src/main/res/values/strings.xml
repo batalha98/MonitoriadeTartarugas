@@ -2,7 +2,7 @@
     <string name="app">Monitoring Turtles</string>
     <string name="title_activity_act_main">ActMain</string>
     <string name="title_activity_main">Monitoring Turtles</string>
-    <string name="txtButton_turtle_and_nest">Location and Nesting Activities</string>
+    <string name="txtButton_turtle_and_nest">Turtle and Nesting Activities</string>
     <string name="txtButton_nest_without_turtle">Nest Without Turtle</string>
     <string name="txtButton_show_data">Records</string>
     <string name="title_activity_turtle_and_nest">Turtle</string>

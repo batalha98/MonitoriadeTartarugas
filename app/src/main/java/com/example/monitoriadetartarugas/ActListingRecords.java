@@ -1,17 +1,14 @@
 package com.example.monitoriadetartarugas;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -22,23 +19,22 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ajts.androidmads.library.SQLiteToExcel;
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.NestWithoutTurtleController;
 import com.example.monitoriadetartarugas.domain.controller.TurtleNestController;
-import com.example.monitoriadetartarugas.domain.entitys.Nest;
 import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
-import com.example.monitoriadetartarugas.domain.entitys.Turtle;
 import com.example.monitoriadetartarugas.domain.entitys.TurtleNest;
 import com.example.monitoriadetartarugas.listViewAdapter.NestWithoutTurtleAdapter;
 import com.example.monitoriadetartarugas.listViewAdapter.TurtleNestAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActListingRecords extends AppCompatActivity {
     private ListView listView;
     private String idDataName;
-    private String[] strings;
     private Bundle bundle;
 
     private FloatingActionButton fab;
@@ -137,7 +133,7 @@ public class ActListingRecords extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.menu_main_options, menu);
+        inflater.inflate(R.menu.context_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -159,6 +155,10 @@ public class ActListingRecords extends AppCompatActivity {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = getMenuInflater();
+
+            inflater.inflate(R.menu.list_options, menu);
+
             return true;
         }
 
@@ -169,6 +169,7 @@ public class ActListingRecords extends AppCompatActivity {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
             if(idDataName.equals("turtleNest")) {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
@@ -256,10 +257,53 @@ public class ActListingRecords extends AppCompatActivity {
         Intent it;
 
         switch (id){
-            case R.id.action_home:
-                it = new Intent(this, Act_Main.class);
-                startActivityForResult(it, 0);
-                break;
+            case R.id.action_export:
+                String directory_path = Environment.getExternalStorageDirectory().getPath()+ "/TurtlesDataExported/";
+                SQLiteToExcel sqLiteToExcel;
+                File file = new File(directory_path);
+
+                sqLiteToExcel = new SQLiteToExcel(getApplicationContext(),
+                        DataOpenHelper.DB_NAME, directory_path);
+
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+
+                if(idDataName.equals("turtleNest")){
+                    sqLiteToExcel.exportSingleTable("turtlenestdata","turtleNest.xls", new SQLiteToExcel.ExportListener(){
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onCompleted(String filePath) {
+                            Toast.makeText(getApplicationContext(),"Sucessfully exported!",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(getApplicationContext(),"Export failed!",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    sqLiteToExcel.exportSingleTable("nestWTurtleData","nestWTurtle.xls", new SQLiteToExcel.ExportListener(){
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onCompleted(String filePath) {
+                            Toast.makeText(getApplicationContext(),"Sucessfully exported!",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(getApplicationContext(),"Export failed!",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
         }
 
         return super.onOptionsItemSelected(item);

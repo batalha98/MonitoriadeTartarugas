@@ -20,10 +20,12 @@ import android.widget.Toast;
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.HatchlingController;
 import com.example.monitoriadetartarugas.domain.controller.NestController;
+import com.example.monitoriadetartarugas.domain.controller.NestWTurtleDataController;
 import com.example.monitoriadetartarugas.domain.controller.NestWithoutTurtleController;
 import com.example.monitoriadetartarugas.domain.controller.SpecieController;
 import com.example.monitoriadetartarugas.domain.entitys.Hatchling;
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
+import com.example.monitoriadetartarugas.domain.entitys.NestWTurtleData;
 import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
 import com.example.monitoriadetartarugas.domain.entitys.Specie;
 
@@ -41,11 +43,15 @@ public class ActHatchling_2 extends AppCompatActivity {
     private EditText txt_nrUnhatched2;
     private EditText txt_nrPredatedEggs2;
     private EditText txt_HatchDescription2;
+    private String toNestWTurtleData;
+    private String[] strings, stringsAux, stringsAux2;
 
     private DatePickerDialog picker;
     private Hatchling hatchling;
     private NestWithoutTurtle nestWithoutTurtle;
+    private NestWTurtleData nestWTurtleData;
 
+    private NestWTurtleDataController nestWTurtleDataController;
     private NestWithoutTurtleController nestWithoutTurtleController;
     private SpecieController specieController;
     private NestController nestController;
@@ -97,11 +103,13 @@ public class ActHatchling_2 extends AppCompatActivity {
 
     public void confirm() throws ParseException {
         connection = dataOpenHelper.getWritableDatabase();
+        nestWTurtleDataController = new NestWTurtleDataController(connection);
         hatchlingController = new HatchlingController(connection);
         nestWithoutTurtleController = new NestWithoutTurtleController(connection);
         nestController = new NestController(connection);
         specieController = new SpecieController(connection);
 
+        nestWTurtleData = new NestWTurtleData();
         nestWithoutTurtle = new NestWithoutTurtle();
         hatchling = new Hatchling();
 
@@ -121,19 +129,15 @@ public class ActHatchling_2 extends AppCompatActivity {
         if (bundle != null) {
             String receivedFromNest = bundle.getString("idnestAndSpecie2");
 
-            String[] strings = receivedFromNest.split("-");
+            strings = receivedFromNest.split("#");
+
+            stringsAux = strings[2].split("@");
 
             nest = nestController.fetchOne(Integer.parseInt(strings[0]));
             specie = specieController.fetchOne(Integer.parseInt(strings[1]));
-
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("por guardar na db: ");
-            alertDialog.setMessage(strings[0] +", specie: "+strings[1]);
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
         }
 
-        /*hatchling.setIdnest(nest);
+        hatchling.setIdnest(nest);
         hatchling.setHatched(Integer.parseInt(nrHatched));
         hatchling.setDataa(new Date(date));
         hatchling.setDied_in_nest(Integer.parseInt(diedInNest));
@@ -148,7 +152,36 @@ public class ActHatchling_2 extends AppCompatActivity {
 
         hatchlingController.insert(hatchling);
 
-        nestWithoutTurtleController.insert(nestWithoutTurtle);*/
+        nestWithoutTurtleController.insert(nestWithoutTurtle);
+
+        stringsAux2 = stringsAux[0].split("=");
+
+        nestWTurtleData.setHabitat(stringsAux2[0]);
+        nestWTurtleData.setBeach(stringsAux2[1]);
+        nestWTurtleData.setGps_east(Float.parseFloat(stringsAux2[2]));
+        nestWTurtleData.setGps_south(Float.parseFloat(stringsAux2[3]));
+        nestWTurtleData.setNest_loc_date(new Date(stringsAux2[4]));
+
+        stringsAux2 = stringsAux[1].split("=");
+
+        nestWTurtleData.setAlive_in_nest(Integer.parseInt(aliveInNest));
+        nestWTurtleData.setDied_in_nest(Integer.parseInt(diedInNest));
+        nestWTurtleData.setPredated_eggs(Integer.parseInt(predatedEggs));
+        nestWTurtleData.setHatch_notes(description);
+        nestWTurtleData.setUndeveloped(Integer.parseInt(undeveloped));
+        nestWTurtleData.setUnhatched(Integer.parseInt(unhatched));
+        nestWTurtleData.setHatched(Integer.parseInt(nrHatched));
+        nestWTurtleData.setHatch_dataa(new Date(date));
+
+        nestWTurtleData.setDepth(Integer.parseInt(stringsAux2[0]));
+        nestWTurtleData.setEggs_quantity(Integer.parseInt(stringsAux2[1]));
+        nestWTurtleData.setDistance_to_tide(Float.parseFloat(stringsAux2[2]));
+        nestWTurtleData.setNest_notes(stringsAux2[3]);
+
+        nestWTurtleData.setIdnest(nest.getIdnest());
+        nestWTurtleData.setSpecie(specie.getSpecie());
+
+        nestWTurtleDataController.insert(nestWTurtleData);
     }
 
     public boolean validateFields(){
@@ -227,14 +260,14 @@ public class ActHatchling_2 extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                   /* Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
                     Intent it = new Intent(this, ActListingRecords.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("idBtn","nestWithoutTurtle");
                     it.putExtras(bundle);
 
-                    startActivityForResult(it,  0);*/
+                    startActivityForResult(it,  0);
                 }
                 break;
         }

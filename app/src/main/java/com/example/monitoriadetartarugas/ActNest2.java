@@ -39,7 +39,8 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
     private EditText txt_nrEggsField2;
     private EditText txt_nrDistance2;
     private EditText txt_descriptionField2;
-    private String[] strings;
+    private String[] strings, strings2;
+    private String toNestWTurtleData;
 
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
@@ -114,7 +115,9 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
             if(bundle!=null){
                 receivedFromNest = bundle.getString("toActNest2");
 
-                strings = receivedFromNest.split("-");
+                strings = receivedFromNest.split("#");
+
+                strings2 = strings[0].split("!");
             }
 
             String depth = txt_depthField2.getText().toString();
@@ -129,13 +132,18 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
 
             idnest = nestController.insert(nest);
 
+            toNestWTurtleData = strings[1]+"@"+Integer.parseInt(depth)+
+                    "="+Integer.parseInt(eggs_quantity)+
+                    "="+Float.valueOf(distance)+
+                    "="+description;
+
             nestLocalization.setIdnest(nestController.fetchOne((int)idnest));
-            nestLocalization.setBeach(beachController.fetchOne(strings[1]));
-            nestLocalization.setNest_marking_date(new Date(strings[4]));
-            nestLocalization.setIdhabitat(habitatController.fetchOne(Integer.parseInt(strings[0])));
-            nestLocalization.setGpsSouth(Float.parseFloat(strings[2]));
-            nestLocalization.setGpsEast(Float.parseFloat(strings[3]));
-            nestLocalization.setNotes(strings[5]);
+            nestLocalization.setIdhabitat(habitatController.fetchOne(Integer.parseInt(strings2[0])));
+            nestLocalization.setBeach(beachController.fetchOne(strings2[1]));
+            nestLocalization.setGpsSouth(Float.parseFloat(strings2[2]));
+            nestLocalization.setGpsEast(Float.parseFloat(strings2[3]));
+            nestLocalization.setNest_marking_date(new Date(strings2[4]));
+            nestLocalization.setNotes(strings2[5]);
 
             nestLocalizationController.insert(nestLocalization);
     }
@@ -197,13 +205,13 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
                 if(validateFields() == false){
                     confirm();
 
-                    /*Intent it = new Intent(this, ActHatchling_2.class);
+                    Intent it = new Intent(this, ActHatchling_2.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("idnestAndSpecie2", idnest+"-"+specie.getIdspecie());
+                    bundle.putString("idnestAndSpecie2", idnest+"#"+specie.getIdspecie()+"#"+toNestWTurtleData);
                     it.putExtras(bundle);
 
-                    startActivityForResult(it, 0);*/
+                    startActivityForResult(it, 0);
                 }
                 break;
         }

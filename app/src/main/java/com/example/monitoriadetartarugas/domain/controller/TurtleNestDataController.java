@@ -15,7 +15,7 @@ public class TurtleNestDataController {
     private SQLiteDatabase connection;
     private String[] parameters;
     private StringBuilder sql;
-    TurtleNestData turtleNestData;
+    private TurtleNestData turtleNestData;
 
     public TurtleNestDataController(SQLiteDatabase connection) {
         this.connection = connection;
