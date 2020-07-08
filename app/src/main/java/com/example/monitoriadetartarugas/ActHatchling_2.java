@@ -27,6 +27,8 @@ import com.example.monitoriadetartarugas.domain.entitys.Nest;
 import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
 import com.example.monitoriadetartarugas.domain.entitys.Specie;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -90,65 +92,63 @@ public class ActHatchling_2 extends AppCompatActivity {
         txt_nrPredatedEggs2 = findViewById(R.id.txt_nrPredatedEggs2);
         txt_HatchDescription2 = findViewById(R.id.txt_HatchDescription2);
 
+        dataOpenHelper = new DataOpenHelper(this);
     }
 
-    public void confirm(){
-        try {
-            connection = dataOpenHelper.getWritableDatabase();
-            hatchlingController = new HatchlingController(connection);
-            nestWithoutTurtleController = new NestWithoutTurtleController(connection);
-            nestController = new NestController(connection);
-            specieController = new SpecieController(connection);
+    public void confirm() throws ParseException {
+        connection = dataOpenHelper.getWritableDatabase();
+        hatchlingController = new HatchlingController(connection);
+        nestWithoutTurtleController = new NestWithoutTurtleController(connection);
+        nestController = new NestController(connection);
+        specieController = new SpecieController(connection);
 
-            nestWithoutTurtle = new NestWithoutTurtle();
-            hatchling = new Hatchling();
+        nestWithoutTurtle = new NestWithoutTurtle();
+        hatchling = new Hatchling();
 
-            Nest nest = new Nest();
-            Specie specie = new Specie();
-            Bundle bundle = getIntent().getExtras();
+        Nest nest = new Nest();
+        Specie specie = new Specie();
+        Bundle bundle = getIntent().getExtras();
 
-            String date = dateOfBirthField2.getText().toString();
-            String nrHatched = txt_nrHatched2.getText().toString();
-            String diedInNest = txt_nrDiedInNest2.getText().toString();
-            String aliveInNest = txt_nrAliveInNest2.getText().toString();
-            String undeveloped = txt_nrUndeveloped2.getText().toString();
-            String unhatched = txt_nrUnhatched2.getText().toString();
-            String predatedEggs = txt_nrPredatedEggs2.getText().toString();
-            String description = txt_HatchDescription2.getText().toString();
+        String date = dateOfBirthField2.getText().toString();
+        String nrHatched = txt_nrHatched2.getText().toString();
+        String diedInNest = txt_nrDiedInNest2.getText().toString();
+        String aliveInNest = txt_nrAliveInNest2.getText().toString();
+        String undeveloped = txt_nrUndeveloped2.getText().toString();
+        String unhatched = txt_nrUnhatched2.getText().toString();
+        String predatedEggs = txt_nrPredatedEggs2.getText().toString();
+        String description = txt_HatchDescription2.getText().toString();
 
-            if (bundle != null) {
-                String receivedFromNest = bundle.getString("idnestAndSpecie2");
+        if (bundle != null) {
+            String receivedFromNest = bundle.getString("idnestAndSpecie2");
 
-                String[] strings = receivedFromNest.split("-");
-                nest = nestController.fetchOne(Integer.parseInt(strings[0]));
-                specie = specieController.fetchOne(Integer.parseInt(strings[1]));
-            }
+            String[] strings = receivedFromNest.split("-");
 
-            hatchling.setIdnest(nest);
-            hatchling.setHatched(Integer.parseInt(nrHatched));
-            hatchling.setDataa(new Date(date));
-            hatchling.setDied_in_nest(Integer.parseInt(diedInNest));
-            hatchling.setAlive_in_nest(Integer.parseInt(aliveInNest));
-            hatchling.setUndeveloped(Integer.parseInt(undeveloped));
-            hatchling.setPredated_eggs(Integer.parseInt(predatedEggs));
-            hatchling.setUnhatched(Integer.parseInt(unhatched));
-            hatchling.setDescription(description);
+            nest = nestController.fetchOne(Integer.parseInt(strings[0]));
+            specie = specieController.fetchOne(Integer.parseInt(strings[1]));
 
-            nestWithoutTurtle.setIdnest(nest);
-            nestWithoutTurtle.setIdspecie(specie);
-
-            hatchlingController.insert(hatchling);
-
-            nestWithoutTurtleController.insert(nestWithoutTurtle);
-//            inserir um observador (utilizador logado)
-
-        }catch (Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
+            alertDialog.setTitle("por guardar na db: ");
+            alertDialog.setMessage(strings[0] +", specie: "+strings[1]);
             alertDialog.setNeutralButton("OK", null);
             alertDialog.show();
         }
+
+        /*hatchling.setIdnest(nest);
+        hatchling.setHatched(Integer.parseInt(nrHatched));
+        hatchling.setDataa(new Date(date));
+        hatchling.setDied_in_nest(Integer.parseInt(diedInNest));
+        hatchling.setAlive_in_nest(Integer.parseInt(aliveInNest));
+        hatchling.setUndeveloped(Integer.parseInt(undeveloped));
+        hatchling.setPredated_eggs(Integer.parseInt(predatedEggs));
+        hatchling.setUnhatched(Integer.parseInt(unhatched));
+        hatchling.setDescription(description);
+
+        nestWithoutTurtle.setIdnest(nest);
+        nestWithoutTurtle.setIdspecie(specie);
+
+        hatchlingController.insert(hatchling);
+
+        nestWithoutTurtleController.insert(nestWithoutTurtle);*/
     }
 
     public boolean validateFields(){
@@ -221,16 +221,20 @@ public class ActHatchling_2 extends AppCompatActivity {
                 break;
             case R.id.action_report:
                 if(validateFields() == false) {
-                    confirm();
+                    try {
+                        confirm();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-                    Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
+                   /* Toast.makeText(this, "Info added successfully!", Toast.LENGTH_LONG).show();
                     Intent it = new Intent(this, ActListingRecords.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("idBtn","nestWithoutTurtle");
                     it.putExtras(bundle);
 
-                    startActivityForResult(it,  0);
+                    startActivityForResult(it,  0);*/
                 }
                 break;
         }

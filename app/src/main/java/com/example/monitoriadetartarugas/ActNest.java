@@ -21,6 +21,8 @@ import com.example.monitoriadetartarugas.domain.controller.NestLocalizationContr
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
 import com.example.monitoriadetartarugas.domain.entitys.NestLocalization;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ActNest extends AppCompatActivity {
@@ -36,7 +38,7 @@ public class ActNest extends AppCompatActivity {
     private String[] strings;
     private String[] splitNestLocalization;
     private String[] splitObservation;
-    private String receivedFromActObservation;
+    private String receivedFromActObservation, toTurtleNestData;
     private HabitatController habitatController;
     private NestLocalizationController nestLocalizationController;
     private BeachController beachController;
@@ -77,54 +79,53 @@ public class ActNest extends AppCompatActivity {
         }
     }
 
-    public void confirm(){
-        try {
-            NestLocalization nestLocalization = new NestLocalization();
-            Nest nest = new Nest();
-            receivedFromActObservation = "";
-            Bundle bundle = getIntent().getExtras();
-            String depth = txt_depthField.getText().toString();
-            String eggs_quantity = txt_nrEggsField.getText().toString();
-            String distance = txt_nrDistance.getText().toString();
-            String description = txt_descriptionField.getText().toString();
+    public void confirm() throws ParseException {
+        NestLocalization nestLocalization = new NestLocalization();
+        Nest nest = new Nest();
+        receivedFromActObservation = "";
+        Bundle bundle = getIntent().getExtras();
+        String depth = txt_depthField.getText().toString();
+        String eggs_quantity = txt_nrEggsField.getText().toString();
+        String distance = txt_nrDistance.getText().toString();
+        String description = txt_descriptionField.getText().toString();
 
-            if(bundle != null){
-                receivedFromActObservation = bundle.getString("actNestLocalAndObservation");
-                strings = receivedFromActObservation.split("#");
+        if(bundle != null){
+            receivedFromActObservation = bundle.getString("actNestLocalAndObservation");
+            strings = receivedFromActObservation.split("#");
 
-                /*
-                * strings[0] = nestlocalization
-                * strings[1] = observation
-                * */
-            }
-
-            splitNestLocalization = strings[0].split("-");
-            splitObservation = strings[1].split("-");
-
-            nest.setDepth(Integer.parseInt(depth));
-            nest.setNotes(description);
-            nest.setDistance_to_tide(Float.valueOf(distance));
-            nest.setEggs_quantity(Integer.parseInt(eggs_quantity));
-
-            idnest = nestController.insert(nest);
-
-            nestLocalization.setIdnest(nestController.fetchOne((int) idnest));
-            nestLocalization.setGpsEast(Float.valueOf(splitNestLocalization[0]));
-            nestLocalization.setGpsSouth(Float.valueOf(splitNestLocalization[1]));
-            nestLocalization.setIdhabitat(
-                    habitatController.fetchOne(Integer.parseInt(splitNestLocalization[2])));
-            nestLocalization.setNotes(splitNestLocalization[3]);
-            nestLocalization.setNest_marking_date(new Date(splitNestLocalization[4]));
-            nestLocalization.setBeach(beachController.fetchOne(splitObservation[0]));
-
-            nestLocalizationController.insert(nestLocalization);
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
+            /*
+            * strings[0] = nestlocalization
+            * strings[1] = observation
+            * */
         }
+
+        splitNestLocalization = strings[0].split("-");
+        splitObservation = strings[1].split("-");
+
+        nest.setDepth(Integer.parseInt(depth));
+        nest.setNotes(description);
+        nest.setDistance_to_tide(Float.valueOf(distance));
+        nest.setEggs_quantity(Integer.parseInt(eggs_quantity));
+
+        idnest = nestController.insert(nest);
+
+        nestLocalization.setIdnest(nestController.fetchOne((int) idnest));
+        nestLocalization.setGpsEast(Float.valueOf(splitNestLocalization[0]));
+        nestLocalization.setGpsSouth(Float.valueOf(splitNestLocalization[1]));
+        nestLocalization.setIdhabitat(
+              habitatController.fetchOne(Integer.parseInt(splitNestLocalization[2])));
+        nestLocalization.setNotes(splitNestLocalization[3]);
+
+        nestLocalization.setNest_marking_date(new Date(splitNestLocalization[4]));
+        nestLocalization.setBeach(beachController.fetchOne(splitObservation[0]));
+
+        nestLocalizationController.insert(nestLocalization);
+
+        toTurtleNestData = strings[2] +"!"
+                +idnest+"-"
+                +Integer.parseInt(depth)+"-"
+                +Integer.parseInt(eggs_quantity)+"-"
+                +Float.valueOf(distance);
     }
 
     public boolean validateFields(){
@@ -133,7 +134,6 @@ public class ActNest extends AppCompatActivity {
         String depth = txt_depthField.getText().toString();
         String eggs_quantity = txt_nrEggsField.getText().toString();
         String distance = txt_nrDistance.getText().toString();
-        String description = txt_descriptionField.getText().toString();
 
         if(res = isEmptyField(depth)){
             txt_depthField.requestFocus();
@@ -183,12 +183,17 @@ public class ActNest extends AppCompatActivity {
 
             case R.id.action_next:
                 if(validateFields() == false){
-                    confirm();
+                    try {
+                        confirm();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     Intent it = new Intent(this, ActHatchling.class);
 
-                    strings[1] += "#"+idnest;
+                    String toSend = strings[1] +"#"+idnest+"#"+toTurtleNestData;
+
                     Bundle bundle = new Bundle();
-                    bundle.putString("observationFromActNest", strings[1]);
+                    bundle.putString("observationFromActNest", toSend);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

@@ -144,6 +144,7 @@ public class ActNestLocalization2 extends AppCompatActivity implements AdapterVi
                     "-"+gpsEast+
                     "-"+date+
                     "-"+observations;
+
         }catch(Exception e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);

@@ -6,12 +6,12 @@ import java.util.Date;
 public class TurtleNestData implements Serializable {
 
     int idturtle, idnest,hatched,died_in_nest,alive_in_nest,undeveloped,unhatched,predated_eggs,
-            leftring,rightring,internal_tag;
+            leftring,rightring,internal_tag, depth, eggs_quantity;
     Date hatch_dataa, nest_marking_date,tagg_dataa,obs_dataa;
     String nest_beach,habitat,obs_beach,activity,wc,wd;
 
     double ccl_measure,cwl_measure;
-    float gps_east,gps_south;
+    float gps_east,gps_south,dune_height, distance_to_tide;
 
     public TurtleNestData() {
     }
@@ -214,5 +214,37 @@ public class TurtleNestData implements Serializable {
 
     public void setGps_south(float gps_south) {
         this.gps_south = gps_south;
+    }
+
+    public float getDune_height() {
+        return dune_height;
+    }
+
+    public void setDune_height(float dune_height) {
+        this.dune_height = dune_height;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public int getEggs_quantity() {
+        return eggs_quantity;
+    }
+
+    public void setEggs_quantity(int eggs_quantity) {
+        this.eggs_quantity = eggs_quantity;
+    }
+
+    public float getDistance_to_tide() {
+        return distance_to_tide;
+    }
+
+    public void setDistance_to_tide(float distance_to_tide) {
+        this.distance_to_tide = distance_to_tide;
     }
 }

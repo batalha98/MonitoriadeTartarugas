@@ -44,15 +44,8 @@ public class ActTaggs extends AppCompatActivity {
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
+    private String receivedFromHatchling, toTurtle, toTurtleNestData, sendToTurtle;
     private String[] strings;
-    private String receivedFromHatchling, toTurtle = "";
-    private TurtleNest turtleNest;
-    private TurtleTaggs turtleTaggs;
-    private TurtleController turtleController;
-    private TurtleNestController turtleNestController;
-    private NestController nestController;
-
-    private TurtleTaggsController turtleTaggsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +87,9 @@ public class ActTaggs extends AppCompatActivity {
     }
 
     public void confirm(){
-        try {
             Bundle bundle = getIntent().getExtras();
 
-            Date tagDate = new Date(tagginDate.getText().toString());
+            String tagDate = tagginDate.getText().toString();
             int leftRing = Integer.parseInt(txt_nrLeftRing.getText().toString());
             int rightRing = Integer.parseInt(txt_nrRightRing.getText().toString());
             int internalTag = Integer.parseInt(txt_nrInternalTag.getText().toString());
@@ -106,24 +98,28 @@ public class ActTaggs extends AppCompatActivity {
 
             if(bundle != null){
                 receivedFromHatchling = bundle.getString("observation");
+
+                strings = receivedFromHatchling.split("_");
+
+                sendToTurtle = strings[0]+"_"+strings[1];
                 //strings[0]: idnest
                 //strings[1]: observation
             }
 
-            toTurtle = receivedFromHatchling+"@"+tagDate+
+            toTurtle = sendToTurtle+"@"+tagDate+
                     "-"+leftRing+
                     "-"+rightRing+
                     "-"+internalTag+
                     "-"+cclMeasure+
                     "-"+cwlMeasure;
 
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+            toTurtleNestData = strings[2]+"!"
+                    +tagDate+"-"
+                    +leftRing+"-"
+                    +rightRing+"-"
+                    +internalTag+"-"
+                    +cclMeasure+"-"
+                    +cwlMeasure;
     }
 
     public boolean validateFields(){
@@ -198,7 +194,7 @@ public class ActTaggs extends AppCompatActivity {
                     Intent it = new Intent(this, ActTurtle.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("finalStage", toTurtle);
+                    bundle.putString("finalStage", toTurtle+"#"+toTurtleNestData);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

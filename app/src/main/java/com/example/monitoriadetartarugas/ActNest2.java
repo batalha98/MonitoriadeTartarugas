@@ -39,6 +39,7 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
     private EditText txt_nrEggsField2;
     private EditText txt_nrDistance2;
     private EditText txt_descriptionField2;
+    private String[] strings;
 
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
@@ -97,7 +98,6 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     public void confirm(){
-        try {
             connection = dataOpenHelper.getWritableDatabase();
             nestLocalizationController = new NestLocalizationController(connection);
             nestController = new NestController(connection);
@@ -108,7 +108,6 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
 
             Bundle bundle = getIntent().getExtras();
             String receivedFromNest;
-            String[] strings = new String[0];
             nest = new Nest();
             nestLocalization = new NestLocalization();
 
@@ -139,13 +138,6 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
             nestLocalization.setNotes(strings[5]);
 
             nestLocalizationController.insert(nestLocalization);
-        }catch(Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
     }
 
     public boolean validateFields(){
@@ -205,13 +197,13 @@ public class ActNest2 extends AppCompatActivity implements AdapterView.OnItemSel
                 if(validateFields() == false){
                     confirm();
 
-                    Intent it = new Intent(this, ActHatchling_2.class);
+                    /*Intent it = new Intent(this, ActHatchling_2.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("idnestAndSpecie", idnest+"-"+specie.getIdspecie());
+                    bundle.putString("idnestAndSpecie2", idnest+"-"+specie.getIdspecie());
                     it.putExtras(bundle);
 
-                    startActivityForResult(it, 0);
+                    startActivityForResult(it, 0);*/
                 }
                 break;
         }

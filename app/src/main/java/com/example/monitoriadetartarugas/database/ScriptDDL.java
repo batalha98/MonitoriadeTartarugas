@@ -159,6 +159,9 @@ public class ScriptDDL {
         builder.append("CREATE TABLE turtlenestdata(");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    depth  INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    eggs_quantity INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    distance_to_tide FLOAT NOT NULL DEFAULT (''),");
         builder.append("    hatch_dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    hatched INT (11) NOT NULL DEFAULT (''),");
         builder.append("    died_in_nest INT (11) NOT NULL DEFAULT (''),");
@@ -182,6 +185,7 @@ public class ScriptDDL {
         builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    wc VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    wd VARCHAR (45) NOT NULL DEFAULT (''),");
+        builder.append("    dune_height FLOAT NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY(");
         builder.append("        idturtle,");
         builder.append("        idnest));");

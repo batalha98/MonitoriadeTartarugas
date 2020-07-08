@@ -23,12 +23,12 @@ import com.example.monitoriadetartarugas.domain.controller.NestController;
 import com.example.monitoriadetartarugas.domain.entitys.Hatchling;
 import com.example.monitoriadetartarugas.domain.entitys.Nest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class ActHatchling extends AppCompatActivity {
-
-
     private EditText dateOfBirthField;
     private EditText txt_nrHatched;
     private EditText txt_nrDiedInNest;
@@ -43,7 +43,7 @@ public class ActHatchling extends AppCompatActivity {
     private DataOpenHelper dataOpenHelper;
 
     private String[] strings;
-    private String receivedFromNest;
+    private String receivedFromNest, toTurtleNestData;
     private Hatchling hatchling;
     private NestController nestController;
     private HatchlingController hatchlingController;
@@ -89,8 +89,8 @@ public class ActHatchling extends AppCompatActivity {
         dataOpenHelper = new DataOpenHelper(this);
     }
 
-    public void confirm(){
-        try {
+    public void confirm() throws ParseException {
+
             connection = dataOpenHelper.getWritableDatabase();
             hatchlingController = new HatchlingController(connection);
 
@@ -128,13 +128,15 @@ public class ActHatchling extends AppCompatActivity {
             hatchling.setDescription(description);
 
             hatchlingController.insert(hatchling);
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+
+            toTurtleNestData = strings[2]+"!"
+                    +Integer.parseInt(nrHatched)+"-"
+                    +date+"-"
+                    +Integer.parseInt(diedInNest)+"-"
+                    +Integer.parseInt(aliveInNest)+"-"
+                    +Integer.parseInt(undeveloped)+"-"
+                    +Integer.parseInt(predatedEggs)+"-"
+                    +Integer.parseInt(unhatched);
     }
 
     public boolean validateFields(){
@@ -147,7 +149,6 @@ public class ActHatchling extends AppCompatActivity {
         String undeveloped = txt_nrUndeveloped.getText().toString();
         String unhatched = txt_nrUnhatched.getText().toString();
         String predatedEggs = txt_nrPredatedEggs.getText().toString();
-        String description = txt_HatchDescription.getText().toString();
 
         if(res = isEmptyField(date)){
             dateOfBirthField.requestFocus();
@@ -209,12 +210,16 @@ public class ActHatchling extends AppCompatActivity {
 
             case R.id.action_next:
                 if(validateFields() == false){
-                    confirm();
+                    try {
+                        confirm();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
                     Intent it = new Intent(this, ActTaggs.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("observation", Integer.parseInt(strings[1])+"_"+strings[0]);
+                    bundle.putString("observation", Integer.parseInt(strings[1])+"_"+strings[0]+"_"+toTurtleNestData);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

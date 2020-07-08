@@ -47,19 +47,12 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
     private DatePickerDialog picker;
 
     private Habitat habitat;
-    private String[] strings;
     private SQLiteDatabase connection;
     private DataOpenHelper dataOpenHelper;
 
-    private String toActObservation;
-    private NestController nestController;
-    private NestLocalization nestLocalization;
-    private LocalizationAndObservation localizationAndObservation;
+    private String toActObservation, toTurtleNestData;
 
     private HabitatController habitatController;
-    private BeachController beachController;
-    private NestLocalizationController nestLocalizationController;
-    private LocalizationAndObservationController localizationAndObservationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,18 +91,15 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
 
         spinner_habitatName.setOnItemSelectedListener(this);
 
-        dataOpenHelper = new DataOpenHelper(this);
-
         getSpinnerValues();
     }
 
     public void getSpinnerValues(){
         try {
+            dataOpenHelper = new DataOpenHelper(this);
             connection = dataOpenHelper.getReadableDatabase();
             habitatController = new HabitatController(connection);
-            beachController = new BeachController(connection);
-            nestController = new NestController(connection);
-        }catch(SQLException e){
+         }catch(SQLException e){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle(R.string.title_msgErro);
             alertDialog.setMessage(e.getMessage());
@@ -131,34 +121,21 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
     }
 
     public void confirm(){
-        try {
-            connection = dataOpenHelper.getWritableDatabase();
-            localizationAndObservationController = new LocalizationAndObservationController(connection);
-            nestLocalizationController = new NestLocalizationController(connection);
+        String observations = txt_observationField.getText().toString();
+        String date = dateLocalization.getText().toString();
+        Float gpsEast = Float.valueOf(txt_gpsEast.getText().toString());
+        Float gpsSouth = Float.valueOf(txt_gpsSouth.getText().toString());
 
-            strings = null;
-            nestLocalization = new NestLocalization();
-//            Beach beach = new Beach();
-//            Nest nest = new Nest();
+        toActObservation = gpsEast+
+                "-"+gpsSouth+
+                "-"+habitat.getIdhabitat()+
+                "-"+observations+
+                "-"+date;
 
-            String observations = txt_observationField.getText().toString();
-            String date = dateLocalization.getText().toString();
-            Float gpsEast = Float.valueOf(txt_gpsEast.getText().toString());
-            Float gpsSouth = Float.valueOf(txt_gpsSouth.getText().toString());
-            Date date1 = new Date(date);
-
-            toActObservation = gpsEast+"-"+
-                    gpsSouth+"-"+habitat.getIdhabitat()+"-"+
-                    observations+"-"+date1;
-
-            //nestLocalizationController.insert(nestLocalization);
-        }catch (Exception e){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle(R.string.title_msgErro);
-            alertDialog.setMessage(e.getMessage());
-            alertDialog.setNeutralButton("OK", null);
-            alertDialog.show();
-        }
+        toTurtleNestData = gpsEast+
+                "-"+gpsSouth+
+                "-"+habitat.getHabitat()+
+                "-"+date;
     }
 
     public boolean validateFields(){
@@ -220,7 +197,7 @@ public class ActNestLocalization extends AppCompatActivity implements AdapterVie
                     Intent it = new Intent(this, ActObservation.class);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("nestlocalizationData", toActObservation);
+                    bundle.putString("nestlocalizationData", toActObservation+"!"+toTurtleNestData);
                     it.putExtras(bundle);
 
                     startActivityForResult(it, 0);

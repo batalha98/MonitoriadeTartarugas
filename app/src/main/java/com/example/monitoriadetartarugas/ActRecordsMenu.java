@@ -69,37 +69,8 @@ public class ActRecordsMenu extends AppCompatActivity{
                 sqLiteToExcel = new SQLiteToExcel(getApplicationContext(),
                         DataOpenHelper.DB_NAME, directory_path);
 
-/*                tables.add("turtle");
-                tables.add("nest");
-                tables.add("observation");
-                tables.add("turtlenest");
-                tables.add("nestwithoutturtle");
-                tables.add("observerobservation");
-                tables.add("nestlocalization");
-                tables.add("turtleactivities");
-                tables.add("turtletags");
-                tables.add("localizationandobservation");
-                tables.add("hatchlings");
-                tables.add("observationandobserver");
 
-                sqLiteToExcel.exportSpecificTables(tables, "turtles.xls", new SQLiteToExcel.ExportListener() {
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onCompleted(String filePath) {
-                        Utils.showSnackBar(v, "Success!!!");
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Utils.showSnackBar(v, e.getMessage());
-                    }
-                });*/
-
-                sqLiteToExcel.exportAllTables("turtles.xls", new SQLiteToExcel.ExportListener(){
+                sqLiteToExcel.exportSingleTable("turtlenestdata","turtles.xls", new SQLiteToExcel.ExportListener(){
                     @Override
                     public void onStart() {
 

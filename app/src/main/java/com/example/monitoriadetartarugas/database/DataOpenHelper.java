@@ -55,17 +55,21 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 
         db.execSQL(ScriptDDL.createTableNestLocalization());
 
-//        db.execSQL(ScriptDDL.createTableLocalizationAndObservation());
-//        db.execSQL(ScriptDDL.createTableObserver());
+/*
+        db.execSQL(ScriptDDL.createTableLocalizationAndObservation());
+        db.execSQL(ScriptDDL.createTableObserver());
+*/
 
         db.execSQL(ScriptDDL.createTableHatchlings());
         db.execSQL(ScriptDDL.createTableTurtleTaggs());
         db.execSQL(ScriptDDL.createTableTurtleNest());
         db.execSQL(ScriptDDL.createTableNestWithouTurtle());
-//        db.execSQL(ScriptDDL.createTableObservationAndObserver());
-//        db.execSQL(ScriptDDL.createTableObserverObservation());
-//        db.execSQL(ScriptDDL.createTableUsers());
-//        db.execSQL("INSERT INTO users (email,password) VALUES ('test@gmail.com','123')");
+/*
+        db.execSQL(ScriptDDL.createTableObservationAndObserver());
+        db.execSQL(ScriptDDL.createTableObserverObservation());
+        db.execSQL(ScriptDDL.createTableUsers());
+        db.execSQL("INSERT INTO users (email,password) VALUES ('test@gmail.com','123')");
+*/
 
         db.execSQL(ScriptDDL.createTableTurtleNestData());
     }
