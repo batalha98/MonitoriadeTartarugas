@@ -145,7 +145,7 @@ public class ActNestLocalization2 extends AppCompatActivity implements AdapterVi
                     "!"+date+
                     "!"+observations;
 
-            toNestWTurtleData = habitat.getIdhabitat()+
+            toNestWTurtleData = habitat.getHabitat()+
                     "="+beach.getBeach()+
                     "="+gpsSouth+
                     "="+gpsEast+

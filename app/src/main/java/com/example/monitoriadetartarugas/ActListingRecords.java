@@ -217,6 +217,7 @@ public class ActListingRecords extends AppCompatActivity {
 
         @Override
         public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
             if(idDataName.equals("turtleNest")){
                 String turtleNest = turtleNestController.fetchAll().get(position).toString();
                 TurtleNest tn = turtleNestController.fetchAll().get(position);

@@ -4,49 +4,48 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.monitoriadetartarugas.domain.entitys.Activities;
+import com.example.monitoriadetartarugas.domain.entitys.Users;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersController {
-   /* private SQLiteDatabase connection;
+    private SQLiteDatabase connection;
 
-    public ActivitiesController(SQLiteDatabase connection){
+    public UsersController(SQLiteDatabase connection){
         this.connection = connection;
     }
 
-    public void insert(Activities activities){
+    public void insert(Users users){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("activity", activities.getActivity());
+        contentValues.put("email", users.getEmail());
+        contentValues.put("password", users.getPassword());
 
-        connection.insertOrThrow("activities",null, contentValues);
+        connection.insertOrThrow("users",null, contentValues);
     }
 
-    public void remove(int idactivity){
+    public void remove(String email){
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idactivity);
+        parameters[0] = email;
 
-        connection.delete("activities","idactivity = ?",parameters);
+        connection.delete("users","email = ?",parameters);
     }
 
-    public void edit(Activities activities){
+    public void edit(Users users){
         ContentValues contentValues = new ContentValues();
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(activities.getIdactivity());
+        parameters[0] = users.getEmail();
 
-        connection.update("activities", contentValues,"idactivity = ?", parameters);
+        connection.update("users", contentValues,"email = ?", parameters);
     }
 
-    public List<Activities> fetchAll(){
-        List<Activities> activitiesList = new ArrayList<>();
+    public List<Users> fetchAll(){
+        List<Users> usersList = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idactivity,");
-        sql.append("       activity");
-        sql.append("  FROM activities;");
+        sql.append("SELECT * FROM users;");
 
         try {
             Cursor result = connection.rawQuery(sql.toString(), null);
@@ -55,44 +54,43 @@ public class UsersController {
                 result.moveToFirst();
 
                 do{
-                    Activities activities = new Activities();
+                    Users users = new Users();
 
-                    activities.setIdactivity(result.getInt(result.getColumnIndexOrThrow("idactivity")));
-                    activities.setActivity(result.getString(result.getColumnIndexOrThrow("activity")));
+                    users.setEmail(result.getString(result.getColumnIndexOrThrow("email")));
+                    users.setPassword(result.getString(result.getColumnIndexOrThrow("password")));
 
-                    activitiesList.add(activities);
+                    usersList.add(users);
                 }while(result.moveToNext());
             }
         }catch (NullPointerException e){
             e.printStackTrace();
         }
 
-        return activitiesList;
+        return usersList;
     }
 
-    public Activities fetchOne(int idactivity){
-        Activities activities = new Activities();
+    public Users fetchOne(String email, String password){
+        Users users = new Users();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idactivity,");
-        sql.append("       activity");
-        sql.append("  FROM activities");
-        sql.append("  WHERE idactivity = ?;");
+        sql.append("SELECT * FROM users");
+        sql.append("  WHERE email = ? AND password = ?;");
 
-        String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idactivity);
+        String[] parameters = new String[2];
+        parameters[0] = email;
+        parameters[1] = password;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();
 
-            activities.setIdactivity(result.getInt(result.getColumnIndexOrThrow("idactivity")));
-            activities.setActivity(result.getString(result.getColumnIndexOrThrow("activity")));
+            users.setEmail(result.getString(result.getColumnIndexOrThrow("email")));
+            users.setPassword(result.getString(result.getColumnIndexOrThrow("password")));
 
-            return activities;
+            return users;
         }
 
         return null;
-    }*/
+    }
 }

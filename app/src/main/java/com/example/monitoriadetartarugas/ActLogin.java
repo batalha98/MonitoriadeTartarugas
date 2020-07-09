@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
+import com.example.monitoriadetartarugas.domain.controller.UsersController;
 
 public class ActLogin extends AppCompatActivity {
     EditText username;
@@ -20,9 +21,9 @@ public class ActLogin extends AppCompatActivity {
     String txtUsername, txtPassword;
     Button btnLogin;
     DataOpenHelper dataOpenHelper;
-    SQLiteDatabase sqLiteDatabase;
+    SQLiteDatabase conn;
     SharedPreferences sp;
-
+    UsersController usersController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,22 +35,32 @@ public class ActLogin extends AppCompatActivity {
         password = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btn_login);
 
+        dataOpenHelper = new DataOpenHelper(this);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             if(isEmptyFields()){
                 Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
             }else{
+                conn = dataOpenHelper.getReadableDatabase();
+                usersController = new UsersController(conn);
+                String uname = username.getText().toString();
+                String pwd = password.getText().toString();
 
-                Intent intent = new Intent(ActLogin.this, Act_Main.class);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("uname",txtUsername);
-                editor.putString("pwd",txtPassword);
-                editor.commit();
+                if(usersController.fetchOne(uname, pwd)!=null){
+                    Intent intent = new Intent(ActLogin.this, Act_Main.class);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("uname",txtUsername);
+                    editor.putString("pwd",txtPassword);
+                    editor.commit();
 
-                Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
 
-                startActivity(intent);
+                    startActivity(intent);
+                } else{
+                    Toast.makeText(getApplicationContext(), "You are not registered! Please contact the owner.",Toast.LENGTH_SHORT).show();
+                }
             }
             }
         });

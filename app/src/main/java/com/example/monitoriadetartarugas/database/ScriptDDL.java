@@ -5,7 +5,7 @@ public class ScriptDDL {
     public static String createTableActivities(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE activities(");
+        builder.append("CREATE TABLE IF NOT EXISTS activities(");
         builder.append("    idactivity INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -15,7 +15,7 @@ public class ScriptDDL {
     public static String createTableBeach(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE beach(");
+        builder.append("CREATE TABLE IF NOT EXISTS beach(");
         builder.append("    beach  VARCHAR (45) NOT NULL PRIMARY KEY,");
         builder.append("    island VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    FOREIGN KEY(");
@@ -28,7 +28,7 @@ public class ScriptDDL {
     public static String createTableTurtle(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE turtle(");
+        builder.append("CREATE TABLE IF NOT EXISTS turtle(");
         builder.append("    idturtle INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    idspecie INT (11) NOT NULL DEFAULT (''),");
         builder.append("    notes VARCHAR (255) NOT NULL DEFAULT (''),");
@@ -42,7 +42,7 @@ public class ScriptDDL {
     public static String createTableSpecie(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE specie(");
+        builder.append("CREATE TABLE IF NOT EXISTS specie(");
         builder.append("    idspecie INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    specie VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -52,7 +52,7 @@ public class ScriptDDL {
     public static String createTableNest(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE nest(");
+        builder.append("CREATE TABLE IF NOT EXISTS nest(");
         builder.append("    idnest INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    depth  INT (11) NOT NULL DEFAULT (''),");
         builder.append("    eggs_quantity INT (11) NOT NULL DEFAULT (''),");
@@ -65,7 +65,7 @@ public class ScriptDDL {
     public static String createTableWindCategory(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE windcategory(");
+        builder.append("CREATE TABLE IF NOT EXISTS windcategory(");
         builder.append("    idwc INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -75,7 +75,7 @@ public class ScriptDDL {
     public static String createTableWindDirection(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE winddirection(");
+        builder.append("CREATE TABLE IF NOT EXISTS winddirection(");
         builder.append("    idwd INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    name VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -85,7 +85,7 @@ public class ScriptDDL {
     public static String createTableIsland(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE island(");
+        builder.append("CREATE TABLE IF NOT EXISTS island(");
         builder.append("    island VARCHAR (45) NOT NULL PRIMARY KEY);");
 
         return builder.toString();
@@ -94,7 +94,7 @@ public class ScriptDDL {
     public static String createTableUsers(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE users(");
+        builder.append("CREATE TABLE IF NOT EXISTS users(");
         builder.append("    email VARCHAR (255) NOT NULL PRIMARY KEY,");
         builder.append("    password VARCHAR (255) NOT NULL DEFAULT (''));");
 
@@ -104,7 +104,7 @@ public class ScriptDDL {
     public static String createTableObservation(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE observation(");
+        builder.append("CREATE TABLE IF NOT EXISTS observation(");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
@@ -138,7 +138,7 @@ public class ScriptDDL {
     public static String createTableTurtleNest(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE turtlenest(");
+        builder.append("CREATE TABLE IF NOT EXISTS turtlenest(");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
@@ -156,7 +156,7 @@ public class ScriptDDL {
     public static String createTableTurtleNestData(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE turtlenestdata(");
+        builder.append("CREATE TABLE IF NOT EXISTS turtlenestdata(");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    depth  INT (11) NOT NULL DEFAULT (''),");
@@ -196,7 +196,7 @@ public class ScriptDDL {
     public static String createTableNestWithouTurtle(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE nestwithoutturtle (");
+        builder.append("CREATE TABLE IF NOT EXISTS nestwithoutturtle (");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    idspecie INT (11) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
@@ -214,7 +214,7 @@ public class ScriptDDL {
     public static String createTableNestWTurtleData(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE nestWTurtleData (");
+        builder.append("CREATE TABLE IF NOT EXISTS nestWTurtleData (");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    specie VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''),");
@@ -244,7 +244,7 @@ public class ScriptDDL {
     public static String createTableObserver(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE observer(");
+        builder.append("CREATE TABLE IF NOT EXISTS observer(");
         builder.append("    idobserver INTEGER PRIMARY KEY AUTOINCREMENT,");
         builder.append("    observer VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -254,7 +254,7 @@ public class ScriptDDL {
     public static String createTableObserverObservation(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE observerobservation (");
+        builder.append("CREATE TABLE IF NOT EXISTS observerobservation (");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME  NOT NULL DEFAULT (''),");
@@ -283,7 +283,7 @@ public class ScriptDDL {
     public static String createTableNestLocalization(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE nestlocalization (");
+        builder.append("CREATE TABLE IF NOT EXISTS nestlocalization (");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    nest_marking_date DATETIME NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
@@ -310,7 +310,7 @@ public class ScriptDDL {
     public static String createTableTurtleActivities(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE turtleactivities (");
+        builder.append("CREATE TABLE IF NOT EXISTS turtleactivities (");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    idactivity INT (11) NOT NULL DEFAULT (''),");
@@ -334,7 +334,7 @@ public class ScriptDDL {
     public static String createTableTurtleTaggs(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE turtletags (");
+        builder.append("CREATE TABLE IF NOT EXISTS turtletags (");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    leftring INT (11) NOT NULL DEFAULT (''),");
@@ -354,7 +354,7 @@ public class ScriptDDL {
     public static String createTableLocalizationAndObservation(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE localizationandobservation (");
+        builder.append("CREATE TABLE IF NOT EXISTS localizationandobservation (");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    nest_marking_date DATETIME NOT NULL DEFAULT (''),");
         builder.append("    observation_date  DATETIME NOT NULL DEFAULT (''),");
@@ -375,7 +375,7 @@ public class ScriptDDL {
     public static String createTableHatchlings(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE hatchlings (");
+        builder.append("CREATE TABLE IF NOT EXISTS hatchlings (");
         builder.append("    idnest  INT (11) NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
         builder.append("    hatched INT (11) NOT NULL DEFAULT (''),");
@@ -397,7 +397,7 @@ public class ScriptDDL {
     public static String createTableHabitat(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE habitat (");
+        builder.append("CREATE TABLE IF NOT EXISTS habitat (");
         builder.append("    idhabitat INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
         builder.append("    habitat VARCHAR (45) NOT NULL DEFAULT (''));");
 
@@ -407,7 +407,7 @@ public class ScriptDDL {
     public static String createTableObservationAndObserver(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE observationandobserver (");
+        builder.append("CREATE TABLE IF NOT EXISTS observationandobserver (");
         builder.append("    idnest INT (11) NOT NULL DEFAULT (''),");
         builder.append("    nest_marking_date DATETIME NOT NULL DEFAULT (''),");
         builder.append("    observation_date DATETIME NOT NULL DEFAULT (''),");

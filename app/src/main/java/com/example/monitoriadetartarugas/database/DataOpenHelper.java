@@ -7,9 +7,10 @@ import android.widget.Adapter;
 
 public class DataOpenHelper extends SQLiteOpenHelper {
     public static String DB_NAME = "turtlesDB";
+    public static int DB_VERSION = 2;
 
     public DataOpenHelper(Context context) {
-        super(context, DB_NAME,null, 1);
+        super(context, DB_NAME,null, DB_VERSION);
     }
 
     @Override
@@ -67,9 +68,10 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 /*
         db.execSQL(ScriptDDL.createTableObservationAndObserver());
         db.execSQL(ScriptDDL.createTableObserverObservation());
-        db.execSQL(ScriptDDL.createTableUsers());
-        db.execSQL("INSERT INTO users (email,password) VALUES ('test@gmail.com','123')");
 */
+        db.execSQL(ScriptDDL.createTableUsers());
+        db.execSQL("INSERT INTO users (email,password) VALUES ('lpina@gmail.com','111')");
+        db.execSQL("INSERT INTO users (email,password) VALUES ('ab@gmail.com','321')");
 
         db.execSQL(ScriptDDL.createTableTurtleNestData());
         db.execSQL(ScriptDDL.createTableNestWTurtleData());
@@ -77,28 +79,30 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(ScriptDDL.dropTableSpecie());
-        db.execSQL(ScriptDDL.dropTableBeach());
-        db.execSQL(ScriptDDL.dropTableActivities());
-        db.execSQL(ScriptDDL.dropTableHabitat());
-        db.execSQL(ScriptDDL.dropTableHatchlings());
-        db.execSQL(ScriptDDL.dropTableIsland());
-        db.execSQL(ScriptDDL.dropTableLocalizationandobservation());
-        db.execSQL(ScriptDDL.dropTableNest());
-        db.execSQL(ScriptDDL.dropTableNestlocalization());
-        db.execSQL(ScriptDDL.dropTableNestwithoutturtle());
-        db.execSQL(ScriptDDL.dropTableObservation());
-        db.execSQL(ScriptDDL.dropTableObservationAndObserver());
-        db.execSQL(ScriptDDL.dropTableTurtle());
-        db.execSQL(ScriptDDL.dropTableTurtleactivities());
-        db.execSQL(ScriptDDL.dropTableTurtlenest());
-        db.execSQL(ScriptDDL.dropTableTurtletags());
-        db.execSQL(ScriptDDL.dropTableWC());
-        db.execSQL(ScriptDDL.dropTableWD());
-        db.execSQL(ScriptDDL.dropTableUsers());
-        db.execSQL(ScriptDDL.dropTableObserver());
-        db.execSQL(ScriptDDL.dropTableObserverobservation());
+        if(newVersion > oldVersion){
+            db.execSQL(ScriptDDL.dropTableSpecie());
+            db.execSQL(ScriptDDL.dropTableBeach());
+            db.execSQL(ScriptDDL.dropTableActivities());
+            db.execSQL(ScriptDDL.dropTableHabitat());
+            db.execSQL(ScriptDDL.dropTableHatchlings());
+            db.execSQL(ScriptDDL.dropTableIsland());
+            //db.execSQL(ScriptDDL.dropTableLocalizationandobservation());
+            db.execSQL(ScriptDDL.dropTableNest());
+            db.execSQL(ScriptDDL.dropTableNestlocalization());
+            db.execSQL(ScriptDDL.dropTableNestwithoutturtle());
+            db.execSQL(ScriptDDL.dropTableObservation());
+           // db.execSQL(ScriptDDL.dropTableObservationAndObserver());
+            db.execSQL(ScriptDDL.dropTableTurtle());
+            //db.execSQL(ScriptDDL.dropTableTurtleactivities());
+            db.execSQL(ScriptDDL.dropTableTurtlenest());
+            db.execSQL(ScriptDDL.dropTableTurtletags());
+            db.execSQL(ScriptDDL.dropTableWC());
+            db.execSQL(ScriptDDL.dropTableWD());
+            db.execSQL(ScriptDDL.dropTableUsers());
+            //db.execSQL(ScriptDDL.dropTableObserver());
+            //db.execSQL(ScriptDDL.dropTableObserverobservation());
 
-        onCreate(db);
+            onCreate(db);
+        }
     }
 }
