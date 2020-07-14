@@ -38,7 +38,7 @@ public class TurtleNestAdapter extends ArrayAdapter<TurtleNest> {
         TextView txt_content = row.findViewById(R.id.txt_content);
 
         txt_header.setText("Specie: "+turtleNests.get(position).getIdturtle().getIdspecie().getSpecie());
-        txt_subheader.setText("IdTurtle: "+turtleNests.get(position).getIdturtle().getIdturtle());
+        txt_subheader.setText("Turtle: "+turtleNests.get(position).getIdturtle().getIdturtle());
         txt_content.setText(turtleNests.get(position).getIdnest().toString());
 
         return row;

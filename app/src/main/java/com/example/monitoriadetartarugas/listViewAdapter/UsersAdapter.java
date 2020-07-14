@@ -10,18 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.monitoriadetartarugas.R;
-import com.example.monitoriadetartarugas.domain.entitys.NestWithoutTurtle;
+import com.example.monitoriadetartarugas.domain.entitys.Users;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NestWithoutTurtleAdapter extends ArrayAdapter<NestWithoutTurtle> {
-    private List<NestWithoutTurtle> withoutTurtles = new ArrayList<>();
+public class UsersAdapter extends ArrayAdapter<Users> {
+    private List<Users> usersList = new ArrayList<>();
     private Context context;
 
-    public NestWithoutTurtleAdapter(List<NestWithoutTurtle> withoutTurtles, Context context) {
-        super(context, R.layout.item_layout, withoutTurtles);
-        this.withoutTurtles = withoutTurtles;
+    public UsersAdapter(List<Users> usersList, Context context) {
+        super(context, R.layout.item_layout, usersList);
+        this.usersList = usersList;
         this.context = context;
     }
 
@@ -34,18 +34,10 @@ public class NestWithoutTurtleAdapter extends ArrayAdapter<NestWithoutTurtle> {
         TextView txt_subheader = row.findViewById(R.id.txt_subheader);
         TextView txt_content = row.findViewById(R.id.txt_content);
 
-        txt_header.setText("Specie: "+withoutTurtles.get(position).getIdspecie().getSpecie());
-        txt_subheader.setText("Nest: "+withoutTurtles.get(position).getIdnest().getIdnest());
-        txt_content.setText(withoutTurtles.get(position).getIdnest().toString());
+        txt_header.setText(usersList.get(position).getEmail());
+        txt_subheader.setText(usersList.get(position).getSurname());
+        txt_content.setText(usersList.get(position).getFname());
 
         return row;
-    }
-
-    public void removeItems(List<NestWithoutTurtle> nestWithoutTurtles){
-        for(NestWithoutTurtle wturtle: nestWithoutTurtles){
-            withoutTurtles.remove(wturtle);
-        }
-
-        notifyDataSetChanged();
     }
 }

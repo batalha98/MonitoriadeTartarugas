@@ -8,12 +8,20 @@ public class TurtleNestData implements Serializable {
     int idturtle, idnest,hatched,died_in_nest,alive_in_nest,undeveloped,unhatched,predated_eggs,
             leftring,rightring,internal_tag, depth, eggs_quantity;
     Date hatch_dataa, nest_marking_date,tagg_dataa,obs_dataa;
-    String nest_beach,habitat,obs_beach,activity,wc,wd;
+    String nest_beach,habitat,obs_beach,activity,wc,wd, observer;
 
     double ccl_measure,cwl_measure;
     float gps_east,gps_south,dune_height, distance_to_tide;
 
     public TurtleNestData() {
+    }
+
+    public String getObserver() {
+        return observer;
+    }
+
+    public void setObserver(String observer) {
+        this.observer = observer;
     }
 
     public int getIdturtle() {

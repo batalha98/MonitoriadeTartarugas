@@ -52,6 +52,7 @@ public class TurtleNestDataController {
         contentValues.put("depth",turtleNestData.getDepth());
         contentValues.put("eggs_quantity",turtleNestData.getEggs_quantity());
         contentValues.put("distance_to_tide",turtleNestData.getDistance_to_tide());
+        contentValues.put("unhatched",turtleNestData.getUnhatched());
 
         connection.insertOrThrow("turtlenestdata",null, contentValues);
     }
@@ -88,11 +89,15 @@ public class TurtleNestDataController {
         contentValues.put("activity", turtleNestData.getActivity());
         contentValues.put("wc",turtleNestData.getWc());
         contentValues.put("wd",turtleNestData.getWd());
+        contentValues.put("dune_height",turtleNestData.getDune_height());
         contentValues.put("ccl_measure",turtleNestData.getCcl_measure());
         contentValues.put("cwl_measure",turtleNestData.getCwl_measure());
         contentValues.put("gps_east",turtleNestData.getGps_east());
         contentValues.put("gps_south",turtleNestData.getGps_south());
         contentValues.put("unhatched",turtleNestData.getUnhatched());
+        contentValues.put("eggs_quantity",turtleNestData.getEggs_quantity());
+        contentValues.put("depth",turtleNestData.getDepth());
+
         parameters = new String[2];
 
         parameters[0] = String.valueOf(turtleNestData.getIdturtle());
@@ -165,30 +170,35 @@ public class TurtleNestDataController {
             cursor.moveToFirst();
                 turtleNestData = new TurtleNestData();
 
-                turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
-                turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idnest")));
-                turtleNestData.setHatched(cursor.getInt(cursor.getColumnIndexOrThrow("hatched")));
-                turtleNestData.setDied_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("died_in_nest")));
-                turtleNestData.setAlive_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("alive_in_nest")));
-                turtleNestData.setUndeveloped(cursor.getInt(cursor.getColumnIndexOrThrow("undeveloped")));
-                turtleNestData.setPredated_eggs(cursor.getInt(cursor.getColumnIndexOrThrow("predated_eggs")));
-                turtleNestData.setLeftring(cursor.getInt(cursor.getColumnIndexOrThrow("leftring")));
-                turtleNestData.setRightring(cursor.getInt(cursor.getColumnIndexOrThrow("rightring")));
-                turtleNestData.setInternal_tag(cursor.getInt(cursor.getColumnIndexOrThrow("internal_tag")));
-                turtleNestData.setHatch_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("hatch_dataa"))));
-                turtleNestData.setNest_marking_date(new Date(cursor.getString(cursor.getColumnIndexOrThrow("nest_marking_date"))));
-                turtleNestData.setTagg_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("tagg_dataa"))));
-                turtleNestData.setObs_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("obs_dataa"))));
-                turtleNestData.setNest_beach(cursor.getString(cursor.getColumnIndexOrThrow("nest_beach")));
-                turtleNestData.setHabitat(cursor.getString(cursor.getColumnIndexOrThrow("habitat")));
-                turtleNestData.setObs_beach(cursor.getString(cursor.getColumnIndexOrThrow("obs_beach")));
-                turtleNestData.setActivity(cursor.getString(cursor.getColumnIndexOrThrow("activity")));
-                turtleNestData.setWc(cursor.getString(cursor.getColumnIndexOrThrow("wc")));
-                turtleNestData.setWd(cursor.getString(cursor.getColumnIndexOrThrow("wd")));
+            turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idturtle")));
+            turtleNestData.setIdnest(cursor.getInt(cursor.getColumnIndexOrThrow("idnest")));
+            turtleNestData.setHatched(cursor.getInt(cursor.getColumnIndexOrThrow("hatched")));
+            turtleNestData.setDied_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("died_in_nest")));
+            turtleNestData.setAlive_in_nest(cursor.getInt(cursor.getColumnIndexOrThrow("alive_in_nest")));
+            turtleNestData.setUndeveloped(cursor.getInt(cursor.getColumnIndexOrThrow("undeveloped")));
+            turtleNestData.setPredated_eggs(cursor.getInt(cursor.getColumnIndexOrThrow("predated_eggs")));
+            turtleNestData.setLeftring(cursor.getInt(cursor.getColumnIndexOrThrow("leftring")));
+            turtleNestData.setRightring(cursor.getInt(cursor.getColumnIndexOrThrow("rightring")));
+            turtleNestData.setInternal_tag(cursor.getInt(cursor.getColumnIndexOrThrow("internal_tag")));
+            turtleNestData.setHatch_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("hatch_dataa"))));
+            turtleNestData.setNest_marking_date(new Date(cursor.getString(cursor.getColumnIndexOrThrow("nest_marking_date"))));
+            turtleNestData.setTagg_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("tagg_dataa"))));
+            turtleNestData.setObs_dataa(new Date(cursor.getString(cursor.getColumnIndexOrThrow("obs_dataa"))));
+            turtleNestData.setNest_beach(cursor.getString(cursor.getColumnIndexOrThrow("nest_beach")));
+            turtleNestData.setHabitat(cursor.getString(cursor.getColumnIndexOrThrow("habitat")));
+            turtleNestData.setObs_beach(cursor.getString(cursor.getColumnIndexOrThrow("obs_beach")));
+            turtleNestData.setActivity(cursor.getString(cursor.getColumnIndexOrThrow("activity")));
+            turtleNestData.setWc(cursor.getString(cursor.getColumnIndexOrThrow("wc")));
+            turtleNestData.setWd(cursor.getString(cursor.getColumnIndexOrThrow("wd")));
+            turtleNestData.setCcl_measure(cursor.getDouble(cursor.getColumnIndexOrThrow("ccl_measure")));
+            turtleNestData.setCwl_measure(cursor.getDouble(cursor.getColumnIndexOrThrow("cwl_measure")));
+            turtleNestData.setGps_east(cursor.getFloat(cursor.getColumnIndexOrThrow("gps_east")));
+            turtleNestData.setGps_south(cursor.getFloat(cursor.getColumnIndexOrThrow("gps_south")));
+            turtleNestData.setUnhatched(cursor.getInt(cursor.getColumnIndexOrThrow("unhatched")));
 
-                return turtleNestData;
+            return turtleNestData;
 
-            }
+        }
                 return null;
     }
 

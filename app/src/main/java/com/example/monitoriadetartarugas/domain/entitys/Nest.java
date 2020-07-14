@@ -51,7 +51,7 @@ public class Nest implements Serializable {
 
     @Override
     public String toString() {
-        return  "Nest" +"\n"+
+        return  "Nest details:" +"\n"+
                 "   Depth: " + depth +"\n"+
                 "   Eggs_quantity: " + eggs_quantity +"\n"+
                 "   Distance: " + distance_to_tide +"\n"+

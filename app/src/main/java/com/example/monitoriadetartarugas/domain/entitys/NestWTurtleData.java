@@ -6,10 +6,18 @@ public class NestWTurtleData {
     int idnest,hatched,died_in_nest,alive_in_nest,undeveloped,
             unhatched,predated_eggs, eggs_quantity, depth;
     Date hatch_dataa, nest_loc_date;
-    String beach,habitat,specie,nest_notes, hatch_notes;
+    String beach,habitat,specie,nest_notes, hatch_notes, observer;
     float gps_east,gps_south,distance_to_tide;
 
     public NestWTurtleData() {
+    }
+
+    public String getObserver() {
+        return observer;
+    }
+
+    public void setObserver(String observer) {
+        this.observer = observer;
     }
 
     public int getIdnest() {

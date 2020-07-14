@@ -20,6 +20,8 @@ public class UsersController {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("email", users.getEmail());
+        contentValues.put("fname", users.getFname());
+        contentValues.put("surname", users.getSurname());
         contentValues.put("password", users.getPassword());
 
         connection.insertOrThrow("users",null, contentValues);
@@ -57,6 +59,8 @@ public class UsersController {
                     Users users = new Users();
 
                     users.setEmail(result.getString(result.getColumnIndexOrThrow("email")));
+                    users.setFname(result.getString(result.getColumnIndexOrThrow("fname")));
+                    users.setSurname(result.getString(result.getColumnIndexOrThrow("surname")));
                     users.setPassword(result.getString(result.getColumnIndexOrThrow("password")));
 
                     usersList.add(users);
@@ -86,6 +90,34 @@ public class UsersController {
             result.moveToFirst();
 
             users.setEmail(result.getString(result.getColumnIndexOrThrow("email")));
+            users.setFname(result.getString(result.getColumnIndexOrThrow("fname")));
+            users.setSurname(result.getString(result.getColumnIndexOrThrow("surname")));
+            users.setPassword(result.getString(result.getColumnIndexOrThrow("password")));
+
+            return users;
+        }
+
+        return null;
+    }
+
+    public Users fetchOne(String email){
+        Users users = new Users();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM users");
+        sql.append("  WHERE email = ?;");
+
+        String[] parameters = new String[1];
+        parameters[0] = email;
+
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
+
+        if(result.getCount() > 0){
+            result.moveToFirst();
+
+            users.setEmail(result.getString(result.getColumnIndexOrThrow("email")));
+            users.setFname(result.getString(result.getColumnIndexOrThrow("fname")));
+            users.setSurname(result.getString(result.getColumnIndexOrThrow("surname")));
             users.setPassword(result.getString(result.getColumnIndexOrThrow("password")));
 
             return users;

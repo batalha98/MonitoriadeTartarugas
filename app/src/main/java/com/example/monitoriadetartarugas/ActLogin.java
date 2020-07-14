@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.UsersController;
+import com.example.monitoriadetartarugas.domain.entitys.Users;
 
 public class ActLogin extends AppCompatActivity {
     EditText username;
@@ -40,28 +41,36 @@ public class ActLogin extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(isEmptyFields()){
-                Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
-            }else{
-                conn = dataOpenHelper.getReadableDatabase();
-                usersController = new UsersController(conn);
-                String uname = username.getText().toString();
-                String pwd = password.getText().toString();
+                if(isEmptyFields()){
+                    Toast.makeText(ActLogin.this, "Cannot proceed with blank fields!", Toast.LENGTH_SHORT).show();
+                }else{
+                    conn = dataOpenHelper.getReadableDatabase();
+                    usersController = new UsersController(conn);
+                    String uname = username.getText().toString();
+                    String pwd = password.getText().toString();
+                    Users logUser = usersController.fetchOne(uname, pwd);
 
-                if(usersController.fetchOne(uname, pwd)!=null){
-                    Intent intent = new Intent(ActLogin.this, Act_Main.class);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("uname",txtUsername);
-                    editor.putString("pwd",txtPassword);
-                    editor.commit();
+                    if(logUser==null){
+                        Toast.makeText(getApplicationContext(), "Invalid account!",Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(logUser.getEmail().equals("admin@gmail.com")){
+                            Intent intent = new Intent(ActLogin.this, AdminDashboard.class);
+                            startActivity(intent);
 
-                    Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Logged as ADMIN!",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent intent = new Intent(ActLogin.this, Act_Main.class);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("uname",txtUsername);
+                            editor.putString("pwd",txtPassword);
+                            editor.commit();
 
-                    startActivity(intent);
-                } else{
-                    Toast.makeText(getApplicationContext(), "You are not registered! Please contact the owner.",Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+
+                            Toast.makeText(getApplicationContext(), "Logged in Successfully!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-            }
             }
         });
     }

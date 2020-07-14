@@ -7,7 +7,7 @@ import android.widget.Adapter;
 
 public class DataOpenHelper extends SQLiteOpenHelper {
     public static String DB_NAME = "turtlesDB";
-    public static int DB_VERSION = 2;
+    public static int DB_VERSION = 6;
 
     public DataOpenHelper(Context context) {
         super(context, DB_NAME,null, DB_VERSION);
@@ -70,8 +70,9 @@ public class DataOpenHelper extends SQLiteOpenHelper {
         db.execSQL(ScriptDDL.createTableObserverObservation());
 */
         db.execSQL(ScriptDDL.createTableUsers());
-        db.execSQL("INSERT INTO users (email,password) VALUES ('lpina@gmail.com','111')");
-        db.execSQL("INSERT INTO users (email,password) VALUES ('ab@gmail.com','321')");
+        db.execSQL("INSERT INTO users (email, fname, surname, password) VALUES ('lpina@gmail.com','Luis','Pina','111')");
+        db.execSQL("INSERT INTO users (email, fname, surname, password) VALUES ('ab@gmail.com','Aderito','Batalha','321')");
+        db.execSQL("INSERT INTO users (email, fname, surname, password) VALUES ('admin@gmail.com','Adelito','Meneses','000')");
 
         db.execSQL(ScriptDDL.createTableTurtleNestData());
         db.execSQL(ScriptDDL.createTableNestWTurtleData());

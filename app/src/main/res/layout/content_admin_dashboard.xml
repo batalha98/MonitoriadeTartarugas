@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:shadowColor="@color/cardview_shadow_start_color"
+            android:text="Admin Dashboard"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_manageUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Users" />
+
+        <Button
+            android:id="@+id/btn_editBeach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit beach" />
+
+        <Button
+            android:id="@+id/btn_editSpecie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Species" />
+
+        <Button
+            android:id="@+id/btn_editIsland"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit island" />
+
+        <Button
+            android:id="@+id/btn_editActivities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit turtle ativities" />
+
+        <Button
+            android:id="@+id/btn_editWC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Wind Category " />
+
+        <Button
+            android:id="@+id/btn_editWD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Wind Direction" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

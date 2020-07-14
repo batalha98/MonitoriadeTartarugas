@@ -95,7 +95,9 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS users(");
-        builder.append("    email VARCHAR (255) NOT NULL PRIMARY KEY,");
+        builder.append("    email VARCHAR (50) NOT NULL PRIMARY KEY,");
+        builder.append("    fname VARCHAR (50) NOT NULL DEFAULT (''),");
+        builder.append("    surname VARCHAR (50) NOT NULL DEFAULT (''),");
         builder.append("    password VARCHAR (255) NOT NULL DEFAULT (''));");
 
         return builder.toString();
