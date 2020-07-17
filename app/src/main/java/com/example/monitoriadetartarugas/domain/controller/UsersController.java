@@ -34,8 +34,26 @@ public class UsersController {
         connection.delete("users","email = ?",parameters);
     }
 
+    public void edit(Users users, String old_email){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("email",users.getEmail());
+        contentValues.put("fname", users.getFname());
+        contentValues.put("surname", users.getSurname());
+        contentValues.put("password", users.getPassword());
+
+        String[] parameters = new String[1];
+        parameters[0] = old_email;
+
+        connection.update("users", contentValues,"email = ?", parameters);
+    }
+
     public void edit(Users users){
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("fname", users.getFname());
+        contentValues.put("surname", users.getSurname());
+        contentValues.put("password", users.getPassword());
 
         String[] parameters = new String[1];
         parameters[0] = users.getEmail();

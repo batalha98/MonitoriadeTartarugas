@@ -13,21 +13,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.UsersController;
+import com.example.monitoriadetartarugas.domain.entitys.Users;
 import com.example.monitoriadetartarugas.listViewAdapter.UsersAdapter;
 
 public class ListingData extends AppCompatActivity {
     private ListView listView;
-    private String idData;
+    private String idData, idToModal;
     private Bundle bundle;
     private FloatingActionButton fab;
     private UsersAdapter usersAdapter;
     private UsersController usersController;
     private SQLiteDatabase connection;
     private DataOpenHelper openHelper;
+    private ModalBottomSheet modalBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,15 @@ public class ListingData extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         fab = findViewById(R.id.fabAddNewData);
+        listView = findViewById(R.id.listview_data);
 
         if(bundle!=null){
             idData = bundle.getString("idBtn");
 
             if(idData.equals("users")){
+                usersAdapter = new UsersAdapter(usersController.fetchAll(),this);
+                listView.setAdapter(usersAdapter);
+
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -94,11 +101,43 @@ public class ListingData extends AppCompatActivity {
             }
         }
 
-        listView = findViewById(R.id.listview_data);
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
 
-        usersAdapter = new UsersAdapter(usersController.fetchAll(),this);
-        listView.setAdapter(usersAdapter);
+                if(idData.equals("users")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }/*else if(idData.equals("beach")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }else if(idData.equals("activities")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }else if(idData.equals("island")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }else if(idData.equals("wc")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }else if(idData.equals("wd")){
+                    Users user = (Users) parent.getItemAtPosition(position);
+                    modalBottomSheet = new ModalBottomSheet();
+                    idToModal = "users"+"!"+user.getEmail();
+                }*/
+
+                bundle.putString("ToModify", idToModal);
+                modalBottomSheet.setArguments(bundle);
+
+                modalBottomSheet.show(getSupportFragmentManager(), "modalMenu");
+            }
+        });
     }
 
     @Override
@@ -107,22 +146,4 @@ public class ListingData extends AppCompatActivity {
         Intent it = new Intent(this, AdminDashboard.class);
         startActivity(it);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.list_options, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-//    AbsListView.OnLongClickListener modeListener = new AbsListView.OnLongClickListener(){
-//        @Override
-//        public boolean onLongClick(View v) {
-//
-//
-//            return false;
-//        }
-//    };
 }
