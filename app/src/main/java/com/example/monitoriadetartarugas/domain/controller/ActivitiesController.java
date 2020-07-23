@@ -17,37 +17,37 @@ public class ActivitiesController {
         this.connection = connection;
     }
 
-    public void insert(Activities activities){
+    public void insert(Activities activity){
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("activity", activities.getActivity());
+        contentValues.put("activity", activity.getActivity());
 
         connection.insertOrThrow("activities",null, contentValues);
     }
 
-    public void remove(int idactivity){
+    public void remove(String activity){
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idactivity);
+        parameters[0] = activity;
 
-        connection.delete("activities","idactivity = ?",parameters);
+        connection.delete("activities","activity = ?",parameters);
     }
 
-    public void edit(Activities activities){
+    public void edit(String old_activity, String new_activity){
         ContentValues contentValues = new ContentValues();
 
-        String[] parameters = new String[1];
-        parameters[0] = String.valueOf(activities.getIdactivity());
+        contentValues.put("activity", new_activity);
 
-        connection.update("activities", contentValues,"idactivity = ?", parameters);
+        String[] parameters = new String[1];
+        parameters[0] = old_activity;
+
+        connection.update("activities", contentValues,"activity = ?", parameters);
     }
 
     public List<Activities> fetchAll(){
         List<Activities> activitiesList = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idactivity,");
-        sql.append("       activity");
-        sql.append("  FROM activities;");
+        sql.append("SELECT * FROM activities;");
 
         try {
             Cursor result = connection.rawQuery(sql.toString(), null);
@@ -58,7 +58,6 @@ public class ActivitiesController {
                 do{
                     Activities activities = new Activities();
 
-                    activities.setIdactivity(result.getInt(result.getColumnIndexOrThrow("idactivity")));
                     activities.setActivity(result.getString(result.getColumnIndexOrThrow("activity")));
 
                     activitiesList.add(activities);
@@ -71,24 +70,21 @@ public class ActivitiesController {
         return activitiesList;
     }
 
-    public Activities fetchOne(int idactivity){
+    public Activities fetchOne(String activity){
         Activities activities = new Activities();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT idactivity,");
-        sql.append("       activity");
-        sql.append("  FROM activities");
-        sql.append("  WHERE idactivity = ?;");
+        sql.append("SELECT * FROM activities");
+        sql.append("  WHERE activity = ?;");
 
         String[] parameters = new String[1];
-        parameters[0] = String.valueOf(idactivity);
+        parameters[0] = activity;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 
         if(result.getCount() > 0){
             result.moveToFirst();
 
-            activities.setIdactivity(result.getInt(result.getColumnIndexOrThrow("idactivity")));
             activities.setActivity(result.getString(result.getColumnIndexOrThrow("activity")));
 
             return activities;

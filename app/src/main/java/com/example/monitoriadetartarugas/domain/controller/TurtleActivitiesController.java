@@ -31,19 +31,19 @@ public class TurtleActivitiesController {
 
         contentValues.put("idturtle", turtleActivities.getIdturtle().getIdturtle().getIdturtle());
         contentValues.put("beach", turtleActivities.getBeach().getBeach().getBeach());
-        contentValues.put("idactivity", turtleActivities.getIdactivity().getIdactivity());
+        contentValues.put("activity", turtleActivities.getActivity().getActivity());
 
         connection.insertOrThrow("turtleactivities",null, contentValues);
     }
 
-    public void remove(int idturtle, String beach, int idactivity){
+    public void remove(int idturtle, String beach, String activity){
         String[] parameters = new String[4];
 
         parameters[0] = String.valueOf(idturtle);
         parameters[1] = beach;
-        parameters[2] = String.valueOf(idactivity);
+        parameters[2] = activity;
 
-        connection.delete("turtleactivities","idturtle = ? and beach = ? and idactivity = ?",parameters);
+        connection.delete("turtleactivities","idturtle = ? and beach = ? and activity = ?",parameters);
     }
 
     public void edit(TurtleActivities turtleActivities){
@@ -53,9 +53,9 @@ public class TurtleActivitiesController {
 
         parameters[0] = String.valueOf(turtleActivities.getIdturtle().getIdturtle().getIdturtle());
         parameters[1] = turtleActivities.getBeach().getBeach().getBeach();
-        parameters[2] = String.valueOf(turtleActivities.getIdactivity().getIdactivity());
+        parameters[2] = turtleActivities.getActivity().getActivity();
 
-        connection.update("turtleactivities", contentValues,"idturtle = ? and beach = ? and idactivity = ?", parameters);
+        connection.update("turtleactivities", contentValues,"idturtle = ? and beach = ? and activity = ?", parameters);
     }
 
     public List<TurtleActivities> fetchAll(){
@@ -64,7 +64,7 @@ public class TurtleActivitiesController {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       beach,");
-        sql.append("       idactivity");
+        sql.append("       activity");
         sql.append("  FROM turtleactivities;");
 
         try {
@@ -81,7 +81,7 @@ public class TurtleActivitiesController {
 
                     turtleActivities.setIdturtle(observation);
                     turtleActivities.setBeach(observation);
-                    turtleActivities.setIdactivity(observation.getIdactivity());
+                    turtleActivities.setActivity(observation.getActivity());
 
                     turtleActivitiesList.add(turtleActivities);
                 }while(result.moveToNext());
@@ -93,20 +93,19 @@ public class TurtleActivitiesController {
         return turtleActivitiesList;
     }
 
-    public Activities fetchOne(int idturtle, String beach, Date dataa, int idactivity){
-        Activities activities = new Activities();
+    public TurtleActivities fetchOne(int idturtle, String beach, Date dataa, String activity){
         String[] parameters = new String[4];
 
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT idturtle,");
         sql.append("       beach,");
-        sql.append("       idactivity");
+        sql.append("       activity");
         sql.append("  FROM turtleactivities");
-        sql.append("  WHERE idturtle = ? and beach = ? and idactivity = ?");
+        sql.append("  WHERE idturtle = ? and beach = ? and activity = ?");
 
         parameters[0] = String.valueOf(idturtle);
         parameters[1] = beach;
-        parameters[2] = String.valueOf(idactivity);
+        parameters[2] = activity;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 
@@ -120,9 +119,9 @@ public class TurtleActivitiesController {
 
             turtleActivities.setIdturtle(observation);
             turtleActivities.setBeach(observation);
-            turtleActivities.setIdactivity(observation.getIdactivity());
+            turtleActivities.setActivity(observation.getActivity());
 
-            return activities;
+            return turtleActivities;
         }
 
         return null;

@@ -31,11 +31,13 @@ public class IslandController {
         connection.delete("island","island = ?",parameters);
     }
 
-    public void edit(Island island){
+    public void edit(String old_island, String new_island){
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put("island",new_island);
+
         String[] parameters = new String[1];
-        parameters[0] = island.getIsland();
+        parameters[0] = old_island;
 
         connection.update("island", contentValues,"island = ?", parameters);
     }
@@ -44,7 +46,7 @@ public class IslandController {
         List<Island> islandList = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT island,");
+        sql.append("SELECT island");
         sql.append("  FROM island;");
 
         try {
@@ -72,7 +74,7 @@ public class IslandController {
         island1 = new Island();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT island,");
+        sql.append("SELECT island");
         sql.append("  FROM island");
         sql.append("  WHERE island = ?;");
 

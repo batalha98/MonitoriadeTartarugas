@@ -94,5 +94,12 @@
     <string name="title_activity_listing_w_c">ListingWC</string>
     <string name="title_activity_listing_data">ListingData</string>
     <string name="title_activity_add_user">AddUser</string>
+    <string name="title_activity_add_activities">AddActivities</string>
+    <string name="title_activity_add_beach">AddBeach</string>
+    <string name="title_activity_add_island">AddIsland</string>
+    <string name="title_activity_add_w_c">AddWC</string>
+    <string name="title_activity_add_w_d">AddWD</string>
+    <string name="title_activity_add_specie">AddSpecie</string>
+    <string name="title_activity_add_habitat">AddHabitat</string>
 
 </resources>

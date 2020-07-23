@@ -1,4 +1,4 @@
-package com.example.monitoriadetartarugas;
+package com.example.monitoriadetartarugas.addData;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.monitoriadetartarugas.ListingData;
+import com.example.monitoriadetartarugas.R;
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.UsersController;
 import com.example.monitoriadetartarugas.domain.entitys.Users;
@@ -157,7 +159,7 @@ public class AddUser extends AppCompatActivity {
 
 
         if(res){
-            Toast.makeText(getApplicationContext(), "Fill the blank fiedls!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Fill the blank fields!", Toast.LENGTH_SHORT).show();
         }
 
         return res;

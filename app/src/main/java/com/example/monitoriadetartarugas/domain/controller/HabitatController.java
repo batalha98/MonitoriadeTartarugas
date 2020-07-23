@@ -33,8 +33,10 @@ public class HabitatController {
         connection.delete("habitat","idhabitat = ?",parameters);
     }
 
-    public void edit(Habitat habitat){
+    public void edit(String new_habitat, Habitat habitat){
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("habitat", new_habitat);
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(habitat.getIdhabitat());
@@ -83,6 +85,32 @@ public class HabitatController {
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idhabitat);
+
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
+
+        if(result.getCount() > 0){
+            result.moveToFirst();
+
+            habitat.setIdhabitat(result.getInt(result.getColumnIndexOrThrow("idhabitat")));
+            habitat.setHabitat(result.getString(result.getColumnIndexOrThrow("habitat")));
+
+            return habitat;
+        }
+
+        return null;
+    }
+
+    public Habitat fetchOne(String str_habitat){
+        Habitat habitat = new Habitat();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT idhabitat,");
+        sql.append("       habitat");
+        sql.append("  FROM habitat");
+        sql.append("  WHERE habitat = ?;");
+
+        String[] parameters = new String[1];
+        parameters[0] = str_habitat;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 

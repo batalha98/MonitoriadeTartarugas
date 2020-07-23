@@ -12,9 +12,37 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
-            android:name=".AddUser"
-            android:label="@string/title_activity_add_user"
+            android:name=".addData.AddHabitat"
+            android:label="@string/title_activity_add_habitat"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".addData.AddSpecie"
+            android:label="@string/title_activity_add_specie"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddWD"
+            android:label="@string/title_activity_add_w_d"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddWC"
+            android:label="@string/title_activity_add_w_c"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddIsland"
+            android:label="@string/title_activity_add_island"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddBeach"
+            android:label="@string/title_activity_add_beach"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddActivities"
+            android:label="@string/title_activity_add_activities"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addData.AddUser"
+            android:label="@string/title_activity_add_user"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ListingData"
             android:label="@string/title_activity_listing_data"
@@ -85,8 +113,8 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

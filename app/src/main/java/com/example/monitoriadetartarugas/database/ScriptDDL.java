@@ -6,8 +6,7 @@ public class ScriptDDL {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE IF NOT EXISTS activities(");
-        builder.append("    idactivity INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,");
-        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''));");
+        builder.append("    activity VARCHAR (45) NOT NULL PRIMARY KEY);");
 
         return builder.toString();
     }
@@ -110,7 +109,7 @@ public class ScriptDDL {
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    dataa DATETIME NOT NULL DEFAULT (''),");
-        builder.append("    idactivity INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    wc INT (11) NOT NULL DEFAULT (''),");
         builder.append("    wd INT (11) NOT NULL DEFAULT (''),");
         builder.append("    dune_height FLOAT NOT NULL DEFAULT (''),");
@@ -315,13 +314,13 @@ public class ScriptDDL {
         builder.append("CREATE TABLE IF NOT EXISTS turtleactivities (");
         builder.append("    idturtle INT (11) NOT NULL DEFAULT (''),");
         builder.append("    beach VARCHAR (45) NOT NULL DEFAULT (''),");
-        builder.append("    idactivity INT (11) NOT NULL DEFAULT (''),");
+        builder.append("    activity VARCHAR (45) NOT NULL DEFAULT (''),");
         builder.append("    PRIMARY KEY (");
         builder.append("        idturtle,");
         builder.append("        beach,");
-        builder.append("        idactivity),");
+        builder.append("        activity),");
         builder.append("    FOREIGN KEY (");
-        builder.append("        idactivity)");
+        builder.append("        activity)");
         builder.append("    REFERENCES activities (idactivity),");
         builder.append("    FOREIGN KEY (");
         builder.append("        idturtle)");

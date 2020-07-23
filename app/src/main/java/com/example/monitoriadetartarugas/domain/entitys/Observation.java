@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Observation implements Serializable {
     private Turtle idturtle;
-    private Activities idactivity;
+    private Activities activity;
     private WindCategory wc;
     private WindDirection wd;
     private Beach beach;
@@ -21,12 +21,12 @@ public class Observation implements Serializable {
         this.idturtle = idturtle;
     }
 
-    public Activities getIdactivity() {
-        return idactivity;
+    public Activities getActivity() {
+        return activity;
     }
 
-    public void setIdactivity(Activities idactivity) {
-        this.idactivity = idactivity;
+    public void setActivity(Activities activity) {
+        this.activity = activity;
     }
 
     public WindCategory getWc() {
@@ -73,7 +73,7 @@ public class Observation implements Serializable {
     public String toString() {
         return "Observation{" +
                 "idturtle=" + idturtle +
-                ", idactivity=" + idactivity +
+                ", activity=" + activity +
                 ", wc=" + wc +
                 ", wd=" + wd +
                 ", beach=" + beach +

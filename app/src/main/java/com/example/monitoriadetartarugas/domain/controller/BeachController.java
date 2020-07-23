@@ -32,11 +32,14 @@ public class BeachController {
         connection.delete("beach","beach = ?",parameters);
     }
 
-    public void edit(Beach beach){
+    public void edit(String old_beach, Beach beach){
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put("beach", beach.getBeach());
+        contentValues.put("island",beach.getIsland());
+
         String[] parameters = new String[1];
-        parameters[0] = beach.getBeach();
+        parameters[0] = old_beach;
 
         connection.update("beach", contentValues,"beach = ?", parameters);
     }

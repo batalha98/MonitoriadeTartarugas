@@ -36,8 +36,10 @@ public class SpecieController {
         connection.delete("specie","idspecie = ?",parameters);
     }
 
-    public void edit(Specie specie){
+    public void edit(String new_specie, Specie specie){
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("specie",new_specie);
 
         parameters = new String[1];
         parameters[0] = String.valueOf(specie.getIdspecie());
@@ -86,6 +88,32 @@ public class SpecieController {
 
         parameters = new String[1];
         parameters[0] = String.valueOf(idspecie);
+
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
+
+        if(result.getCount() > 0){
+            result.moveToFirst();
+
+            specie.setIdspecie(result.getInt(result.getColumnIndexOrThrow("idspecie")));
+            specie.setSpecie(result.getString(result.getColumnIndexOrThrow("specie")));
+
+            return specie;
+        }
+
+        return null;
+    }
+
+    public Specie fetchOne(String specie_name){
+        Specie specie = new Specie();
+
+        sql = new StringBuilder();
+        sql.append("SELECT idspecie,");
+        sql.append("       specie");
+        sql.append("  FROM specie");
+        sql.append("  WHERE specie = ?;");
+
+        parameters = new String[1];
+        parameters[0] = specie_name;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 

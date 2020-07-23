@@ -32,8 +32,10 @@ public class WindDirectionController {
         connection.delete("windDirection","idwd = ?",parameters);
     }
 
-    public void edit(WindDirection windDirection){
+    public void edit(String new_wd, WindDirection windDirection){
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("name", new_wd);
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(windDirection.getIdwd());
@@ -83,6 +85,32 @@ public class WindDirectionController {
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(idwd);
+
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
+
+        if(result.getCount() > 0){
+            result.moveToLast();
+
+            windDirection.setIdwd(result.getInt(result.getColumnIndexOrThrow("idwd")));
+            windDirection.setName(result.getString(result.getColumnIndexOrThrow("name")));
+
+            return windDirection;
+        }
+
+        return null;
+    }
+
+    public WindDirection fetchOne(String wd){
+        WindDirection windDirection = new WindDirection();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT idwd,");
+        sql.append("       name");
+        sql.append("  FROM winddirection");
+        sql.append("  WHERE name = ?");
+
+        String[] parameters = new String[1];
+        parameters[0] = wd;
 
         Cursor result = connection.rawQuery(sql.toString(), parameters);
 

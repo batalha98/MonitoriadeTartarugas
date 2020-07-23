@@ -31,8 +31,10 @@ public class WindCategoryController {
         connection.delete("windcategory","idwc = ?",parameters);
     }
 
-    public void edit(WindCategory windCategory){
+    public void edit(String new_wc, WindCategory windCategory){
         ContentValues contentValues = new ContentValues();
+
+        contentValues.put("name", new_wc);
 
         String[] parameters = new String[1];
         parameters[0] = String.valueOf(windCategory.getIdwc());
@@ -97,4 +99,29 @@ public class WindCategoryController {
         return null;
     }
 
+    public WindCategory fetchOne(String wc){
+        WindCategory windCategory = new WindCategory();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT idwc,");
+        sql.append("       name");
+        sql.append("  FROM windcategory");
+        sql.append("  WHERE name = ?");
+
+        String[] parameters = new String[1];
+        parameters[0] = wc;
+
+        Cursor result = connection.rawQuery(sql.toString(), parameters);
+
+        if(result.getCount() > 0){
+            result.moveToFirst();
+
+            windCategory.setIdwc(result.getInt(result.getColumnIndexOrThrow("idwc")));
+            windCategory.setName(result.getString(result.getColumnIndexOrThrow("name")));
+
+            return windCategory;
+        }
+
+        return null;
+    }
 }

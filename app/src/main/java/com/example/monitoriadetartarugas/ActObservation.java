@@ -1,7 +1,6 @@
 package com.example.monitoriadetartarugas;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,22 +23,16 @@ import android.widget.Spinner;
 import com.example.monitoriadetartarugas.database.DataOpenHelper;
 import com.example.monitoriadetartarugas.domain.controller.ActivitiesController;
 import com.example.monitoriadetartarugas.domain.controller.BeachController;
-import com.example.monitoriadetartarugas.domain.controller.ObservationController;
-import com.example.monitoriadetartarugas.domain.controller.TurtleActivitiesController;
-import com.example.monitoriadetartarugas.domain.controller.TurtleController;
 import com.example.monitoriadetartarugas.domain.controller.WindCategoryController;
 import com.example.monitoriadetartarugas.domain.controller.WindDirectionController;
 import com.example.monitoriadetartarugas.domain.entitys.Activities;
 import com.example.monitoriadetartarugas.domain.entitys.Beach;
 import com.example.monitoriadetartarugas.domain.entitys.Observation;
-import com.example.monitoriadetartarugas.domain.entitys.Turtle;
-import com.example.monitoriadetartarugas.domain.entitys.TurtleActivities;
 import com.example.monitoriadetartarugas.domain.entitys.WindCategory;
 import com.example.monitoriadetartarugas.domain.entitys.WindDirection;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ActObservation extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -114,10 +107,10 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
         spinner_activity.setOnItemSelectedListener(this);
         spinner_beach.setOnItemSelectedListener(this);
 
-        getSpinnerValues();
+        setSpinnerValues();
     }
 
-    public void getSpinnerValues(){
+    public void setSpinnerValues(){
         try {
             dataOpenHelper = new DataOpenHelper(this);
             connection = dataOpenHelper.getReadableDatabase();
@@ -189,7 +182,7 @@ public class ActObservation extends AppCompatActivity implements AdapterView.OnI
             }
 
             toActNest = beach.getBeach()
-                    +"-"+activities.getIdactivity()
+                    +"-"+activities.getActivity()
                     +"-"+windCategory.getIdwc()
                     +"-"+windDirection.getIdwd()
                     +"-"+dune_height

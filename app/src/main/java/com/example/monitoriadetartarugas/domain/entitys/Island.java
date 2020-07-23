@@ -15,8 +15,6 @@ public class Island implements Serializable {
 
     @Override
     public String toString() {
-        return "Island{" +
-                "island='" + island + '\'' +
-                '}';
+        return island;
     }
 }

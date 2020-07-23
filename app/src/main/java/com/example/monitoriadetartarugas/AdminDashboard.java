@@ -25,6 +25,7 @@ public class AdminDashboard extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         sp = getSharedPreferences("user_details", MODE_PRIVATE);
+        Button btnHabitat = findViewById(R.id.btn_editHabitat);
         Button btnUsers = findViewById(R.id.btn_manageUsers);
         Button btnBeach = findViewById(R.id.btn_editBeach);
         Button btnSpecie = findViewById(R.id.btn_editSpecie);
@@ -32,6 +33,13 @@ public class AdminDashboard extends AppCompatActivity {
         Button btnActivities = findViewById(R.id.btn_editActivities);
         Button btnWC = findViewById(R.id.btn_editWC);
         Button btnWD = findViewById(R.id.btn_editWD);
+
+        btnHabitat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getRecords(v,"habitat");
+            }
+        });
 
         btnUsers.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -42,6 +42,12 @@
             android:text="Edit Species" />
 
         <Button
+            android:id="@+id/btn_editHabitat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit habitat" />
+
+        <Button
             android:id="@+id/btn_editIsland"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -33,9 +33,6 @@ public class DataOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO beach (beach,island) VALUES ('Chuiba','Ibo')");
 
         db.execSQL(ScriptDDL.createTableActivities());
-        db.execSQL("INSERT INTO activities (idactivity, activity) VALUES (1, 'Making a nest')");
-        db.execSQL("INSERT INTO activities (idactivity, activity) VALUES (2, 'Running to the beach')");
-        db.execSQL("INSERT INTO activities (idactivity, activity) VALUES (3, 'Caught with fisherman')");
 
         db.execSQL(ScriptDDL.createTableWindCategory());
         db.execSQL("INSERT INTO windcategory (name) VALUES ('Strong')");

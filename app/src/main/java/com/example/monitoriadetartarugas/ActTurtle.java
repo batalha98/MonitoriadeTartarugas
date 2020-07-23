@@ -175,8 +175,8 @@ public class ActTurtle extends AppCompatActivity implements AdapterView.OnItemSe
         observation.setIdturtle(turtleController.fetchOne((int) idturtle));
         observation.setBeach(
                 beachController.fetchOne(stringsObservation[0]));
-        observation.setIdactivity(
-                activitiesController.fetchOne(Integer.parseInt(stringsObservation[1])));
+        observation.setActivity(
+                activitiesController.fetchOne(stringsObservation[1]));
         observation.setWc(
                 windCategoryController.fetchOne(Integer.parseInt(stringsObservation[2])));
         observation.setWd(
